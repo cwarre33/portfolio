@@ -1,0 +1,325 @@
+/* General Reset */
+body, h1, h2, h3, p, ul, li, form, input, textarea, button {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Cascadia Code', monospace;
+}
+
+.scroll-slide-in {
+    opacity: 0;
+    transform: translateX(-100px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.slide-in {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.scroll-fade {
+    opacity: 0;
+    transition: opacity 1s ease-out;
+}
+
+.fade-in {
+    opacity: 1;
+}
+
+.fade-out {
+    opacity: 0;
+}
+
+/* Bouncing Button */
+.bounce-button {
+    display: inline-block;
+    margin: 20px auto; 
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #157b35;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    animation: bounce 2s infinite;
+    text-decoration: none;
+    display: block; 
+    text-align: center; 
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.bounce-button:hover {
+    box-shadow: 0 0 20px rgba(0, 123, 255, 0.7); /* Glowing blue hover effect */
+}
+
+
+/* Keyframes for bounce animation */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
+}
+
+/* Body and Container */
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    position: relative;
+    text-align: center;
+}
+
+.container h1 {
+    margin-bottom: 20px;
+    color: #f8f4f4;
+}
+
+.profile-picture {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-picture img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    transition: box-shadow 0.3s;
+    border: 5px solid #ccc;
+    opacity: 0; /* Start with the image hidden */
+    animation: reveal 6s forwards; /* Apply the animation */
+}
+
+.profile-picture img:hover {
+    box-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00; /* Glow effect for border */
+}
+
+/* Keyframes for reveal animation */
+@keyframes reveal {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Header */
+header {
+    background: #333;
+    color: #fff;
+    padding: 20px 0;
+    font-family: 'Fira Code', monospace;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Hero Section */
+.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Adjust height as needed */
+    background: url('/images/matrix.gif') no-repeat center center/cover;
+    z-index: 1;
+    padding: 20px;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Optional: Add a dark overlay */
+    z-index: -1;
+}
+
+.hero h2 {
+    font-size: 2.5rem;
+    color: #f0f8ff; /* Ice white color */
+    margin: 20px 0; /* Add margin for spacing */
+    transition: color 0.3s, text-shadow 0.3s; /* Smooth transition for hover effect */
+}
+
+.hero h2:hover {
+    color: #00ff00; /* Matrix green color */
+    text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00; /* Glow effect */
+}
+
+.hero p {
+    font-size: 1.2rem;
+    color: #f0f8ff; /* Ice white color */
+    margin: 10px 0; /* Add margin for spacing */
+}
+
+.cta-button {
+    display: flex;
+    padding: 10px 20px;
+    margin: 10px;
+    background: #3b572d;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    border: 2px solid transparent;
+    font-family: 'Hack', monospace;
+    transition: color 0.3s, text-shadow 0.3s; /* Smooth transition for hover effect */
+}
+
+.cta-button:hover {
+    color: #00ff00; /* Matrix green color */
+    text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00; /* Glow effect */
+    border-color: #00ff00; /* Matrix green border */
+    box-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00; /* Glow effect for border */
+}
+
+.social-media-icons {
+    margin-top: 20px;
+}
+.social-media-icons a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: inherit;
+}
+.social-media-icons i {
+    font-size: 24px;
+    transition: color 0.3s, text-shadow 0.3s; /* Smooth transition for hover effect */
+    color: #fff;
+}
+.social-media-icons a:hover i {
+    transform: scale(1.2);
+    color: #00ff00; /* Matrix green color */
+    text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00; /* Glow effect */
+}
+
+/* About Section */
+.about {
+    padding: 20px;
+}
+
+/* Contact Section */
+.contact {
+    background: #f4f4f4;
+    padding: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin-bottom: 5px;
+}
+
+form input, form textarea {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: 'Inconsolata', monospace;
+}
+
+form button {
+    padding: 10px;
+    background: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Inconsolata', monospace;
+}
+
+form button:hover {
+    background: #555;
+}
+
+/* Projects Section */
+.projects {
+    padding: 20px;
+}
+
+.project {
+    margin-bottom: 20px;
+}
+
+.project img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.project h3 {
+    margin-top: 10px;
+    font-size: 1.5rem;
+    font-family: 'Hack', monospace;
+}
+
+/* Footer */
+footer {
+    background: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    font-family: 'Source Code Pro', monospace;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+footer ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+footer ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+footer ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+}

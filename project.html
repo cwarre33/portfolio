@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Projects</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=JetBrains+Mono&family=Source+Code+Pro&family=Inconsolata&family=Hack&family=Cascadia+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Cameron Warren</h1>
+            <div class="underglow"></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="project.html">Projects</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="projects">
+        <div class="container">
+            <h2>My Projects</h2>
+            <div class="projects-grid">
+                <a href="https://github.com/cwarre33/Colmar-Academy" class="project-item">
+                    <div class="project-content">
+                        <img src="images/both-views.png" alt="Project 1 Image" class="project-image">
+                        <h3>Colmar Academy Website</h3>
+                        <p>The purpose of this project is to illustrate my ability to design and develop a responsive and visually appealing website using HTML and CSS. This project serves as a practical application of the concepts and techniques learned during the Codecademy course, culminating in the successful completion of the course and earning a certificate.</p>
+                    </div>
+                </a>
+                <a href="https://github.com/cwarre33/EDA-NASDAQ" class="project-item">
+                    <div class="project-content">
+                        <img src="images/SDA_project.png" alt="Project 2 Image" class="project-image">
+                        <h3>Stock Data Analysis with Python</h3>
+                        <p>The project is structured around analyzing historical stock market data obtained from the NASDAQ exchange. The dataset spans from 1962 to 2024 and includes various financial metrics such as opening price, closing price, high, low, adjusted close, and trading volume for numerous stocks listed on NASDAQ.</p>
+                    </div>
+                </a>
+                <a href="https://github.com/cwarre33/p3" class="project-item">
+                    <div class="project-content">
+                        <img src="images/p3.png" alt="Project 3 Image" class="project-image">
+                        <h3>Document Object Model (DOM)</h3>
+                        <p>As a group, we undertook Project 3 to explore key aspects of the Software Development Life Cycle (SDLC) by developing a custom calendar component using the Document Object Model (DOM) Application Programming Interface (API). Our main objectives were to implement an interactive DatePicker and a simple table template processor in JavaScript.</p>
+                    </div>
+                </a>
+                <a href="https://github.com/CMatth40/p4" class="project-item">
+                    <div class="project-content">
+                        <img src="images/p4.png" alt="Project 4 Image" class="project-image">
+                        <h3>Page Generation with ReactJS</h3>
+                        <p>In this project, our group delved into building web applications using ReactJS, a powerful framework known for its component-based architecture. Our primary goal was to familiarize ourselves with ReactJS coding conventions and to develop the foundational skills needed for more complex web applications in future projects.</p>
+                    </div>                    git remote set-url origin https://github.com/cwarre33/portfolio.git
+                </a>
+                <a href="https://github.com/cwarre33/p2" class="project-item">
+                    <div class="project-content">
+                        <img src="images/p2.png" alt="Project 5 Image" class="project-image">
+                        <h3>JavaScript</h3>
+                        <p>In this project, our group focused on several JavaScript concepts by implementing a multi-filter function, a template processor, and addressing global namespace pollution. The aim was to deepen our understanding of JavaScript's functionalities while adhering to the Software Development Life Cycle (SDLC) principles. </p>
+                    </div>
+                </a>
+                <a href="https://github.com/cwarre33/DiningReviewApplication" class="project-item">
+                    <div class="project-content">
+                        <img src="images/SpringProject.png" alt="Project 6 Image" class="project-image">
+                        <h3>Restaurant Dining Review API</h3>
+                        <p>This project showcases my ability to build a RESTful web API from scratch using Spring and Spring Data JPA. The application serves as a platform for users to submit dining reviews for restaurants, allowing for data persistence and a structured API interface..</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Your Name. All rights reserved.</p>
+            <ul>
+                <li><a href="https://www.linkedin.com/in/cameron-warren-73a0192b2/">LinkedIn</a></li>
+                <li><a href="https://github.com/cwarre33">GitHub</a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+</html>
+
+<style>
+    .projects {
+        padding: 20px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .projects-grid {
+        display: grid;
+        grid-template-columns: 1fr; /* Default to 1 column */
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .project-item {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        border: 1px solid #ddd;
+        padding: 20px;
+        border-radius: 8px;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .project-item:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px 5px rgba(0, 255, 0, 0.5);
+    }
+
+    .project-content {
+        text-align: center;
+    }
+
+    .project-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+
+    .project-content h3 {
+        margin-top: 0;
+    }
+
+    @media (min-width: 768px) {
+        .projects-grid {
+            grid-template-columns: repeat(3, 1fr); /* 3 columns on larger screens */
+        }
+    }
+</style>
