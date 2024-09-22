@@ -114,15 +114,32 @@ body {
 
 /* Header */
 header {
-    background: #333;
-    color: #fff;
-    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: black; /* Matrix theme background */
+    color: #00ff00; /* Matrix green color */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
     font-family: 'Fira Code', monospace;
+    box-shadow: 0 0 10px #00ff00;
+}
+
+header a {
+    color: #00ff00;
+    text-decoration: none;
 }
 
 header h1 {
     margin: 0;
     font-size: 2rem;
+    text-shadow: 0 0 5px #00ff00;
+}
+
+header h1:hover {
+    text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00; /* Glow effect */
 }
 
 nav ul {
@@ -136,11 +153,13 @@ nav ul li {
 }
 
 nav ul li a {
+    color: #00ff00;
     color: #fff;
     text-decoration: none;
 }
 
 nav ul li a:hover {
+    text-shadow: 0 0 5px #00ff00;
     text-decoration: underline;
 }
 
@@ -243,6 +262,7 @@ nav ul li a:hover {
     background: #3b572d;
     color: #fff;
     text-decoration: none;
+    text-align: center;
     border-radius: 5px;
     border: 2px solid transparent;
     font-family: 'Hack', monospace;
@@ -333,6 +353,53 @@ nav ul li a:hover {
 .contact {
     background: #f4f4f4;
     padding: 20px;
+    animation: slide-in 1s ease-out;
+}
+
+.contact ul {
+    list-style: none;
+    padding: 0;
+}
+
+.contact h2 {
+    margin-bottom: 20px;
+    font-family: 'Hack', monospace;
+    text-align: center;
+}
+
+.scroll-slide-in {
+    animation: slide-in 1s ease-out;
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #333;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-family: 'Inconsolata', monospace;
+}
+
+.bounce-button {
+    animation: bounce 0.5s infinite alternate;
+}
+
+@keyframes bounce {
+    to {
+        transform: translateY(-5px);
+    }
 }
 
 form {
@@ -360,6 +427,25 @@ form button {
     border-radius: 5px;
     cursor: pointer;
     font-family: 'Inconsolata', monospace;
+}
+
+/* Small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .contact {
+        padding: 10px;
+    }
+
+    .cta-button {
+        padding: 8px 16px;
+    }
+
+    form input, form textarea {
+        padding: 8px;
+    }
+
+    form button {
+        padding: 8px;
+    }
 }
 
 /* Small devices (phones, 600px and down) */
