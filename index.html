@@ -123,11 +123,11 @@
         <section class="about scroll-slide-in">
             <h2>About Me</h2>
             <p>
-                I'm Cameron Warren, a Computer Science student at The University of North Carolina at Charlotte, with a strong interest in software development and front-end technologies. I specialize in Java, Python, JavaScript, SQL, and have extensive experience with front-end development languages like HTML, CSS, and React. My skill set also includes working with frameworks like Spring for back-end development and leveraging JavaScript to build dynamic, responsive web applications.
-            </p>
-            <p>
-                I'm looking for opportunities to apply my expertise in both front-end and back-end development, collaborate on innovative projects, and continue growing as a full-stack developer. I'm passionate about creating user-friendly, scalable software solutions that make a meaningful impact.        
-            </p>
+                I am Cameron Warren, a dedicated and aspiring software engineer currently pursuing a Bachelor of Science in Computer Science at The University of North Carolina at Charlotte. My education has provided me with a solid foundation in core programming languages such as Java, Python, and JavaScript, as well as hands-on experience with modern web technologies including HTML, CSS, and React. <br><br>
+                Throughout my academic journey, I have developed a keen interest in both front-end and back-end development, leveraging frameworks like Spring to create scalable and efficient applications. I thrive in collaborative environments where innovative ideas are fostered, and I am passionate about utilizing agile methodologies to drive projects forward. <br><br>
+                On my projects page, you can explore various applications I’ve built, including the Colmar Academy Website, which showcases my ability to design user-friendly interfaces and implement robust functionalities. I am actively seeking opportunities to contribute my skills and knowledge in a real-world setting, where I can further develop as a full-stack developer. <br><br>
+                With a strong commitment to continuous learning, problem-solving, and a desire to create impactful software solutions, I am excited to make meaningful contributions to a forward-thinking team and help tackle the challenges of tomorrow’s technology landscape.
+            </p>                       
         </section>
         <div class="skills">
             <h1>Skills</h1>
@@ -224,7 +224,7 @@
                 <li><a href="project.html" class="bounce-button">View Projects</a></li>
             </ul>
             <h2>Contact</h2>
-            <form action="https://api.web3forms.com/submit" method="POST">
+            <form id="feedbackForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
 
                 <!-- Replace with your Access Key -->
                 <input type="hidden" name="access_key" value="2f3593f1-6c69-4ed8-b438-9aec061da9cf">
@@ -243,6 +243,7 @@
                 <button type="submit">Submit Form</button>
             
             </form>
+            <div id="formMessage"></div>
         </section>
     </main>
 
@@ -273,5 +274,36 @@
           }
         });
       </script>
+      <script>
+        document.getElementById('feedbackForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let form = event.target;
+            let formMessage = document.getElementById('formMessage');
+            
+            if (form.checkValidity() === false) {
+                formMessage.textContent = 'Please fill out all required fields.';
+                return;
+            }
+    
+            formMessage.textContent = 'Submitting...';
+    
+            fetch(form.action, {
+                method: form.method,
+                body: new FormData(form),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    formMessage.textContent = 'Thank you for your feedback!';
+                    form.reset();
+                } else {
+                    formMessage.textContent = 'There was an error submitting your feedback. Please try again.';
+                }
+            })
+            .catch(error => {
+                formMessage.textContent = 'There was an error submitting your feedback. Please try again.';
+            });
+        });
+    </script>
 </body>
 </html>
