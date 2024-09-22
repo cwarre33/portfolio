@@ -484,6 +484,13 @@ form button:hover {
     background: #555;
 }
 
+#formMessage {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+}
+
 /* Projects Section */
 .projects {
     padding: 20px 0;
