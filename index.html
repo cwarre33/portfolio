@@ -22,6 +22,9 @@
                 opacity: 0;
             }
         }
+        html {
+            scroll-behavior: smooth;
+        }
     </style>
 </head>
 <body>
@@ -29,7 +32,7 @@
         <div class="container">
             <a href="https://github.com/cwarre33"><h1>Cameron Warren</h1></a>
             <nav>
-                <a href="index.html">Home</a>
+                <a href="#hero">Home</a>
                 <a href="project.html">Projects</a>
                 <a href="#contact">Contact</a>
             </nav>
@@ -37,7 +40,7 @@
     </header>
     
     <main>
-        <section class="hero">
+        <section id="hero" class="hero">
             <div class="profile-picture">
                 <img src="images/profile.jpeg" alt="Cameron Warren">
             </div>
@@ -245,5 +248,23 @@
             </ul>
         </div>
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const links = document.querySelectorAll('a[href^="#"]');
+          for (const link of links) {
+            link.addEventListener('click', function(event) {
+              event.preventDefault();
+              const targetId = this.getAttribute('href').substring(1);
+              const targetElement = document.getElementById(targetId);
+              if (targetElement) {
+                window.scrollTo({
+                  top: targetElement.offsetTop,
+                  behavior: 'smooth'
+                });
+              }
+            });
+          }
+        });
+      </script>
 </body>
 </html>
