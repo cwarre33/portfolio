@@ -275,6 +275,55 @@ nav ul li a:hover {
     text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00; /* Glow effect */
 }
 
+.skills h1 {
+    text-align: center;
+    transition: color 0.3s, text-shadow 0.3s; /* Smooth transition for hover effect */
+    color: #2d2828;
+}
+
+.skills h1:hover {
+    color: #445144; /* Matrix green color */
+    text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00; /* Glow effect */
+}
+.icon-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+    padding: 40px;
+    justify-items: center;
+}
+.icon-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers the icon and text horizontally */
+    justify-content: center; /* Centers them vertically */
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 25px;
+    height: 50px;
+    text-align: center; /* Ensures the text is centered under the icon */
+}
+
+.icon-box:hover {
+    background-color: #f8f9fa;
+    text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00; /* Glow effect */
+
+}
+.icon {
+    font-size: 25px;
+    color: #333;
+    transition: transform 0.3s;
+}
+.icon:hover {
+    transform: scale(1.2);
+    color: #007bff;
+}
+.icon-label {
+    margin-top: 10px;
+    font-size: 12px;
+}
 /* About Section */
 .about {
     padding: 20px;
@@ -396,7 +445,6 @@ form button:hover {
 }
 
 .project-content:hover p {
-    
     opacity: 1;
 }
 
@@ -407,11 +455,11 @@ form button:hover {
         flex-direction: column;
     }
 
-    .project {
+    .project-content {
         flex: 1 1 100%;
     }
 
-    .project h3 {
+    .project-content h3 {
         font-size: 1.2rem;
     }
 }
