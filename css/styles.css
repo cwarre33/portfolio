@@ -154,7 +154,7 @@ nav ul li a:hover {
     position: relative;
     width: 100%;
     height: 100vh; /* Adjust height as needed */
-    background: url('../images/matrix.gif') no-repeat center center/cover;
+    background: url('https://github.com/cwarre33/portfolio/blob/669047ab9a7afd73287c54e1daba9edc82c8a1e6/images/matrix.gif') no-repeat center center/cover;
     z-index: 1;
     padding: 20px;
 }
