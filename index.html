@@ -8,17 +8,30 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=JetBrains+Mono&family=Source+Code+Pro&family=Inconsolata&family=Hack&family=Cascadia+Code&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/devicon@2.14.0/devicon.min.css">
+    <style>
+        #rotating-text::after {
+            content: '|';
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% {
+                opacity: 1;
+            }
+            50%, 100% {
+                opacity: 0;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
         <div class="container">
             <a href="https://github.com/cwarre33"><h1>Cameron Warren</h1></a>
             <nav>
-
                 <a href="index.html">Home</a>
                 <a href="project.html">Projects</a>
                 <a href="#contact">Contact</a>
-
             </nav>
         </div>
     </header>
@@ -30,22 +43,23 @@
             </div>
             <h2>Welcome to My Portfolio</h2>
             <p>I'm a software developer specializing in <span id="rotating-text"></span></p>
-
+            <a href="#contact" class="cta-button scroll-fade">Contact Me</a>
+            <a href="downloads/CameronWarrenResumeDownload.pdf" class="cta-button scroll-fade" download>Resume</a>
             <script>
                 document.addEventListener("DOMContentLoaded", function() {
                     const scrollElements = document.querySelectorAll('.scroll-slide-in');
-            
+
                     const elementInView = (el, dividend = 1) => {
                         const elementTop = el.getBoundingClientRect().top;
                         return (
                             elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend
                         );
                     };
-            
+
                     const displayScrollElement = (element) => {
                         element.classList.add('slide-in');
                     };
-            
+
                     const handleScrollAnimation = () => {
                         scrollElements.forEach((el) => {
                             if (elementInView(el, 1.25)) {
@@ -53,29 +67,29 @@
                             }
                         });
                     };
-            
+
                     window.addEventListener('scroll', () => {
                         handleScrollAnimation();
                     });
                 });
-            
+
                 const skills = ["React ", "Node.js ", "Advanced Java ", "Python ", "SQL (Database) ", "HTML5 ", "CSS3 ", "Spring Framework ", "C ", "C++ ", "Algorithm Design ", "Linear Algebra ", "Operating Systems ", "Networking ", "Machine Learning ", "Website Deployment ", "Database Management "];
                 let skillIndex = 0;
                 let charIndex = 0;
                 let currentSkill = '';
                 let isDeleting = false;
-            
+
                 function typeSkills() {
                     const rotatingText = document.getElementById("rotating-text");
-            
+
                     if (isDeleting) {
                         currentSkill = skills[skillIndex].substring(0, charIndex--);
                     } else {
                         currentSkill = skills[skillIndex].substring(0, charIndex++);
                     }
-            
+
                     rotatingText.textContent = currentSkill;
-            
+
                     if (!isDeleting && charIndex === skills[skillIndex].length) {
                         isDeleting = true;
                         setTimeout(typeSkills, 2000); // Pause before deleting
@@ -87,81 +101,17 @@
                         setTimeout(typeSkills, isDeleting ? 100 : 200); // Slower typing effect
                     }
                 }
-            
+
                 typeSkills(); // Initial call to start typing effect
             </script>
-            <style>
-                #rotating-text::after {
-                    content: '|';
-                    animation: blink 1s infinite;
-                }
-
-                @keyframes blink {
-                    0%, 50% {
-                        opacity: 1;
-                    }
-                    50%, 100% {
-                        opacity: 0;
-                    }
-                }
-            </style>
-            </script>
-            <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const scrollElements = document.querySelectorAll('.scroll-fade');
-
-        const elementInView = (el, dividend = 1) => {
-            const elementTop = el.getBoundingClientRect().top;
-            return (
-                elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend
-            );
-        };
-
-        const elementOutOfView = (el) => {
-            const elementTop = el.getBoundingClientRect().top;
-            return (
-                elementTop > (window.innerHeight || document.documentElement.clientHeight)
-            );
-        };
-
-        const displayScrollElement = (element) => {
-            element.classList.add('fade-in');
-            element.classList.remove('fade-out');
-        };
-
-        const hideScrollElement = (element) => {
-            element.classList.add('fade-out');
-            element.classList.remove('fade-in');
-        };
-
-        const handleScrollAnimation = () => {
-            scrollElements.forEach((el) => {
-                if (elementInView(el, 1.25)) {
-                    displayScrollElement(el);
-                } else if (elementOutOfView(el)) {
-                    hideScrollElement(el);
-                }
-            });
-        };
-
-        window.addEventListener('scroll', () => {
-            handleScrollAnimation();
-        });
-
-        // Initial check
-        handleScrollAnimation();
-    });
-</script>
-            <a href="#contact" class="cta-button scroll-fade">Contact Me</a>
-            <a href="downloads/CameronWarrenResumeDownload.pdf" class="cta-button scroll-fade" download>Resume</a>
             <div class="social-media-icons">
-                <a href="https://www.linkedin.com/in/cameron-warren-73a0192b2/" target="_blank">
+                <a href="https://www.linkedin.com/in/cameron-warren-73a0192b2/" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-linkedin"></i>
                 </a>
-                <a href="https://github.com/cwarre33" target="_blank">
+                <a href="https://github.com/cwarre33" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-github"></i>
                 </a>
-                <a href="https://www.facebook.com/yourprofile" target="_blank">
+                <a href="https://www.facebook.com/yourprofile" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-instagram"></i>
                 </a>
             </div>
@@ -171,113 +121,101 @@
             <h2>About Me</h2>
             <p>
                 I'm Cameron Warren, a Computer Science student at The University of North Carolina at Charlotte, with a strong interest in software development and front-end technologies. I specialize in Java, Python, JavaScript, SQL, and have extensive experience with front-end development languages like HTML, CSS, and React. My skill set also includes working with frameworks like Spring for back-end development and leveraging JavaScript to build dynamic, responsive web applications.
-                
+            </p>
+            <p>
                 I'm looking for opportunities to apply my expertise in both front-end and back-end development, collaborate on innovative projects, and continue growing as a full-stack developer. I'm passionate about creating user-friendly, scalable software solutions that make a meaningful impact.        
-            </section>
-            <div class="skills"><h1>Skills</h1></div>
-            <div class="icon-container">
-                <!-- React -->
-                <div class="icon-box">
-                    <i class="devicon-react-original icon"></i>
-                    <span class="icon-label">React</span>
-                </div>
-        
-                <!-- Node.js -->
-                <div class="icon-box">
-                    <i class="fab fa-node-js icon"></i>
-                    <span class="icon-label">Node.js</span>
-                </div>
-        
-                <!-- Advanced Java -->
-                <div class="icon-box">
-                    <i class="devicon-java-plain icon"></i>
-                    <span class="icon-label">Advanced Java</span>
-                </div>
-        
-                <!-- Python -->
-                <div class="icon-box">
-                    <i class="fab fa-python icon"></i>
-                    <span class="icon-label">Python</span>
-                </div>
-        
-                <!-- SQL (Database) -->
-                <div class="icon-box">
-                    <i class="fas fa-database icon"></i>
-                    <span class="icon-label">SQL (Database)</span>
-                </div>
-        
-                <!-- HTML5 -->
-                <div class="icon-box">
-                    <i class="devicon-html5-plain icon"></i>
-                    <span class="icon-label">HTML5</span>
-                </div>
-        
-                <!-- CSS3 -->
-                <div class="icon-box">
-                    <i class="devicon-css3-plain icon"></i>
-                    <span class="icon-label">CSS3</span>
-                </div>
-        
-                <!-- Spring Framework -->
-                <div class="icon-box">
-                    <i class="devicon-spring-plain icon"></i>
-                    <span class="icon-label">Spring Framework</span>
-                </div>
-        
-                <!-- C -->
-                <div class="icon-box">
-                    <i class="devicon-c-plain icon"></i>
-                    <span class="icon-label">C</span>
-                </div>
-        
-                <!-- C++ -->
-                <div class="icon-box">
-                    <i class="devicon-cplusplus-plain icon"></i>
-                    <span class="icon-label">C++</span>
-                </div>
-        
-                <!-- Algorithm Design -->
-                <div class="icon-box">
-                    <i class="fas fa-code icon"></i>
-                    <span class="icon-label">Algorithm Design</span>
-                </div>
-        
-                <!-- Linear Algebra -->
-                <div class="icon-box">
-                    <i class="fas fa-square-root-alt icon"></i>
-                    <span class="icon-label">Linear Algebra</span>
-                </div>
-        
-                <!-- Operating Systems -->
-                <div class="icon-box">
-                    <i class="devicon-linux-plain icon"></i>
-                    <span class="icon-label">Operating Systems</span>
-                </div>
-        
-                <!-- Networking -->
-                <div class="icon-box">
-                    <i class="fas fa-network-wired icon"></i>
-                    <span class="icon-label">Networking</span>
-                </div>
-        
-                <!-- Machine Learning -->
-                <div class="icon-box">
-                    <i class="fas fa-robot icon"></i>
-                    <span class="icon-label">Machine Learning</span>
-                </div>
-        
-                <!-- Website Deployment -->
-                <div class="icon-box">
-                    <i class="fas fa-server icon"></i>
-                    <span class="icon-label">Website Deployment</span>
-                </div>
-        
-                <!-- Database Management -->
-                <div class="icon-box">
-                    <i class="fas fa-database icon"></i>
-                    <span class="icon-label">Database Management</span>
-                </div>
+            </p>
+        </section>
+        <div class="skills">
+            <h1>Skills</h1>
+        </div>
+        <div class="icon-container">
+            <!-- Skills Icons -->
+            <div class="icon-box">
+                <i class="devicon-react-original icon"></i>
+                <span class="icon-label">React</span>
             </div>
+
+            <div class="icon-box">
+                <i class="fab fa-node-js icon"></i>
+                <span class="icon-label">Node.js</span>
+            </div>
+
+            <div class="icon-box">
+                <i class="devicon-java-plain icon"></i>
+                <span class="icon-label">Advanced Java</span>
+            </div>
+
+            <div class="icon-box">
+                <i class="fab fa-python icon"></i>
+                <span class="icon-label">Python</span>
+            </div>
+
+            <div class="icon-box">
+                <i class="fas fa-database icon"></i>
+                <span class="icon-label">SQL (Database)</span>
+            </div>
+
+            <div class="icon-box">
+                <i class="devicon-html5-plain icon"></i>
+                <span class="icon-label">HTML5</span>
+            </div>
+
+            <div class="icon-box">
+                <i class="devicon-css3-plain icon"></i>
+                <span class="icon-label">CSS3</span>
+            </div>
+
+            <div class="icon-box">
+                <i class="devicon-spring-plain icon"></i>
+                <span class="icon-label">Spring Framework</span>
+            </div>
+
+            <div class="icon-box">
+                <i class="devicon-c-plain icon"></i>
+                <span class="icon-label">C</span>
+            </div>
+
+            <div class="icon-box">
+                <i class="devicon-cplusplus-plain icon"></i>
+                <span class="icon-label">C++</span>
+            </div>
+
+            <div class="icon-box">
+                <i class="fas fa-code icon"></i>
+                <span class="icon-label">Algorithm Design</span>
+            </div>
+
+            <div class="icon-box">
+                <i class="fas fa-square-root-alt icon"></i>
+                <span class="icon-label">Linear Algebra</span>
+            </div>
+
+            <div class="icon-box">
+                <i class="devicon-linux-plain icon"></i>
+                <span class="icon-label">Operating Systems</span>
+            </div>
+
+            <div class="icon-box">
+                <i class="fas fa-network-wired icon"></i>
+                <span class="icon-label">Networking</span>
+            </div>
+
+            <div class="icon-box">
+                <i class="fas fa-robot icon"></i>
+                <span class="icon-label">Machine Learning</span>
+            </div>
+
+            <div class="icon-box">
+                <i class="fas fa-server icon"></i>
+                <span class="icon-label">Website Deployment</span>
+            </div>
+
+            <div class="icon-box">
+                <i class="fas fa-database icon"></i>
+                <span class="icon-label">Database Management</span>
+            </div>
+        </div>
         <section id="contact" class="contact scroll-slide-in">
             <ul>
                 <li><a href="project.html" class="bounce-button">View Projects</a></li>
