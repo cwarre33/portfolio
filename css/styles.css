@@ -521,6 +521,19 @@ form button:hover {
     flex-direction: column;
 }
 
+.projects h1 {
+    margin-bottom: 20px;
+    font-family: 'Hack', monospace;
+    text-align: center;
+}
+
+.projects .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+}
+
 .projects-grid {
     display: grid;
     grid-template-columns: 1fr; /* Default to 1 column */
