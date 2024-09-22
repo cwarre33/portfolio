@@ -30,6 +30,27 @@ body, h1, h2, h3, p, ul, li, form, input, textarea, button {
     opacity: 0;
 }
 
+#rotating-text::after {
+    content: '|';
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50% {
+        opacity: 1;
+    }
+    50%, 100% {
+        opacity: 0;
+    }
+}
+html {
+    scroll-behavior: smooth;
+}
+
+#honeypot {
+    display: none;
+}
+
 /* Bouncing Button */
 .bounce-button {
     display: inline-block;
@@ -299,7 +320,7 @@ nav a:hover {
 }
 .icon-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(150px, 2fr));
     gap: 20px;
     padding: 40px;
     justify-items: center;

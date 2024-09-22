@@ -8,24 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=JetBrains+Mono&family=Source+Code+Pro&family=Inconsolata&family=Hack&family=Cascadia+Code&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/devicon@2.14.0/devicon.min.css">
-    <style>
-        #rotating-text::after {
-            content: '|';
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            0%, 50% {
-                opacity: 1;
-            }
-            50%, 100% {
-                opacity: 0;
-            }
-        }
-        html {
-            scroll-behavior: smooth;
-        }
-    </style>
 </head>
 <body>
     <header>
@@ -235,7 +217,7 @@
                 <textarea name="message" placeholder="Type your message here!"></textarea>
             
                 <!-- Honeypot Spam Protection -->
-                <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+                <input id="honeypot" type="checkbox" name="botcheck" class="hidden">
             
                 <!-- Custom Confirmation / Success Page -->
                 <!-- <input type="hidden" name="redirect" value="https://mywebsite.com/thanks.html"> -->
@@ -250,10 +232,17 @@
     <footer>
         <div class="container">
             <p>&copy; 2024 Cameron Warren. All rights reserved.</p>
-            <ul>
-                <li><a href="https://www.linkedin.com/in/cameron-warren-73a0192b2/">LinkedIn</a></li>
-                <li><a href="https://github.com/cwarre33">GitHub</a></li>
-            </ul>
+            <div class="social-media-icons">
+                <a href="https://www.linkedin.com/in/cameron-warren-73a0192b2/" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://github.com/cwarre33" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.facebook.com/yourprofile" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
         </div>
     </footer>
     <script>
