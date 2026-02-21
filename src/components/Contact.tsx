@@ -43,19 +43,23 @@ export function Contact() {
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
-          gap: 1rem;
+          gap: 0.75rem;
           margin-bottom: 1rem;
         }
         .contact__btn {
           display: inline-flex;
           align-items: center;
-          padding: 0.625rem 1.25rem;
+          justify-content: center;
+          min-height: 44px;
+          padding: 0.625rem 1rem;
           background: var(--bg-card);
           border: 1px solid var(--border);
           border-radius: 8px;
           color: var(--text);
           font-weight: 500;
           transition: border-color 0.2s, color 0.2s;
+          overflow-wrap: break-word;
+          word-break: break-word;
         }
         .contact__btn:hover {
           border-color: var(--accent);

@@ -58,6 +58,7 @@ export function About() {
           margin-bottom: 1rem;
           color: var(--text-muted);
           max-width: 56ch;
+          overflow-wrap: break-word;
         }
         .about__copy strong {
           color: var(--text);

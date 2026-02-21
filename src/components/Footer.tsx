@@ -8,6 +8,9 @@ export function Footer() {
           © {year} Cameron Warren
         </p>
         <nav className="footer__nav" aria-label="Footer">
+          <a href="https://cwarre33.github.io/" target="_blank" rel="noopener noreferrer">
+            Contributions
+          </a>
           <a href="https://www.linkedin.com/in/cameron-warren-73a0192b2/" target="_blank" rel="noopener noreferrer">
             LinkedIn
           </a>
@@ -24,10 +27,18 @@ export function Footer() {
         }
         .footer__inner {
           display: flex;
+          flex-direction: column;
           align-items: center;
-          justify-content: space-between;
-          flex-wrap: wrap;
+          justify-content: center;
+          text-align: center;
           gap: 0.75rem;
+        }
+        @media (min-width: 480px) {
+          .footer__inner {
+            flex-direction: row;
+            justify-content: space-between;
+            text-align: left;
+          }
         }
         .footer__copy {
           font-size: 0.875rem;

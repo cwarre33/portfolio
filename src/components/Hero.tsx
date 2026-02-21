@@ -52,10 +52,16 @@ export function Hero() {
         .hero {
           position: relative;
           min-height: 100vh;
+          min-height: 100dvh;
           display: flex;
           align-items: center;
-          padding: 6rem 0 4rem;
+          padding: 5rem 0 2.5rem;
           overflow: hidden;
+        }
+        @media (min-width: 640px) {
+          .hero {
+            padding: 6rem 0 4rem;
+          }
         }
         .hero__bg {
           position: absolute;
@@ -82,15 +88,19 @@ export function Hero() {
           letter-spacing: 0.05em;
         }
         .hero__title {
-          font-size: clamp(1.75rem, 4vw, 2.5rem);
+          font-size: clamp(1.5rem, 4vw, 2.5rem);
           font-weight: 700;
-          line-height: 1.25;
+          line-height: 1.3;
           margin-bottom: 1rem;
+          word-wrap: break-word;
         }
         .hero__subtitle {
           color: var(--text-muted);
-          font-size: 1.0625rem;
-          margin-bottom: 2rem;
+          font-size: clamp(0.9375rem, 2.5vw, 1.0625rem);
+          margin-bottom: 1.5rem;
+        }
+        @media (min-width: 640px) {
+          .hero__subtitle { margin-bottom: 2rem; }
         }
         .hero__actions {
           display: flex;
@@ -101,6 +111,8 @@ export function Hero() {
         .hero__btn {
           display: inline-flex;
           align-items: center;
+          justify-content: center;
+          min-height: 44px;
           padding: 0.625rem 1.25rem;
           border-radius: 8px;
           font-size: 0.9375rem;
@@ -135,6 +147,14 @@ export function Hero() {
         .hero__social a:hover {
           color: var(--accent);
           text-decoration: none;
+        }
+        .hero__social a {
+          padding: 0.5rem;
+          min-width: 44px;
+          min-height: 44px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
         }
       `}</style>
     </section>
