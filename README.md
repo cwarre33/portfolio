@@ -1,30 +1,38 @@
-# Portfolio - Cameron Warren
+# Cameron Warren — Portfolio
 
-## Link: https://cwarre33.github.io/portfolio/
+**Live:** [https://cwarre33.github.io/portfolio/](https://cwarre33.github.io/portfolio/)
 
-## Typography and Color Scheme
+A professional, React-based portfolio showcasing experience as an AI Research Analyst and Software Engineer — SofaScope, SellSmart, SEC Breach Dashboard, and full-stack/AI projects.
 
-### Typography
-For this project, I selected a combination of modern monospace fonts, including **Fira Code**, **JetBrains Mono**, and **Source Code Pro**. These fonts convey a tech-savvy and professional vibe, perfectly aligning with the nature of my projects. The varied font weights establish a clear hierarchy, making headings prominent while ensuring the body text remains legible.
+## Stack
 
-### Color Scheme
-The color scheme features vibrant greens (`#01FF00`, `#D4F6CF`) set against dark backgrounds (`#3B572D`, `#000000`). Green hover effects and glowing elements create an engaging interface that reflects innovation and creativity. This choice enhances visibility, allowing users to navigate content easily while reducing eye strain and providing responsive feedback as they hover over elements.
+- **React 18** + **TypeScript**
+- **Vite** (build & dev server)
+- CSS with design tokens (dark, clean theme)
 
-## Implementation of Responsive Web Design
-I implemented responsive web design using CSS media queries and flexible grid layouts. By setting widths in percentages and ensuring images have a `max-width: 100%`, the layout adapts seamlessly across various screen sizes. Media queries adjust styles based on the viewport, modifying font sizes and padding as necessary to ensure a user-friendly experience on both mobile devices and desktops.
+## Run locally
 
-## Easy and Challenging Parts of the Assignment
+```bash
+npm install
+npm run dev
+```
 
-### Easy Parts
-- Creating the overall HTML structure and applying CSS styles was straightforward.
-- Utilizing frameworks and resources for responsive design simplified the process.
-- Linking external fonts and icons was seamless.
+Open [http://localhost:5173](http://localhost:5173). The app is served with base path `/portfolio/` for GitHub Pages.
 
-### Challenging Parts
-The most challenging aspect was implementing the desired hover effects and glowing design elements. Achieving smooth transitions and animations required extensive testing and adjustments. To overcome this, I researched online resources and experimented with different CSS properties to achieve the right visual appeal.
+## Build for GitHub Pages
 
-## Additional Functionality for Extra Credit
-For extra credit, I implemented a smooth scrolling feature using JavaScript. This functionality allows users to click on navigation links and smoothly scroll to the corresponding sections of the page, enhancing user experience and making navigation more intuitive. The implementation involved adding an event listener to the navigation links, which triggers a smooth scroll effect, improving overall interaction with the website.
+```bash
+npm run build
+```
 
-## Conclusion
-Overall, this project effectively combines thoughtful design choices, responsive layout implementation, and additional JavaScript functionality that elevates the user experience while showcasing my skills and creativity.
+Deploy the contents of the `dist/` folder to the `gh-pages` branch or to GitHub Pages (e.g. set the source to the branch that contains `dist/`, or use a GitHub Action to build and push `dist/` to `gh-pages`).
+
+## Structure
+
+- **Content** (resume, Jira, GitHub–informed): `src/data/` — experience, projects, skills.
+- **Sections:** Hero (with typewriter), About, Experience, Projects, Contact, Footer.
+- **Design:** Dark theme, DM Sans + JetBrains Mono, accent blue, responsive layout.
+
+## Legacy site
+
+The previous static HTML/CSS site is preserved as `index-legacy.html` and `project.html` for reference.
