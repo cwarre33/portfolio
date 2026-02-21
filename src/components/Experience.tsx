@@ -36,8 +36,11 @@ export function Experience() {
         }
         .experience__item {
           position: relative;
-          padding-left: 1.5rem;
+          padding-left: 1.25rem;
           padding-bottom: 2rem;
+        }
+        @media (min-width: 640px) {
+          .experience__item { padding-left: 1.5rem; }
         }
         .experience__item:last-child {
           padding-bottom: 0;
@@ -87,6 +90,7 @@ export function Experience() {
           position: relative;
           padding-left: 1rem;
           margin-bottom: 0.35rem;
+          overflow-wrap: break-word;
         }
         .experience__highlights li::before {
           content: '';

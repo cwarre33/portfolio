@@ -29,7 +29,12 @@ export function Certifications() {
         .certifications__grid {
           display: grid;
           gap: 0.75rem;
-          grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+          grid-template-columns: 1fr;
+        }
+        @media (min-width: 480px) {
+          .certifications__grid {
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+          }
         }
         .cert-card {
           display: flex;

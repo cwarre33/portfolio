@@ -42,8 +42,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
           background: var(--bg-card);
           border: 1px solid var(--border);
           border-radius: 12px;
-          padding: 1.5rem;
+          padding: 1.25rem;
           transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        @media (min-width: 640px) {
+          .project-card { padding: 1.5rem; }
         }
         .project-card--highlight {
           border-color: rgba(88, 166, 255, 0.3);
@@ -85,6 +88,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           color: var(--text-muted);
           line-height: 1.55;
           margin-bottom: 0.75rem;
+          overflow-wrap: break-word;
         }
         .project-card__live {
           font-size: 0.8125rem;

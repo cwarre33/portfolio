@@ -54,10 +54,13 @@ export function AwsWork() {
           background: var(--bg-card);
           border: 1px solid var(--border);
           border-radius: 12px;
-          padding: 1.5rem;
+          padding: 1.25rem;
           display: flex;
           flex-direction: column;
           gap: 1rem;
+        }
+        @media (min-width: 640px) {
+          .aws-card { padding: 1.5rem; }
         }
         .aws-card__header {
           display: flex;
@@ -90,6 +93,8 @@ export function AwsWork() {
           color: var(--text-muted);
           line-height: 1.5;
           margin: 0;
+          overflow-wrap: break-word;
+          word-wrap: break-word;
         }
         .aws-card__cost {
           color: var(--success);
