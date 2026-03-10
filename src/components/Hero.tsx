@@ -3,19 +3,32 @@ import { Typewriter } from './Typewriter';
 const LINKEDIN = 'https://www.linkedin.com/in/cameron-warren-73a0192b2/';
 const GITHUB = 'https://github.com/cwarre33';
 
+const STATS = [
+  { value: '95%', label: 'faster search' },
+  { value: '< 500ms', label: 'latency' },
+  { value: '2', label: 'AI products shipped' },
+];
+
 export function Hero() {
   return (
     <section className="hero" aria-label="Introduction">
-      <div className="hero__bg" aria-hidden />
+      {/* Animated orb background layer */}
+      <div className="hero__orbs" aria-hidden>
+        <div className="hero__orb hero__orb--1" />
+        <div className="hero__orb hero__orb--2" />
+        <div className="hero__orb hero__orb--3" />
+      </div>
+
       <div className="container hero__inner">
+        {/* Left: text content */}
         <div className="hero__content">
-          <p className="hero__eyebrow">AI Research Analyst & Software Engineer</p>
+          <p className="hero__eyebrow">AI Research Analyst &amp; Software Engineer</p>
           <h1 className="hero__title">
             Building at the intersection of{' '}
             <Typewriter />
           </h1>
           <p className="hero__subtitle">
-            B.S. Computer Science @ UNC Charlotte · Furnitureland South · SofaScope, SellSmart & enterprise AI
+            B.S. Computer Science @ UNC Charlotte · Furnitureland South · SofaScope, SellSmart &amp; enterprise AI
           </p>
           <div className="hero__actions">
             <a href="#contact" className="hero__btn hero__btn--primary">
@@ -47,7 +60,18 @@ export function Hero() {
             </a>
           </div>
         </div>
+
+        {/* Right: stat/badge cluster */}
+        <div className="hero__stats" aria-label="Key metrics">
+          {STATS.map((stat, i) => (
+            <div key={stat.label} className="hero__stat-badge" style={{ '--badge-delay': `${i * 0.12}s` } as React.CSSProperties}>
+              <span className="hero__stat-value">{stat.value}</span>
+              <span className="hero__stat-label">{stat.label}</span>
+            </div>
+          ))}
+        </div>
       </div>
+
       <style>{`
         .hero {
           position: relative;
@@ -63,22 +87,95 @@ export function Hero() {
             padding: 6rem 0 4rem;
           }
         }
-        .hero__bg {
+
+        /* ── Animated orb layer ── */
+        .hero__orbs {
           position: absolute;
           inset: 0;
-          background:
-            radial-gradient(ellipse 80% 50% at 50% -20%, var(--accent-soft), transparent),
-            radial-gradient(ellipse 60% 40% at 100% 50%, rgba(88, 166, 255, 0.06), transparent),
-            radial-gradient(ellipse 60% 40% at 0% 50%, rgba(88, 166, 255, 0.06), transparent);
           pointer-events: none;
+          overflow: hidden;
         }
+        .hero__orb {
+          position: absolute;
+          border-radius: 50%;
+          filter: blur(80px);
+        }
+        .hero__orb--1 {
+          width: 600px;
+          height: 600px;
+          top: -120px;
+          left: -100px;
+          background: var(--accent-soft);
+        }
+        .hero__orb--2 {
+          width: 500px;
+          height: 500px;
+          top: 10%;
+          right: -80px;
+          background: rgba(88, 166, 255, 0.08); /* lighter accent blob */
+        }
+        .hero__orb--3 {
+          width: 400px;
+          height: 400px;
+          bottom: -80px;
+          left: 30%;
+          background: rgba(88, 166, 255, 0.06);
+        }
+        @media (prefers-reduced-motion: no-preference) {
+          .hero__orb--1 {
+            animation: float-orb 22s ease-in-out infinite alternate;
+          }
+          .hero__orb--2 {
+            animation: float-orb 18s ease-in-out infinite alternate-reverse;
+          }
+          .hero__orb--3 {
+            animation: float-orb 26s ease-in-out infinite alternate;
+          }
+        }
+
+        /* ── Split layout ── */
         .hero__inner {
           position: relative;
           z-index: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 3rem;
         }
+        @media (min-width: 900px) {
+          .hero__inner {
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+          }
+        }
+
+        /* ── Left: text content ── */
         .hero__content {
-          max-width: 640px;
+          max-width: 600px;
         }
+
+        /* ── Staggered entrance animations ── */
+        @media (prefers-reduced-motion: no-preference) {
+          .hero__eyebrow {
+            animation: entrance-fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+          }
+          .hero__title {
+            animation: entrance-fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+          }
+          .hero__subtitle {
+            animation: entrance-fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
+          }
+          .hero__actions {
+            animation: entrance-fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
+          }
+          .hero__social {
+            animation: entrance-fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both;
+          }
+          .hero__stat-badge {
+            animation: entrance-fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) var(--badge-delay, 0s) both;
+          }
+        }
+
         .hero__eyebrow {
           font-size: 0.875rem;
           color: var(--accent);
@@ -108,6 +205,8 @@ export function Hero() {
           gap: 0.75rem;
           margin-bottom: 2rem;
         }
+
+        /* ── CTA button with animated gradient border ── */
         .hero__btn {
           display: inline-flex;
           align-items: center;
@@ -117,15 +216,42 @@ export function Hero() {
           border-radius: 8px;
           font-size: 0.9375rem;
           font-weight: 500;
-          transition: background 0.2s, color 0.2s, border-color 0.2s;
+          transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
         }
         .hero__btn:hover { text-decoration: none; }
         .hero__btn--primary {
+          position: relative;
           background: var(--accent);
           color: #fff;
+          overflow: hidden;
+          z-index: 0;
+        }
+        .hero__btn--primary::before {
+          content: '';
+          position: absolute;
+          inset: -2px;
+          border-radius: 10px;
+          background: conic-gradient(
+            from 0deg,
+            var(--accent),
+            rgba(88, 166, 255, 0.4),
+            var(--accent)
+          );
+          z-index: -1;
+          opacity: 0;
+          transition: opacity 0.3s;
+        }
+        @media (prefers-reduced-motion: no-preference) {
+          .hero__btn--primary::before {
+            animation: rotate-gradient 3s linear infinite;
+          }
         }
         .hero__btn--primary:hover {
           background: #79b8ff;
+          box-shadow: var(--accent-glow);
+        }
+        .hero__btn--primary:hover::before {
+          opacity: 1;
         }
         .hero__btn--secondary {
           background: var(--bg-card);
@@ -136,6 +262,7 @@ export function Hero() {
           border-color: var(--text-muted);
           background: var(--bg-elevated);
         }
+
         .hero__social {
           display: flex;
           gap: 1rem;
@@ -155,6 +282,52 @@ export function Hero() {
           display: inline-flex;
           align-items: center;
           justify-content: center;
+        }
+
+        /* ── Right: stat / badge cluster ── */
+        .hero__stats {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+          flex-shrink: 0;
+        }
+        @media (min-width: 900px) {
+          .hero__stats {
+            align-items: flex-end;
+          }
+          .hero__stat-badge:nth-child(2) {
+            margin-right: 1.5rem; /* stagger offset */
+          }
+        }
+
+        .hero__stat-badge {
+          background: var(--bg-card);
+          border: 1px solid var(--border);
+          border-radius: 12px;
+          padding: 1rem 1.5rem;
+          min-width: 180px;
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .hero__stat-badge:hover {
+          border-color: var(--accent);
+          box-shadow: var(--accent-glow);
+          transform: translateY(-2px);
+        }
+        .hero__stat-value {
+          display: block;
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: var(--accent);
+          font-family: var(--font-mono);
+          line-height: 1.2;
+        }
+        .hero__stat-label {
+          display: block;
+          font-size: 0.8125rem;
+          color: var(--text-muted);
+          margin-top: 0.25rem;
         }
       `}</style>
     </section>

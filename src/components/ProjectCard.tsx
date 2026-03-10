@@ -39,26 +39,85 @@ export function ProjectCard({ project }: ProjectCardProps) {
       </a>
       <style>{`
         .project-card {
-          background: var(--bg-card);
+          position: relative;
+          background: rgba(26, 31, 40, 0.7); /* semi-transparent --bg-card */
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
           border: 1px solid var(--border);
           border-radius: 12px;
           padding: 1.25rem;
-          transition: border-color 0.2s, box-shadow 0.2s;
+          overflow: hidden;
+          transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
         @media (min-width: 640px) {
           .project-card { padding: 1.5rem; }
         }
+
+        /* Top indicator bar — transparent by default, fills with accent on hover */
+        .project-card::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 4px;
+          background: linear-gradient(90deg, var(--accent), rgba(88, 166, 255, 0.4));
+          border-radius: 12px 12px 0 0;
+          opacity: 0;
+          transition: opacity 0.25s;
+        }
+
+        /* Radial glow in top-left corner, revealed on hover */
+        .project-card::before {
+          content: '';
+          position: absolute;
+          top: -40px;
+          left: -40px;
+          width: 180px;
+          height: 180px;
+          border-radius: 50%;
+          background: radial-gradient(circle, var(--accent-soft) 0%, transparent 70%);
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.3s;
+          z-index: 0;
+        }
+
         .project-card--highlight {
           border-color: rgba(88, 166, 255, 0.3);
         }
+
+        /* Animated dashed border for highlight cards via background-clip trick */
+        .project-card--highlight::after {
+          background: linear-gradient(90deg, var(--accent), rgba(88, 166, 255, 0.5), var(--accent));
+          background-size: 200% 100%;
+          opacity: 0.6;
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+          .project-card--highlight::after {
+            animation: shimmer 3s linear infinite;
+          }
+        }
+
         .project-card:hover {
           border-color: var(--accent);
-          box-shadow: 0 0 0 1px var(--accent);
+          box-shadow: 0 8px 32px rgba(88, 166, 255, 0.15), var(--accent-glow);
+          transform: translateY(-4px);
         }
+        .project-card:hover::after {
+          opacity: 1;
+        }
+        .project-card:hover::before {
+          opacity: 1;
+        }
+
         .project-card__link {
           display: block;
           color: inherit;
           height: 100%;
+          position: relative;
+          z-index: 1;
         }
         .project-card__link:hover {
           text-decoration: none;
