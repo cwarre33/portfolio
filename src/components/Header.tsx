@@ -79,9 +79,11 @@ export function Header() {
           transition: background 0.2s ease, box-shadow 0.2s ease;
         }
         .header--scrolled {
-          background: rgba(15, 17, 21, 0.85);
-          backdrop-filter: blur(12px);
-          box-shadow: 0 1px 0 var(--border);
+          background: rgba(15, 17, 21, 0.7);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06),
+            0 4px 16px rgba(0, 0, 0, 0.2);
         }
         .header__inner {
           display: flex;

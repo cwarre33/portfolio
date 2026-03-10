@@ -52,18 +52,25 @@ export function Contact() {
           justify-content: center;
           min-height: 44px;
           padding: 0.625rem 1rem;
-          background: var(--bg-card);
-          border: 1px solid var(--border);
-          border-radius: 8px;
+          background: var(--glass-bg);
+          border: 1px solid var(--glass-border);
+          border-radius: 10px;
           color: var(--text);
           font-weight: 500;
-          transition: border-color 0.2s, color 0.2s;
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06),
+            0 4px 12px rgba(0, 0, 0, 0.15);
+          transition: border-color 0.2s, color 0.2s, box-shadow 0.3s, transform 0.3s;
           overflow-wrap: break-word;
           word-break: break-word;
         }
         .contact__btn:hover {
-          border-color: var(--accent);
+          border-color: var(--glass-border-hover);
           color: var(--accent);
+          box-shadow: 0 8px 24px rgba(88, 166, 255, 0.12),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+          transform: translateY(-2px);
           text-decoration: none;
         }
         .contact__note {

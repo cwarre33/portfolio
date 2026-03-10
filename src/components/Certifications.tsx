@@ -1,4 +1,5 @@
 import { certifications, education } from '../data/certifications';
+import { GlassCard } from './GlassCard';
 
 export function Certifications() {
   return (
@@ -10,12 +11,12 @@ export function Certifications() {
         <p className="certifications__education">{education}</p>
         <div className="certifications__grid">
           {certifications.map((cert) => (
-            <div key={cert.name} className="cert-card">
+            <GlassCard key={cert.name} className="cert-card">
               <span className="cert-card__name">{cert.name}</span>
               {cert.issuer && (
                 <span className="cert-card__issuer">{cert.issuer}</span>
               )}
-            </div>
+            </GlassCard>
           ))}
         </div>
       </div>
@@ -37,13 +38,13 @@ export function Certifications() {
           }
         }
         .cert-card {
+          padding: 0.875rem 1rem;
+          border-radius: 12px;
+        }
+        .cert-card .glass-card__content {
           display: flex;
           flex-direction: column;
           gap: 0.25rem;
-          padding: 0.875rem 1rem;
-          background: var(--bg-card);
-          border: 1px solid var(--border);
-          border-radius: 8px;
         }
         .cert-card__name {
           font-size: 0.9375rem;

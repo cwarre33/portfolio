@@ -11,6 +11,26 @@
   --font-sans: 'DM Sans', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   --accent-glow: 0 0 20px rgba(88, 166, 255, 0.25);
+
+  /* Glass design tokens */
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-bg-hover: rgba(255, 255, 255, 0.07);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-hover: rgba(88, 166, 255, 0.35);
+  --glass-blur: 18px;
+  --glass-reflection: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --glass-shadow-hover: 0 16px 48px rgba(88, 166, 255, 0.12),
+    0 4px 16px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 *,
@@ -94,10 +114,23 @@ a:hover {
 
 /* ─── Global utility: glassmorphism card ─── */
 .glass {
-  background: rgba(26, 31, 40, 0.7); /* semi-transparent --bg-card */
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--border);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Glass reflection streak overlay */
+.glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--glass-reflection);
+  pointer-events: none;
+  z-index: 1;
 }
 
 /* ─── Keyframes (guarded by prefers-reduced-motion) ─── */
@@ -122,5 +155,24 @@ a:hover {
   @keyframes entrance-fade-up {
     from { opacity: 0; transform: translateY(28px); }
     to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes glass-reflection-sweep {
+    0%   { transform: translateX(-100%) rotate(25deg); }
+    100% { transform: translateX(200%) rotate(25deg); }
+  }
+
+  @keyframes glass-float {
+    0%   { transform: translateY(0) rotateX(0deg) rotateY(0deg); }
+    25%  { transform: translateY(-8px) rotateX(2deg) rotateY(-2deg); }
+    50%  { transform: translateY(-4px) rotateX(-1deg) rotateY(3deg); }
+    75%  { transform: translateY(-10px) rotateX(1.5deg) rotateY(-1deg); }
+    100% { transform: translateY(0) rotateX(0deg) rotateY(0deg); }
+  }
+
+  @keyframes glass-rotate {
+    0%   { transform: rotateY(0deg) rotateX(10deg); }
+    50%  { transform: rotateY(180deg) rotateX(10deg); }
+    100% { transform: rotateY(360deg) rotateX(10deg); }
   }
 }
