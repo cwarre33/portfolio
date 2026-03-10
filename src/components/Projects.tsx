@@ -191,7 +191,7 @@ function StackedProjectCard({ project, offset, onClick, isActive }: StackedProje
       onClick={onClick}
     >
       {/* Glass reflection */}
-      <div className="stack-card__reflection" aria-hidden />
+      <div className="stack-card__reflection" aria-hidden="true" />
       <div className="stack-card__inner">
         <div className="stack-card__header">
           <h3 className="stack-card__title">{project.title}</h3>

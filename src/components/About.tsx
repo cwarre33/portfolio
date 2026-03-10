@@ -40,7 +40,7 @@ export function About() {
           {/* Highlight metric bento cards */}
           {HIGHLIGHTS.map((h) => (
             <GlassCard key={h.label} className="bento__metric">
-              <span className="bento__metric-icon" aria-hidden>{h.icon}</span>
+              <span className="bento__metric-icon" aria-hidden="true">{h.icon}</span>
               <span className="bento__metric-value">{h.value}</span>
               <span className="bento__metric-label">{h.label}</span>
             </GlassCard>
