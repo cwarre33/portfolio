@@ -13,12 +13,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
     const rect = cardRef.current.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
-    cardRef.current.style.transform = `
-      perspective(800px)
-      rotateY(${x * 5}deg)
-      rotateX(${-y * 5}deg)
-      translateY(-4px)
-    `;
+    cardRef.current.style.transform =
+      `perspective(800px) rotateY(${x * 5}deg) rotateX(${-y * 5}deg) translateY(-4px)`;
   }
 
   function handleMouseLeave() {
