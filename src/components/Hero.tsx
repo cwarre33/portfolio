@@ -1,4 +1,5 @@
 import { Typewriter } from './Typewriter';
+import { GlassCard } from './GlassCard';
 
 const LINKEDIN = 'https://www.linkedin.com/in/cameron-warren-73a0192b2/';
 const GITHUB = 'https://github.com/cwarre33';
@@ -12,11 +13,18 @@ const STATS = [
 export function Hero() {
   return (
     <section className="hero" aria-label="Introduction">
-      {/* Animated orb background layer */}
+      {/* Ambient gradient background layer */}
       <div className="hero__orbs" aria-hidden>
         <div className="hero__orb hero__orb--1" />
         <div className="hero__orb hero__orb--2" />
         <div className="hero__orb hero__orb--3" />
+      </div>
+
+      {/* Floating 3D glass shapes background */}
+      <div className="hero__glass-shapes" aria-hidden>
+        <div className="hero__glass-shape hero__glass-shape--1" />
+        <div className="hero__glass-shape hero__glass-shape--2" />
+        <div className="hero__glass-shape hero__glass-shape--3" />
       </div>
 
       <div className="container hero__inner">
@@ -38,7 +46,7 @@ export function Hero() {
               href={LINKEDIN}
               target="_blank"
               rel="noopener noreferrer"
-              className="hero__btn hero__btn--secondary"
+              className="hero__btn hero__btn--glass"
             >
               LinkedIn
             </a>
@@ -46,7 +54,7 @@ export function Hero() {
               href={GITHUB}
               target="_blank"
               rel="noopener noreferrer"
-              className="hero__btn hero__btn--secondary"
+              className="hero__btn hero__btn--glass"
             >
               GitHub
             </a>
@@ -61,13 +69,18 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Right: stat/badge cluster */}
+        {/* Right: stackable glass stat badges */}
         <div className="hero__stats" aria-label="Key metrics">
           {STATS.map((stat, i) => (
-            <div key={stat.label} className="hero__stat-badge" style={{ '--badge-delay': `${i * 0.12}s` } as React.CSSProperties}>
+            <GlassCard
+              key={stat.label}
+              className="hero__stat-badge"
+              stackIndex={i}
+              style={{ '--badge-delay': `${i * 0.12}s` } as React.CSSProperties}
+            >
               <span className="hero__stat-value">{stat.value}</span>
               <span className="hero__stat-label">{stat.label}</span>
-            </div>
+            </GlassCard>
           ))}
         </div>
       </div>
@@ -88,7 +101,7 @@ export function Hero() {
           }
         }
 
-        /* ── Animated orb layer ── */
+        /* ── Ambient gradient orbs ── */
         .hero__orbs {
           position: absolute;
           inset: 0;
@@ -112,7 +125,7 @@ export function Hero() {
           height: 500px;
           top: 10%;
           right: -80px;
-          background: rgba(88, 166, 255, 0.08); /* lighter accent blob */
+          background: rgba(88, 166, 255, 0.08);
         }
         .hero__orb--3 {
           width: 400px;
@@ -130,6 +143,70 @@ export function Hero() {
           }
           .hero__orb--3 {
             animation: float-orb 26s ease-in-out infinite alternate;
+          }
+        }
+
+        /* ── Floating 3D glass shapes ── */
+        .hero__glass-shapes {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          perspective: 1200px;
+          overflow: hidden;
+        }
+        .hero__glass-shape {
+          position: absolute;
+          border-radius: 24px;
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.06) 0%,
+            rgba(255, 255, 255, 0.02) 50%,
+            rgba(88, 166, 255, 0.04) 100%
+          );
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+        .hero__glass-shape--1 {
+          width: 280px;
+          height: 200px;
+          top: 15%;
+          right: 8%;
+          transform: rotateX(12deg) rotateY(-8deg) rotateZ(5deg);
+        }
+        .hero__glass-shape--2 {
+          width: 180px;
+          height: 180px;
+          bottom: 20%;
+          right: 15%;
+          border-radius: 50%;
+          transform: rotateX(-5deg) rotateY(10deg);
+        }
+        .hero__glass-shape--3 {
+          width: 120px;
+          height: 120px;
+          top: 35%;
+          right: 25%;
+          border-radius: 16px;
+          transform: rotateX(8deg) rotateY(15deg) rotateZ(-10deg);
+        }
+        @media (prefers-reduced-motion: no-preference) {
+          .hero__glass-shape--1 {
+            animation: glass-float 16s ease-in-out infinite;
+          }
+          .hero__glass-shape--2 {
+            animation: glass-float 20s ease-in-out infinite reverse;
+          }
+          .hero__glass-shape--3 {
+            animation: glass-float 14s ease-in-out infinite 2s;
+          }
+        }
+        @media (max-width: 899px) {
+          .hero__glass-shapes {
+            opacity: 0.4;
           }
         }
 
@@ -253,14 +330,21 @@ export function Hero() {
         .hero__btn--primary:hover::before {
           opacity: 1;
         }
-        .hero__btn--secondary {
-          background: var(--bg-card);
+
+        /* Glass-style button */
+        .hero__btn--glass {
+          background: var(--glass-bg);
           color: var(--text);
-          border: 1px solid var(--border);
+          border: 1px solid var(--glass-border);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
         }
-        .hero__btn--secondary:hover {
-          border-color: var(--text-muted);
-          background: var(--bg-elevated);
+        .hero__btn--glass:hover {
+          border-color: var(--glass-border-hover);
+          background: var(--glass-bg-hover);
+          box-shadow: 0 4px 16px rgba(88, 166, 255, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .hero__social {
@@ -284,36 +368,26 @@ export function Hero() {
           justify-content: center;
         }
 
-        /* ── Right: stat / badge cluster ── */
+        /* ── Right: stackable glass stat badges ── */
         .hero__stats {
           display: flex;
           flex-direction: column;
           gap: 1rem;
           flex-shrink: 0;
+          perspective: 800px;
         }
         @media (min-width: 900px) {
           .hero__stats {
             align-items: flex-end;
           }
           .hero__stat-badge:nth-child(2) {
-            margin-right: 1.5rem; /* stagger offset */
+            margin-right: 1.5rem;
           }
         }
 
         .hero__stat-badge {
-          background: var(--bg-card);
-          border: 1px solid var(--border);
-          border-radius: 12px;
           padding: 1rem 1.5rem;
           min-width: 180px;
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
-          transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .hero__stat-badge:hover {
-          border-color: var(--accent);
-          box-shadow: var(--accent-glow);
-          transform: translateY(-2px);
         }
         .hero__stat-value {
           display: block;

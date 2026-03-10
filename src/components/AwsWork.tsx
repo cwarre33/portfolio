@@ -1,4 +1,5 @@
 import { awsWork } from '../data/awsWork';
+import { GlassCard } from './GlassCard';
 
 export function AwsWork() {
   return (
@@ -11,8 +12,8 @@ export function AwsWork() {
           Serverless and event-driven systems on AWS—focused on cost efficiency and clear business impact.
         </p>
         <div className="aws-work__grid">
-          {awsWork.map((item) => (
-            <article key={item.title} className="aws-card">
+          {awsWork.map((item, i) => (
+            <GlassCard key={item.title} as="article" className="aws-card" stackIndex={i}>
               <div className="aws-card__header">
                 <span className="aws-card__emoji" aria-hidden>
                   {item.emoji}
@@ -31,7 +32,7 @@ export function AwsWork() {
                 <h4 className="aws-card__label">Cost</h4>
                 <p className="aws-card__cost">{item.cost}</p>
               </div>
-            </article>
+            </GlassCard>
           ))}
         </div>
       </div>
@@ -51,10 +52,9 @@ export function AwsWork() {
           }
         }
         .aws-card {
-          background: var(--bg-card);
-          border: 1px solid var(--border);
-          border-radius: 12px;
           padding: 1.25rem;
+        }
+        .aws-card .glass-card__content {
           display: flex;
           flex-direction: column;
           gap: 1rem;
