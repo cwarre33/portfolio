@@ -1,4 +1,5 @@
 import { skillGroups } from '../data/skills';
+import { GlassCard } from './GlassCard';
 
 export function About() {
   return (
@@ -8,7 +9,7 @@ export function About() {
           About <span>me</span>
         </h2>
         <div className="about__bento">
-          <div className="about__bio-card">
+          <GlassCard className="about__bio-card" tilt={false}>
             <p>
               I'm Cameron Warren, a Computer Science graduate from UNC Charlotte and a Software Engineer
               focused on high-performance, AI-driven solutions. I'm an <strong>AI Research Analyst at
@@ -26,10 +27,10 @@ export function About() {
               the growth, the team at FLS, and the momentum at the intersection of Computer Vision and
               Full-Stack Development.
             </p>
-          </div>
+          </GlassCard>
           <div className="about__skills-grid">
             {skillGroups.map((group) => (
-              <div key={group.label} className="about__skill-cell">
+              <GlassCard key={group.label} className="about__skill-cell">
                 <h3 className="about__skill-label">{group.label}</h3>
                 <ul className="about__skill-tags">
                   {group.items.map((item) => (
@@ -38,7 +39,7 @@ export function About() {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </GlassCard>
             ))}
           </div>
         </div>
@@ -57,18 +58,10 @@ export function About() {
           }
         }
 
-        /* ── Bio card with glowing left border ── */
+        /* ── Bio card with glass styling + glowing left border ── */
         .about__bio-card {
-          background: var(--bg-card);
-          border: 1px solid var(--border);
           border-left: 3px solid var(--accent);
-          border-radius: 12px;
           padding: 1.5rem 1.5rem 1.5rem 1.25rem;
-          box-shadow: inset 3px 0 16px rgba(88, 166, 255, 0.08);
-          transition: box-shadow 0.3s;
-        }
-        .about__bio-card:hover {
-          box-shadow: inset 3px 0 24px rgba(88, 166, 255, 0.15), var(--accent-glow);
         }
         .about__bio-card p {
           margin-bottom: 1rem;
@@ -90,16 +83,10 @@ export function About() {
           gap: 1rem;
         }
         .about__skill-cell {
-          background: var(--bg-card);
-          border: 1px solid var(--border);
-          border-radius: 12px;
           padding: 1rem 1.25rem;
-          transition: background 0.25s, border-color 0.25s, box-shadow 0.25s;
         }
         .about__skill-cell:hover {
-          background: var(--accent-soft);
-          border-color: rgba(88, 166, 255, 0.4);
-          box-shadow: var(--accent-glow);
+          border-color: var(--glass-border-hover);
         }
 
         /* ── Skill label with shimmer effect ── */
@@ -109,7 +96,7 @@ export function About() {
           text-transform: uppercase;
           letter-spacing: 0.05em;
           margin-bottom: 0.5rem;
-          color: var(--text-muted); /* fallback for browsers without background-clip: text */
+          color: var(--text-muted);
           background: linear-gradient(
             90deg,
             var(--text-muted) 0%,
@@ -144,8 +131,8 @@ export function About() {
           padding: 0.25rem 0.625rem;
           font-size: 0.8125rem;
           font-family: var(--font-mono);
-          background: var(--bg-elevated);
-          border: 1px solid var(--border);
+          background: rgba(255, 255, 255, 0.04);
+          border: 1px solid rgba(255, 255, 255, 0.06);
           border-radius: 6px;
           color: var(--text);
           transition: border-color 0.2s, background 0.2s, color 0.2s;

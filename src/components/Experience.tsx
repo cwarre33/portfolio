@@ -51,11 +51,45 @@ export function Experience() {
           top: 0.5rem;
           bottom: 0;
           width: 2px;
-          background: var(--border);
+          background: linear-gradient(
+            180deg,
+            var(--accent) 0%,
+            rgba(88, 166, 255, 0.3) 50%,
+            rgba(255, 255, 255, 0.06) 100%
+          );
           border-radius: 1px;
         }
         .experience__content {
           position: relative;
+          background: var(--glass-bg);
+          backdrop-filter: blur(var(--glass-blur));
+          -webkit-backdrop-filter: blur(var(--glass-blur));
+          border: 1px solid var(--glass-border);
+          border-radius: 12px;
+          padding: 1.25rem;
+          box-shadow: var(--glass-shadow);
+          transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .experience__content::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 1px;
+          background: linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.15) 30%,
+            rgba(255, 255, 255, 0.25) 50%,
+            rgba(255, 255, 255, 0.15) 70%,
+            transparent 100%
+          );
+          pointer-events: none;
+        }
+        .experience__content:hover {
+          border-color: var(--glass-border-hover);
+          box-shadow: var(--glass-shadow-hover);
         }
         .experience__meta {
           margin-bottom: 0.75rem;
