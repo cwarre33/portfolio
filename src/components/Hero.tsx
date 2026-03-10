@@ -1,5 +1,7 @@
+import { Suspense, lazy, Component, type ReactNode } from 'react';
 import { Typewriter } from './Typewriter';
-import { GlassCard } from './GlassCard';
+
+const SplineScene = lazy(() => import('@splinetool/react-spline'));
 
 const LINKEDIN = 'https://www.linkedin.com/in/cameron-warren-73a0192b2/';
 const GITHUB = 'https://github.com/cwarre33';
@@ -10,22 +12,45 @@ const STATS = [
   { value: '2', label: 'AI products shipped' },
 ];
 
+/** Catches Spline load errors so the rest of the page still renders */
+class SplineErrorBoundary extends Component<
+  { children: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  render() {
+    if (this.state.hasError) return <SplineFallback />;
+    return this.props.children;
+  }
+}
+
+function SplineFallback() {
+  return (
+    <div className="hero__spline-fallback" aria-hidden>
+      <div className="hero__fallback-orb hero__fallback-orb--1" />
+      <div className="hero__fallback-orb hero__fallback-orb--2" />
+      <div className="hero__fallback-orb hero__fallback-orb--3" />
+    </div>
+  );
+}
+
 export function Hero() {
   return (
     <section className="hero" aria-label="Introduction">
-      {/* Ambient gradient background layer */}
-      <div className="hero__orbs" aria-hidden>
-        <div className="hero__orb hero__orb--1" />
-        <div className="hero__orb hero__orb--2" />
-        <div className="hero__orb hero__orb--3" />
+      {/* Spline 3D scene as interactive background */}
+      <div className="hero__spline" aria-hidden>
+        <SplineErrorBoundary>
+          <Suspense fallback={<SplineFallback />}>
+            <SplineScene scene="https://prod.spline.design/PyzDhHNMiFkjS1MG/scene.splinecode" />
+          </Suspense>
+        </SplineErrorBoundary>
       </div>
 
-      {/* Floating 3D glass shapes background */}
-      <div className="hero__glass-shapes" aria-hidden>
-        <div className="hero__glass-shape hero__glass-shape--1" />
-        <div className="hero__glass-shape hero__glass-shape--2" />
-        <div className="hero__glass-shape hero__glass-shape--3" />
-      </div>
+      {/* Gradient vignette for text readability */}
+      <div className="hero__vignette" aria-hidden />
 
       <div className="container hero__inner">
         {/* Left: text content */}
@@ -69,18 +94,17 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Right: stackable glass stat badges */}
-        <div className="hero__stats" aria-label="Key metrics">
+        {/* Right: bento stat grid */}
+        <div className="hero__bento" aria-label="Key metrics">
           {STATS.map((stat, i) => (
-            <GlassCard
+            <div
               key={stat.label}
-              className="hero__stat-badge"
-              stackIndex={i}
+              className="hero__bento-card"
               style={{ '--badge-delay': `${i * 0.12}s` } as React.CSSProperties}
             >
               <span className="hero__stat-value">{stat.value}</span>
               <span className="hero__stat-label">{stat.label}</span>
-            </GlassCard>
+            </div>
           ))}
         </div>
       </div>
@@ -101,119 +125,73 @@ export function Hero() {
           }
         }
 
-        /* ── Ambient gradient orbs ── */
-        .hero__orbs {
+        /* ── Spline 3D background ── */
+        .hero__spline {
           position: absolute;
           inset: 0;
-          pointer-events: none;
+          z-index: 0;
+        }
+        .hero__spline > div,
+        .hero__spline canvas {
+          width: 100% !important;
+          height: 100% !important;
+        }
+
+        /* Fallback animated gradient background when Spline fails to load */
+        .hero__spline-fallback {
+          position: absolute;
+          inset: 0;
           overflow: hidden;
         }
-        .hero__orb {
+        .hero__fallback-orb {
           position: absolute;
           border-radius: 50%;
           filter: blur(80px);
         }
-        .hero__orb--1 {
-          width: 600px;
-          height: 600px;
-          top: -120px;
-          left: -100px;
+        .hero__fallback-orb--1 {
+          width: 600px; height: 600px;
+          top: -120px; left: -100px;
           background: var(--accent-soft);
         }
-        .hero__orb--2 {
-          width: 500px;
-          height: 500px;
-          top: 10%;
-          right: -80px;
+        .hero__fallback-orb--2 {
+          width: 500px; height: 500px;
+          top: 10%; right: -80px;
           background: rgba(88, 166, 255, 0.08);
         }
-        .hero__orb--3 {
-          width: 400px;
-          height: 400px;
-          bottom: -80px;
-          left: 30%;
+        .hero__fallback-orb--3 {
+          width: 400px; height: 400px;
+          bottom: -80px; left: 30%;
           background: rgba(88, 166, 255, 0.06);
         }
         @media (prefers-reduced-motion: no-preference) {
-          .hero__orb--1 {
-            animation: float-orb 22s ease-in-out infinite alternate;
-          }
-          .hero__orb--2 {
-            animation: float-orb 18s ease-in-out infinite alternate-reverse;
-          }
-          .hero__orb--3 {
-            animation: float-orb 26s ease-in-out infinite alternate;
-          }
+          .hero__fallback-orb--1 { animation: float-orb 22s ease-in-out infinite alternate; }
+          .hero__fallback-orb--2 { animation: float-orb 18s ease-in-out infinite alternate-reverse; }
+          .hero__fallback-orb--3 { animation: float-orb 26s ease-in-out infinite alternate; }
         }
 
-        /* ── Floating 3D glass shapes ── */
-        .hero__glass-shapes {
+        /* Gradient vignette overlay for text readability */
+        .hero__vignette {
           position: absolute;
           inset: 0;
+          z-index: 1;
+          background:
+            linear-gradient(180deg,
+              rgba(15, 17, 21, 0.6) 0%,
+              rgba(15, 17, 21, 0.3) 40%,
+              rgba(15, 17, 21, 0.4) 70%,
+              rgba(15, 17, 21, 0.85) 100%
+            ),
+            linear-gradient(90deg,
+              rgba(15, 17, 21, 0.7) 0%,
+              transparent 50%
+            );
           pointer-events: none;
-          perspective: 1200px;
-          overflow: hidden;
-        }
-        .hero__glass-shape {
-          position: absolute;
-          border-radius: 24px;
-          background: linear-gradient(
-            135deg,
-            rgba(255, 255, 255, 0.06) 0%,
-            rgba(255, 255, 255, 0.02) 50%,
-            rgba(88, 166, 255, 0.04) 100%
-          );
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
-          box-shadow:
-            0 8px 32px rgba(0, 0, 0, 0.15),
-            inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-        .hero__glass-shape--1 {
-          width: 280px;
-          height: 200px;
-          top: 15%;
-          right: 8%;
-          transform: rotateX(12deg) rotateY(-8deg) rotateZ(5deg);
-        }
-        .hero__glass-shape--2 {
-          width: 180px;
-          height: 180px;
-          bottom: 20%;
-          right: 15%;
-          border-radius: 50%;
-          transform: rotateX(-5deg) rotateY(10deg);
-        }
-        .hero__glass-shape--3 {
-          width: 120px;
-          height: 120px;
-          top: 35%;
-          right: 25%;
-          border-radius: 16px;
-          transform: rotateX(8deg) rotateY(15deg) rotateZ(-10deg);
-        }
-        @media (prefers-reduced-motion: no-preference) {
-          .hero__glass-shape--1 {
-            animation: glass-float 16s ease-in-out infinite;
-          }
-          .hero__glass-shape--2 {
-            animation: glass-float 20s ease-in-out infinite reverse;
-          }
-          .hero__glass-shape--3 {
-            animation: glass-float 14s ease-in-out infinite 2s;
-          }
-        }
-        @media (max-width: 899px) {
-          .hero__glass-shapes {
-            opacity: 0.4;
-          }
         }
 
-        /* ── Split layout ── */
+        /* ── Layout ── */
         .hero__inner {
           position: relative;
-          z-index: 1;
+          z-index: 2;
           display: flex;
           flex-direction: column;
           gap: 3rem;
@@ -248,7 +226,7 @@ export function Hero() {
           .hero__social {
             animation: entrance-fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both;
           }
-          .hero__stat-badge {
+          .hero__bento-card {
             animation: entrance-fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) var(--badge-delay, 0s) both;
           }
         }
@@ -368,27 +346,46 @@ export function Hero() {
           justify-content: center;
         }
 
-        /* ── Right: stackable glass stat badges ── */
-        .hero__stats {
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
+        /* ── Right: bento stat grid ── */
+        .hero__bento {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 0.75rem;
           flex-shrink: 0;
-          perspective: 800px;
+          max-width: 320px;
         }
-        @media (min-width: 900px) {
-          .hero__stats {
-            align-items: flex-end;
-          }
-          .hero__stat-badge:nth-child(2) {
-            margin-right: 1.5rem;
-          }
+        .hero__bento-card:last-child {
+          grid-column: 1 / -1;
+        }
+        .hero__bento-card {
+          background: var(--glass-bg);
+          backdrop-filter: blur(var(--glass-blur));
+          -webkit-backdrop-filter: blur(var(--glass-blur));
+          border: 1px solid var(--glass-border);
+          border-radius: 14px;
+          padding: 1rem 1.25rem;
+          box-shadow: var(--glass-shadow);
+          position: relative;
+          overflow: hidden;
+          transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .hero__bento-card::before {
+          content: '';
+          position: absolute;
+          top: 0; left: 0; right: 0;
+          height: 1px;
+          background: linear-gradient(90deg,
+            transparent, rgba(255,255,255,0.2) 30%,
+            rgba(255,255,255,0.35) 50%,
+            rgba(255,255,255,0.2) 70%, transparent);
+          pointer-events: none;
+        }
+        .hero__bento-card:hover {
+          border-color: var(--glass-border-hover);
+          box-shadow: var(--glass-shadow-hover);
+          transform: translateY(-2px);
         }
 
-        .hero__stat-badge {
-          padding: 1rem 1.5rem;
-          min-width: 180px;
-        }
         .hero__stat-value {
           display: block;
           font-size: 1.5rem;
