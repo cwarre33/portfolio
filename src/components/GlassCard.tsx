@@ -35,12 +35,9 @@ export function GlassCard({
     const rect = cardRef.current.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
-    cardRef.current.style.transform = `
-      perspective(800px)
-      rotateY(${x * 6}deg)
-      rotateX(${-y * 6}deg)
-      translateY(${stackIndex ? 0 : -2}px)
-    `;
+    const ty = stackIndex ? 0 : -2;
+    cardRef.current.style.transform =
+      `perspective(800px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg) translateY(${ty}px)`;
   }
 
   function handleMouseLeave() {
@@ -50,7 +47,7 @@ export function GlassCard({
 
   return (
     <Tag
-      ref={cardRef as React.Ref<HTMLDivElement>}
+      ref={cardRef as React.RefObject<never>}
       className={`glass-card ${className}`}
       style={{
         '--stack-offset': `${stackIndex * 4}px`,
