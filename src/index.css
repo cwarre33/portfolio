@@ -10,6 +10,7 @@
   --success: #3fb950;
   --font-sans: 'DM Sans', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+  --accent-glow: 0 0 20px rgba(88, 166, 255, 0.25);
 }
 
 *,
@@ -89,4 +90,37 @@ a:hover {
 
 .section-title span {
   color: var(--accent);
+}
+
+/* ─── Global utility: glassmorphism card ─── */
+.glass {
+  background: rgba(26, 31, 40, 0.7); /* semi-transparent --bg-card */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+}
+
+/* ─── Keyframes (guarded by prefers-reduced-motion) ─── */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes float-orb {
+    0%   { transform: translate(0, 0) scale(1); }
+    33%  { transform: translate(30px, -20px) scale(1.05); }
+    66%  { transform: translate(-20px, 15px) scale(0.97); }
+    100% { transform: translate(10px, -10px) scale(1.02); }
+  }
+
+  @keyframes shimmer {
+    0%   { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+
+  @keyframes rotate-gradient {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes entrance-fade-up {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 }

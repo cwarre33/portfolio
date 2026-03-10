@@ -1,11 +1,32 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 
+type AnimationVariant = 'fade-up' | 'fade-in' | 'slide-right';
+
 interface AnimatedSectionProps {
   children: ReactNode;
   className?: string;
+  variant?: AnimationVariant;
+  delay?: number;
 }
 
-export function AnimatedSection({ children, className = '' }: AnimatedSectionProps) {
+const hiddenTransforms: Record<AnimationVariant, string> = {
+  'fade-up':    'translateY(28px)',
+  'fade-in':    'scale(0.97)',
+  'slide-right': 'translateX(-20px)',
+};
+
+const visibleTransforms: Record<AnimationVariant, string> = {
+  'fade-up':    'translateY(0)',
+  'fade-in':    'scale(1)',
+  'slide-right': 'translateX(0)',
+};
+
+export function AnimatedSection({
+  children,
+  className = '',
+  variant = 'fade-up',
+  delay = 0,
+}: AnimatedSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -30,8 +51,8 @@ export function AnimatedSection({ children, className = '' }: AnimatedSectionPro
       className={`animated-section ${visible ? 'animated-section--visible' : ''} ${className}`}
       style={{
         opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0)' : 'translateY(20px)',
-        transition: 'opacity 0.5s ease, transform 0.5s ease',
+        transform: visible ? visibleTransforms[variant] : hiddenTransforms[variant],
+        transition: `opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms, transform 0.55s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
       }}
     >
       {children}
