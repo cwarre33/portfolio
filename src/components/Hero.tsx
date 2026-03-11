@@ -1,9 +1,5 @@
-import { Suspense, lazy, Component, type ReactNode } from 'react';
 import { Typewriter } from './Typewriter';
 
-const SplineScene = lazy(() => import('@splinetool/react-spline'));
-
-const SPLINE_SCENE_URL = 'https://prod.spline.design/PyzDhHNMiFkjS1MG/scene.splinecode';
 const LINKEDIN = 'https://www.linkedin.com/in/cameron-warren-73a0192b2/';
 const GITHUB = 'https://github.com/cwarre33';
 
@@ -13,22 +9,9 @@ const STATS = [
   { value: '2', label: 'AI products shipped' },
 ];
 
-/** Catches Spline load errors so the rest of the page still renders */
-class SplineErrorBoundary extends Component<
-  { children: ReactNode },
-  { hasError: boolean }
-> {
-  state = { hasError: false };
-  static getDerivedStateFromError() {
-    return { hasError: true };
-  }
-  render() {
-    if (this.state.hasError) return <SplineFallback />;
-    return this.props.children;
-  }
-}
+const SPLINE_SCENE_URL = 'https://prod.spline.design/xkOKuZbsmNGFlpat/scene.splinecode?v=2';
 
-function SplineFallback() {
+function HeroBackground() {
   return (
     <div className="hero__spline-fallback" aria-hidden="true">
       <div className="hero__fallback-orb hero__fallback-orb--1" />
@@ -41,13 +24,13 @@ function SplineFallback() {
 export function Hero() {
   return (
     <section className="hero" aria-label="Introduction">
-      {/* Spline 3D scene as interactive background */}
+      {/* Spline 3D background with gradient fallback */}
       <div className="hero__spline" aria-hidden="true">
-        <SplineErrorBoundary>
-          <Suspense fallback={<SplineFallback />}>
-            <SplineScene scene={SPLINE_SCENE_URL} />
-          </Suspense>
-        </SplineErrorBoundary>
+        <HeroBackground />
+        <spline-viewer
+          url={SPLINE_SCENE_URL}
+          className="hero__spline-viewer"
+        />
       </div>
 
       {/* Gradient vignette for text readability */}
@@ -132,17 +115,27 @@ export function Hero() {
           inset: 0;
           z-index: 0;
         }
-        .hero__spline > div,
+        .hero__spline-viewer {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          display: block;
+          z-index: 1;
+        }
+        .hero__spline-viewer::part(canvas),
         .hero__spline canvas {
           width: 100% !important;
           height: 100% !important;
+          display: block;
         }
 
-        /* Fallback animated gradient background when Spline fails to load */
+        /* Animated gradient fallback (behind viewer until scene loads) */
         .hero__spline-fallback {
           position: absolute;
           inset: 0;
           overflow: hidden;
+          z-index: 0;
         }
         .hero__fallback-orb {
           position: absolute;
