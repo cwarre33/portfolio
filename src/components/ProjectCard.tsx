@@ -20,23 +20,22 @@ export function ProjectCard({ project }: ProjectCardProps) {
           <span className="project-card__arrow" aria-hidden>→</span>
         </div>
         <p className="project-card__description">{project.description}</p>
-        {project.liveUrl && (
-          <a
-            href={project.liveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="project-card__live"
-            onClick={(e) => e.stopPropagation()}
-          >
-            Live demo
-          </a>
-        )}
-        <ul className="project-card__tags">
-          {project.tags.map((tag) => (
-            <li key={tag}>{tag}</li>
-          ))}
-        </ul>
       </a>
+      {project.liveUrl && (
+        <a
+          href={project.liveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="project-card__live"
+        >
+          Live demo
+        </a>
+      )}
+      <ul className="project-card__tags">
+        {project.tags.map((tag) => (
+          <li key={tag}>{tag}</li>
+        ))}
+      </ul>
       <style>{`
         .project-card {
           position: relative;
