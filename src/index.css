@@ -176,3 +176,12 @@ a:hover {
     100% { transform: rotateY(360deg) rotateX(10deg); }
   }
 }
+
+/* Hide Spline viewer watermark (shadow DOM) */
+spline-viewer::part(logo),
+spline-viewer::part(brand) {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
