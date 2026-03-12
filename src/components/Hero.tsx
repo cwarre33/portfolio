@@ -130,6 +130,12 @@ export function Hero() {
           display: block;
         }
 
+        /* Hide Spline watermark */
+        .hero__spline-viewer::part(logo),
+        spline-viewer::part(logo) {
+          display: none !important;
+        }
+
         /* Animated gradient fallback (behind viewer until scene loads) */
         .hero__spline-fallback {
           position: absolute;
