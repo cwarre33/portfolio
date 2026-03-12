@@ -31,6 +31,8 @@ export function Hero() {
           url={SPLINE_SCENE_URL}
           className="hero__spline-viewer"
         />
+        {/* Overlay to cover Spline watermark in bottom-right corner */}
+        <div className="hero__spline-logo-cover" aria-hidden="true" />
       </div>
 
       {/* Gradient vignette for text readability */}
@@ -130,10 +132,24 @@ export function Hero() {
           display: block;
         }
 
-        /* Hide Spline watermark */
+        /* Hide Spline watermark (shadow DOM parts + corner overlay) */
         .hero__spline-viewer::part(logo),
-        spline-viewer::part(logo) {
+        spline-viewer::part(logo),
+        .hero__spline-viewer::part(brand),
+        spline-viewer::part(brand) {
           display: none !important;
+          visibility: hidden !important;
+        }
+        .hero__spline-logo-cover {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          width: 260px;
+          height: 72px;
+          z-index: 10;
+          pointer-events: none;
+          background: var(--bg);
+          border-radius: 24px 0 0 0;
         }
 
         /* Animated gradient fallback (behind viewer until scene loads) */
