@@ -2,6 +2,7 @@ import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
 import { Experience } from './components/Experience';
+import { ImpactAtWork } from './components/ImpactAtWork';
 import { AwsWork } from './components/AwsWork';
 import { Projects } from './components/Projects';
 import { Certifications } from './components/Certifications';
@@ -16,6 +17,7 @@ function App() {
         <Hero />
         <About />
         <Experience />
+        <ImpactAtWork />
         <AwsWork />
         <Projects />
         <Certifications />
