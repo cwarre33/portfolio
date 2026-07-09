@@ -29,8 +29,9 @@ Deploy the contents of the `dist/` folder to the `gh-pages` branch or to GitHub 
 
 ## Structure
 
-- **Content** (resume, Jira, GitHub–informed): `src/data/` — experience, projects, skills.
-- **Sections:** Hero (with typewriter), About, Experience, Projects, Contact, Footer.
+- **Content** (resume, Jira, GitHub–informed): `src/data/` — experience, projects, skills, impact at work.
+- **Master resume (complete inventory):** `referece_context/MASTER_RESUME.md` — tailor from this; Jira/Bitbucket snapshots live alongside it.
+- **Sections:** Hero (with typewriter), About, Experience, Impact at Work, Projects, Contact, Footer.
 - **Design:** Dark theme, DM Sans + JetBrains Mono, accent blue, responsive layout.
 
 ## Legacy site

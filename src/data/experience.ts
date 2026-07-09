@@ -5,8 +5,9 @@ export const experience = [
     location: 'Jamestown, North Carolina',
     period: 'Jan 2026 – Present',
     highlights: [
-      'Leading integration of Conversational AI and LLMs into enterprise-wide workflows.',
-      'Optimizing DevOps through AI automation and scaling chatbot architectures.',
+      'Shipping production Inventory Lookup (Next.js + RDS), Zendesk custom round-robin / dedicated-agent routing, and NetSuite integrations.',
+      'Owned Entra ID SSO with role-based pricing, Bitbucket CI quality gates, and shared AWS RDS + delta-sync for the engineering team.',
+      'Leading Conversational AI / Copilot and visual-search work into live retail workflows with measurable ops impact.',
     ],
   },
   {
@@ -15,8 +16,9 @@ export const experience = [
     location: 'Jamestown, North Carolina',
     period: 'Aug 2025 – Jan 2026',
     highlights: [
-      'Researched emerging AI technologies and evaluated models.',
-      'Bridged technical research and business strategy with actionable insights.',
+      'Researched and evaluated models for visual search, speech-to-text, and Copilot Studio agents.',
+      'Built AWS proof pipelines (S3/SQS/ECS Whisper transcription, chat timeout, dedicated-agent Lambdas).',
+      'Bridged research into shippable product: SofaScope, Stella bot, SellSmart knowledge sync.',
     ],
   },
   {
@@ -25,7 +27,8 @@ export const experience = [
     location: 'Jamestown, North Carolina',
     period: 'May 2025 – Aug 2025',
     highlights: [
-      'Supported IT operations and internal tools.',
+      'Supported IT operations and early SofaScope R&D (CLIP/FAISS embeddings, React UI, Akeneo product data).',
+      'Contributed to Zendesk tooling foundations and internal enablement docs.',
     ],
   },
 ];

@@ -1,0 +1,149 @@
+# Bitbucket delivery reference (Cameron Warren)
+
+Generated: 2026-07-09T20:54:19.007291+00:00
+
+## ja-utlity-shed
+- Remote: https://bitbucket.org/furniturelandsouth/ja-utlity-shed.git
+- Recent commits:
+  - c6247ba|2026-07-09|fix(zendesk): point processed-ticket counter at daily CRR JSONL
+  - 953e0a1|2026-07-09|feat(zendesk): write CRR live logs to daily month paths (FLSM-34)
+  - 002948b|2026-07-09|feat(zendesk): add CRR daily log compile script (FLSM-34)
+  - 126b3ce|2026-07-09|feat(zendesk): mark regular CRR decisions with assignment_kind
+  - 576ac66|2026-07-09|feat(zendesk): VCS dedicated assigns count toward cap and dual-tag (FLSM-33)
+  - ffcbd19|2026-07-09|feat(zendesk): support assigned_by_custom_rr_dedicated tag on assign
+  - 62db038|2026-07-09|feat(zendesk): add dailyDedicatedAssignments state for FLSM-33
+  - 770ef99|2026-07-09|test(zendesk): add FLSM-33 VCS dedicated daily-cap offline tests
+  - 1e7a01a|2026-07-09|chore: ignore .worktrees for local git worktree isolation
+  - 8159602|2026-06-10|FLSM-20 Reduce logging verbosity so bearer tokens aren't logged
+  - 6d3e3a2|2026-06-10|FLSM-20 ns listrecords missing from FLSP-305 revert for voucher report building, added listrecords back to ns.js
+  - 5d412d0|2026-06-10|FLSM-20 error logging
+  - 096a839|2026-06-10|FLSP-305 Voucher summary percentage fixed
+  - e4f125b|2026-06-10|FLSP-305 Fix doubled voucher amounts, add line-memo SO linkage, make Zendesk enrichment opt-in.
+  - 4e4bb35|2026-06-09|Add voucher report pipeline to main for FLSP-305.
+  - 240b277|2026-06-05|FLSM-20
+  - 57583d7|2026-06-05|FLSM-20
+  - 4710b11|2026-06-05|FLSM-20 Merge solution
+  - e2ddb72|2026-06-04|FLSM-20 Email conflict handling
+  - 246e362|2026-06-04|FLSP-272 Fixed commision code sourcing
+  - f494a59|2026-06-04|FLSM-20 Reduce verbose logginer, bearer token was being logged
+  - 53d1d05|2026-06-03|FLSM-20 Live Testing
+  - 3bbfcb7|2026-06-02|FLSM-20 Full live run test
+  - f2d5155|2026-06-02|FLSM-20 added list records to ns.js
+  - afd2390|2026-06-02|bat directory change directory bug
+  - 8c80337|2026-06-02|FLSM-20 Integrate NS->ZD Customers
+  - 9602b62|2026-05-22|FLSP-222 Role Based Pricing Views for Inventory Lookup Suitelet
+  - 8bf8a92|2026-05-19|FLSP-159 added suitelet client script content
+  - 30740ef|2026-05-19|FLSP-159 Review all barcodes suitelet
+  - 41956d6|2026-05-19|FLSP-163 Implemented Organization Dedicated Agent Logic in CRR
+  - 0d49edf|2026-05-06|Added Francisco to the supervisor exclusion list, should no longer be considered for tickets
+  - 2577404|2026-05-04|Don removed from default excluded agent id's
+  - 7809f05|2026-05-04|Adjusted custom round robin to pick/route tickets that are not being assigned group
+  - 1eec7e3|2026-05-04|added Don Gibson to roster
+  - 4d4eb6c|2026-05-01|added script to count number of tickets processed by custom round robin
+  - 532b278|2026-04-30|Added git pull retry, logic can be reused for other .bat files
+  - 43d4b40|2026-04-29|FLSP-132 Report email bug fixed
+  - 67f2651|2026-04-29|FLSP-132 added the ns-case-lookup.js script
+  - df90548|2026-04-29|FLSP-132 Primary link is through NS Support Cases
+  - eb8d466|2026-04-24|Allow NetSuite ODBC connection string override
+
+## inventory-lookup
+- Remote: https://bitbucket.org/furniturelandsouth/inventory-lookup.git
+- Recent commits:
+  - ce1077f|2026-07-08|Merge remote main into FLSP-417
+  - ba2d33e|2026-07-08|FLSP-417 feat: EZ Tags deep link auto-fills barcode via SB1
+  - 46e1792|2026-07-08|Merged in worktree-FLSP-587-instant-items-return-v2 (pull request #40)
+  - 5c6e4f5|2026-07-08|Merged main into worktree-FLSP-587-instant-items-return-v2
+  - d5d7dbd|2026-07-08|FLSP-588 docs: mark plan/spec as implemented
+  - 1925833|2026-07-08|FLSP-587 fix: clear stale data when no cache so users see loading state on Apply/Clear/Search
+  - 8188938|2026-07-08|FLSP-588 chore: add snapshot matview checks to verify script and matview EXPLAIN diagnostic
+  - abd2dd4|2026-07-08|FLSP-588 chore: perf tools measure snapshot path by default, live path via skipSnapshot/--live
+  - 26cd624|2026-07-08|FLSP-588 chore: mark-migration-applied takes the filename as an argument
+  - 649b33e|2026-07-08|FLSP-588 test: exercise snapshot fallback branches in parity guard
+  - f935166|2026-07-08|FLSP-588 feat: serve default grouped browse from vmpn_browse_default with live fallback + parity guard
+  - db3be55|2026-07-08|FLSP-588 feat: refresh vmpn_browse_default post-sync, on image loads, and via npm script
+  - 2ba9bab|2026-07-08|FLSP-588 feat: vmpn_browse_default matview for the default grouped browse
+  - d7ab490|2026-07-08|FLSP-588 docs: drop stray no-op from parity script in plan
+  - e1f8fde|2026-07-08|FLSP-588 docs: browse snapshot implementation plan (4 tasks, TDD parity guard)
+  - db6bd44|2026-07-06|FLSP-588 docs: default browse snapshot design (vmpn_browse_default matview)
+  - 9860f81|2026-07-06|FLSP-588 perf: add read-pool statement_timeout guardrail; overlap grouped stats+page queries
+  - e1c065d|2026-07-06|Merged in worktree-FLSP-587-instant-items-return-v2 (pull request #39)
+  - 9afd2e9|2026-07-06|FLSP-587 fix: show Searching spinner when Apply/Clear/Search has no cached result
+  - bce6e94|2026-07-06|FLSP-588 perf: index transactions open-order checks; add grouped browse perf tooling
+  - 3758c51|2026-07-06|Merge branch 'main' of https://bitbucket.org/furniturelandsouth/inventory-lookup
+  - 4ed9a05|2026-07-06|Merged in worktree-FLSP-585-search-loading (pull request #38)
+  - 94ff70b|2026-07-06|FLSP-585 fix: keep search loading spinner visible when an aborted fetch races the live one
+  - 4d21d80|2026-07-06|FLSP-417 docs: implementation plan for EZ Tags barcode prefill
+  - 020e74b|2026-07-06|FLSP-417 docs: spec for EZ Tags barcode prefill via SB1
+  - becc5f2|2026-07-06|FLSP-417 feat: EZ Tags deep link auto-fills barcode via SB1
+  - e34353a|2026-07-06|FLSP-417 docs: implementation plan for EZ Tags barcode prefill
+  - 1c74cb2|2026-07-06|FLSP-417 docs: spec for EZ Tags barcode prefill via SB1
+  - 6259f23|2026-07-03|Merged in worktree-FLSP-533-detail-tags (pull request #37)
+  - 73486e2|2026-07-03|Merged main into worktree-FLSP-533-detail-tags
+  - 6dd3046|2026-07-03|FLSP-533 feat: compact blue tag-type badge, shrunk Latest chip, stacked chips, vendor in subtitle
+  - bc39f52|2026-07-03|Merged in worktree-FLSP-548-txn-parity (pull request #36)
+  - da8a19e|2026-07-03|FLSP-548 fix: drop nodemailer from lockfile (CI npm audit high-severity)
+  - bae29e8|2026-07-03|Merged main into worktree-FLSP-548-txn-parity
+  - 7aab9e1|2026-07-03|FLSP-548 refactor: descope AC#7 to on-demand parity-check (drop automation)
+  - e1e6366|2026-07-03|Merged in worktree-FLSP-551-browse-query-perf (pull request #35)
+  - 85ef19c|2026-07-03|Merged main into worktree-FLSP-551-browse-query-perf
+  - b29e404|2026-07-03|FLSP-551 fix: restore Order chip + Delivered badge on Not Available browse cards
+  - aed70e7|2026-07-03|Merge remote-tracking branch 'origin/main' into worktree-FLSP-548-txn-parity
+  - 6416f21|2026-07-03|Merged in worktree-FLSP-549-netsuite-links (pull request #34)
+
+## zendesk-tools
+- Remote: https://bitbucket.org/furniturelandsouth/zendesk-tools.git
+- Recent commits:
+  - 02885ce|2026-03-31|session issue
+  - 6b339a3|2026-03-31|fixed url_invlaid micollab retry bug
+  - 2d6f4ac|2026-03-23|Merge branch 'main' of https://bitbucket.org/furniturelandsouth/zendesk-tools
+  - 63569c7|2026-03-23|Fixed processing issue, added better logging for new URL status
+  - 1cdd49a|2026-03-19|Skip upload and tag transcription_empty for silent recordings
+  - 0640dee|2026-03-12|test new provider
+  - 1050da5|2026-03-12|bug fix
+  - 3cd45e4|2026-03-12|.bat fix
+  - 9ec2f57|2026-03-12|Added .bat with git pull and logging
+  - 70a1237|2026-03-12|Fixed tagging issue
+  - 9e96547|2026-03-11|docs: update README to reflect ZendeskCallAutoTranscript task server architecture
+  - e0d7de8|2026-03-11|feat: ZendeskCallAutoTranscript — production-ready task server job
+  - 396f134|2026-03-09|FLSI-2066 Round Robin Dedicated Agent
+  - b26bd67|2026-03-03|Dedicated Agent: Now uses custom_status_id: 43129874809499 (⚠️ Untouched) instead of the standard status field
+  - 58dad90|2026-03-02|Refactor Zendesk Lambda functions and remove duplicate checker
+  - 3f93000|2026-02-25|feat: Zendesk tools updates - user-based agent assignment, call summaries, calendar filters, wait time refactor
+  - 97b7ba7|2026-02-23|Fixed Small UI Bugs
+  - 14d7e99|2026-02-23|Deployed to Zendesk Test Group
+  - f065989|2026-02-23| Refactored Repo to 'Zendesk Tools', added Ticket Calendar
+  - 384a440|2026-02-23|AWS config added
+  - 6542100|2026-02-13|Test Suite Lambda Decision Branch Expected Performance
+  - ff33047|2026-02-13|Merge branch 'feature/modular-oss-pipeline'
+  - d3c2a3c|2026-02-13|AWS architecture: API Gateway -> SQS -> Lambda, tag-based idempotency
+  - b56d69e|2026-02-11|Merged in feature/weight-loss (pull request #2)
+  - 9f7ff2f|2026-02-11|concat dedup, 3-phase formatter, fragment filtering
+  - 5e6e449|2026-02-11|Weight loss: remove ~1,700 lines of duplication and dead code (35% reduction)
+  - 071c879|2026-02-09|FLSI-2751 Merged in feature/groq-migration (pull request #1)
+  - 2e6fc1c|2026-02-09|FLSI-2751: Restructure project for production deployment
+  - 6932627|2026-02-09|Add Groq API transcription engine, LLM module, and PII redactor
+  - 1d0daeb|2026-02-09|Merge remote main with unrelated histories
+  - 6c967c1|2026-02-09|Initial commit
+  - 026810c|2026-02-09|Initial commit: ZendeskCallAutoTranscript pipeline
+
+## sellsmart-tools
+- Remote: https://bitbucket.org/furniturelandsouth/sellsmart-tools.git
+- Recent commits:
+  - 25f43e8|2026-04-01|Merge branch 'main' of https://bitbucket.org/furniturelandsouth/sellsmart-tools
+  - bcfe82c|2026-04-01|Fix nsodbc require paths to reflect ja-utlity-shed location under NetSuite/
+  - 44d4651|2026-02-25|Merged in FLSI-2760-new-feature (pull request #2)
+  - 3a03f44|2026-02-25|FLSI-2869 Refactor SellSmart improvements pipeline, add parser tests and apply script
+  - ba5eec7|2026-02-20|Improved Topic Improvement Module
+  - 87c225c|2026-02-20|modified all references to a '.env' to be from project root
+  - c71b151|2026-02-20|Merged in FLSI-2760-new-feature (pull request #1)
+  - d77b91c|2026-02-20|Tools for the **SellSmart Copilot Studio** bot: sync NetSuite data into its knowledge base, run diagnostics on conversations, and generate LLM-assisted improvement suggestions.
+  - 9acb999|2026-02-17|Add vendor type distinction and auto-upload customer files
+  - c7def18|2026-02-16|Optimized Vendor Promotions Query
+  - ea94f3b|2026-02-16|FLSI-2862 Included Detailed Tariff Notes, Added Netsuite Links, Created SuiteQL Query for Vendor Promos
+  - d2b3272|2026-02-16|Fixed to include NetSuite URL, Topic Management
+  - 26a22cd|2026-02-09|FLSI-2760: Update README with comprehensive NetSuite ODBC setup instructions and Quick Start guide
+  - 0fa4014|2026-02-09|Updated Instructions
+  - cf1754e|2026-02-09|Fixed SuiteQL Queries + Added Function to Update Folder Descriptions
+  - ee9fa1d|2026-02-09|Improve pipeline summary: distinguish already-current vs truly-new files
+  - 106dbb0|2026-02-09|Add SellSmart Data Sync pipeline
+  - 569ee2c|2026-02-09|Initial commit

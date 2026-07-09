@@ -1,22 +1,23 @@
 export const skillGroups = [
   {
     label: 'Backend & AI',
-    items: ['Python', 'FastAPI', 'Java', 'Spring', 'CLIP', 'FAISS', 'Docker'],
+    items: ['Python', 'FastAPI', 'Node.js', 'Java', 'Spring', 'CLIP', 'FAISS', 'LLMs', 'Docker'],
   },
   {
     label: 'Frontend',
-    items: ['JavaScript', 'React', 'Next.js', 'HTML', 'CSS'],
+    items: ['TypeScript', 'React', 'Next.js', 'HTML', 'CSS'],
   },
   {
-    label: 'Data & DevOps',
-    items: ['Vector DBs', 'SQL', 'AWS', 'Jira', 'Zendesk'],
+    label: 'Data, Cloud & Ops',
+    items: ['PostgreSQL', 'SQL', 'AWS', 'Bitbucket CI', 'Zendesk', 'NetSuite', 'Entra ID'],
   },
 ];
 
 export const rotatingTitles = [
   'conversational AI & LLMs',
+  'inventory platforms',
+  'contact-center automation',
   'computer vision',
   'full-stack development',
-  'AI research & evaluation',
   'cloud & DevOps',
 ];

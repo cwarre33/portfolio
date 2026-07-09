@@ -14,3 +14,7 @@ dist
 *.log
 .idea
 .vscode
+
+# Ephemeral Jira MCP page dumps (merged JSON is kept)
+referece_context/jira_raw/
+
