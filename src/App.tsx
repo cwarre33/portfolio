@@ -1,3 +1,4 @@
+import { SectionTracker } from './analytics/SectionTracker';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
@@ -12,6 +13,16 @@ import { Footer } from './components/Footer';
 function App() {
   return (
     <>
+      <SectionTracker
+        sectionIds={[
+          'about',
+          'experience',
+          'aws',
+          'projects',
+          'certifications',
+          'contact',
+        ]}
+      />
       <Header />
       <main>
         <Hero />
