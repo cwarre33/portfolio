@@ -18,7 +18,7 @@ With the server listening on `127.0.0.1:8787`:
 tailscale serve --bg http://127.0.0.1:8787
 ```
 
-Open the MagicsDNS / Serve URL from any device on your tailnet. Do **not** use `tailscale funnel` (that is public).
+Open the MagicDNS / Serve URL from any device on your tailnet. Do **not** use `tailscale funnel` (that is public).
 
 ## Keep running (continuous server)
 
