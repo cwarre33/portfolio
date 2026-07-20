@@ -1,3 +1,4 @@
+import { trackEvent } from '../analytics/track';
 import type { Project } from '../data/projects';
 
 interface ProjectCardProps {
@@ -14,6 +15,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         target="_blank"
         rel="noopener noreferrer"
         className="project-card__link"
+        onClick={() => trackEvent('project_open')}
       >
         <div className="project-card__header">
           <h3 className="project-card__title">{project.title}</h3>
@@ -27,6 +29,10 @@ export function ProjectCard({ project }: ProjectCardProps) {
           target="_blank"
           rel="noopener noreferrer"
           className="project-card__live"
+          onClick={(e) => {
+            e.stopPropagation();
+            trackEvent('project_live');
+          }}
         >
           Live demo
         </a>

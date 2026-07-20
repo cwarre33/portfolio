@@ -1,6 +1,9 @@
+import { trackEvent } from '../analytics/track';
+
 const EMAIL = 'cwarre33@uncc.edu';
 const LINKEDIN = 'https://www.linkedin.com/in/cameron-warren-73a0192b2/';
 const GITHUB = 'https://github.com/cwarre33';
+const RESUME_HREF = `${import.meta.env.BASE_URL}downloads/CameronWarrenResumeDownload.pdf`;
 
 export function Contact() {
   return (
@@ -13,14 +16,38 @@ export function Contact() {
           Open to collaboration, speaking, and new opportunities. Reach out via email or LinkedIn.
         </p>
         <div className="contact__links">
-          <a href={`mailto:${EMAIL}`} className="contact__btn">
+          <a
+            href={`mailto:${EMAIL}`}
+            className="contact__btn"
+            onClick={() => trackEvent('contact_email')}
+          >
             {EMAIL}
           </a>
-          <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" className="contact__btn">
+          <a
+            href={LINKEDIN}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="contact__btn"
+            onClick={() => trackEvent('contact_linkedin')}
+          >
             LinkedIn
           </a>
-          <a href={GITHUB} target="_blank" rel="noopener noreferrer" className="contact__btn">
+          <a
+            href={GITHUB}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="contact__btn"
+            onClick={() => trackEvent('contact_github')}
+          >
             GitHub
+          </a>
+          <a
+            href={RESUME_HREF}
+            className="contact__btn"
+            download
+            onClick={() => trackEvent('resume_download')}
+          >
+            Download resume
           </a>
         </div>
         <p className="contact__note">
