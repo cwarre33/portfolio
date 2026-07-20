@@ -27,6 +27,20 @@ npm run build
 
 Deploy the contents of the `dist/` folder to the `gh-pages` branch or to GitHub Pages (e.g. set the source to the branch that contains `dist/`, or use a GitHub Action to build and push `dist/` to `gh-pages`).
 
+## Analytics
+
+Production builds load [GoatCounter](https://www.goatcounter.com/) and [Microsoft Clarity](https://clarity.microsoft.com/) when env vars are set. There is no on-page banner.
+
+1. Create a GoatCounter site; note the site code (subdomain).
+2. Create a Clarity project; copy the project ID.
+3. Locally, copy `.env.example` → `.env` and fill values (dev does not send events unless you force a production build).
+4. In the GitHub repo → Settings → Secrets and variables → Actions, add:
+   - `VITE_GOATCOUNTER_CODE`
+   - `VITE_CLARITY_ID`
+5. Push to `main` (or re-run **Deploy to GitHub Pages**) so the production bundle embeds the IDs.
+
+Private Tailscale hub: see `private-dashboard/README.md`.
+
 ## Structure
 
 - **Content** (resume, Jira, GitHub–informed): `src/data/` — experience, projects, skills, impact at work.
