@@ -5,6 +5,6 @@ declare global {
     goatcounter?: {
       count: (vars?: { path?: string; title?: string; event?: boolean }) => void;
     };
-    clarity?: (action: string, ...args: unknown[]) => void;
+    clarity?: ((...args: unknown[]) => void) & { q?: unknown[] };
   }
 }
