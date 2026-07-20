@@ -1,11 +1,10 @@
-import { getClarityId, getGoatCounterCode, isAnalyticsEnabled } from './config';
+import {
+  type AnalyticsEnv,
+  getClarityId,
+  getGoatCounterCode,
+  isAnalyticsEnabled,
+} from './config';
 import './types';
-
-type AnalyticsEnv = {
-  PROD: boolean;
-  VITE_GOATCOUNTER_CODE?: string;
-  VITE_CLARITY_ID?: string;
-};
 
 let initialized = false;
 

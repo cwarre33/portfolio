@@ -51,7 +51,7 @@ export function Contact() {
           </a>
         </div>
         <p className="contact__note">
-          Resume available on request or via LinkedIn.
+          Prefer LinkedIn messages for roles; resume download above.
         </p>
       </div>
       <style>{`
