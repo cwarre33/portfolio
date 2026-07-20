@@ -17,6 +17,7 @@ function App() {
         sectionIds={[
           'about',
           'experience',
+          'impact',
           'aws',
           'projects',
           'certifications',

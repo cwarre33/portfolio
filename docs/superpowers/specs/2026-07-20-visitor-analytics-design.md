@@ -94,7 +94,7 @@ A page that exists only for the owner, reachable on the Tailscale network, as a 
 ### Layout in repo
 
 - Sibling folder e.g. `private-dashboard/` (minimal static page + tiny local server or `tailscale serve` of static files).
-- Document start command and MagicsDNS / Serve URL in README (or `private-dashboard/README.md`).
+- Document start command and MagicDNS / Serve URL in README (or `private-dashboard/README.md`).
 
 ### Out of scope for v1
 
