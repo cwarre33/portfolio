@@ -8,7 +8,8 @@ export function AwsWork() {
           AWS &amp; infrastructure <span>work</span>
         </h2>
         <p className="aws-work__intro">
-          Serverless and event-driven systems on AWS—focused on cost efficiency and clear business impact.
+          Cloud platforms and serverless automations on AWS—RDS, ECS/Fargate, Terraform-managed secrets, and
+          event-driven pipelines with measurable cost and performance outcomes.
         </p>
         <div className="aws-work__grid">
           {awsWork.map((item) => (

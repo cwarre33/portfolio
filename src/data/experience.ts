@@ -5,9 +5,9 @@ export const experience = [
     location: 'Jamestown, North Carolina',
     period: 'Jan 2026 – Present',
     highlights: [
-      'Shipping production Inventory Lookup (Next.js + RDS), Zendesk custom round-robin / dedicated-agent routing, and NetSuite integrations.',
-      'Owned Entra ID SSO with role-based pricing, Bitbucket CI quality gates, and shared AWS RDS + delta-sync for the engineering team.',
-      'Leading Conversational AI / Copilot and visual-search work into live retail workflows with measurable ops impact.',
+      'Shipping production Inventory Lookup (Next.js + RDS)—browse queries ~11s → sub-second, ~5GB shared Postgres with ~15-min NetSuite delta sync, Entra SSO, and a staging→prod CI/CD pipeline I built on ECS/Fargate with Terraform-managed secrets.',
+      'Custom Zendesk round robin has assigned 4,000+ tickets with dedicated-agent routing, daily caps, and safe env-flagged rollouts.',
+      'Leading Conversational AI / Copilot Studio (SellSmart + Digital-to-Store) and visual-search work into live retail workflows.',
     ],
   },
   {

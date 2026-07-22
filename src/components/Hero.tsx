@@ -4,9 +4,9 @@ const LINKEDIN = 'https://www.linkedin.com/in/cameron-warren-73a0192b2/';
 const GITHUB = 'https://github.com/cwarre33';
 
 const STATS = [
-  { value: '95%', label: 'faster search' },
-  { value: '< 500ms', label: 'latency' },
-  { value: '2', label: 'AI products shipped' },
+  { value: '4,000+', label: 'tickets auto-assigned' },
+  { value: '< 500ms', label: 'AI visual search (was 15s)' },
+  { value: '4', label: 'AI products shipped' },
 ];
 
 const SPLINE_SCENE_URL = 'https://prod.spline.design/xkOKuZbsmNGFlpat/scene.splinecode?v=2';
