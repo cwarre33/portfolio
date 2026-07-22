@@ -2,8 +2,8 @@
 
 > **Purpose:** Single source of truth for all experience, projects, and delivery themes. Tailor down for specific applications; do not send this full document as-is unless asked for a complete work history.
 >
-> **Last synced:** 2026-07-09  
-> **Sources:** Jira (FLSI / FLSP / FLSM / ITT), Bitbucket (`ja-utlity-shed`, `inventory-lookup`, `zendesk-tools`, `sellsmart-tools`), portfolio site data, prior resume PDFs.
+> **Last synced:** 2026-07-21  
+> **Sources:** Jira (FLSI / FLSP / FLSM / ITT), Bitbucket (`ja-utlity-shed`, `inventory-lookup`, `zendesk-tools`, `sellsmart-tools`), cameron-wiki FLS catch-up (2026-07-21), portfolio site data, prior resume PDFs.
 
 ---
 
@@ -21,7 +21,9 @@
 
 ## Professional Summary
 
-AI / full-stack engineer at Furnitureland South building production systems across **inventory lookup (Next.js + PostgreSQL/RDS)**, **Zendesk contact-center automation**, **NetSuite integrations**, and **retail AI** (visual search, Copilot/LLM tooling). Comfortable owning features end-to-end: design → implementation → CI → task-server ops → post-prod validation.
+AI / full-stack engineer at Furnitureland South building production systems across **inventory lookup (Next.js + PostgreSQL/RDS)**, **Zendesk contact-center automation**, **NetSuite integrations**, and **retail AI** (visual search, Copilot/LLM tooling). Comfortable owning features end-to-end: design → implementation → CI/CD (staging→prod on ECS/Fargate) → task-server ops → post-prod validation.
+
+**Headline metrics (public-safe):** 4,000+ tickets auto-assigned by custom round robin · inventory browse ~11s → ~150ms–1s (warm snapshot ~500ms; filtered ~10.4s → ~2.2s) · visual search ~15s → <500ms · ~5GB / ~23-yr RDS read plane synced every ~15 min.
 
 **Jira footprint (as of 2026-07-09):** 324 unique issues · 316 assigned · 200 reported · ~280 Done / Deployed / Closed.
 
@@ -32,8 +34,9 @@ AI / full-stack engineer at Furnitureland South building production systems acro
 ### AI Research Analyst — Furnitureland South, Inc.  
 **Jamestown, NC · Jan 2026 – Present**
 
-- Lead delivery on enterprise AI and internal platforms: Inventory Lookup (SellSmart clone), Zendesk custom round-robin / dedicated-agent routing, NetSuite↔Zendesk customer sync, and SellSmart Copilot / knowledge ops.
-- Own production task-server jobs, Bitbucket CI quality gates, shared AWS RDS for multi-dev parity, and Entra ID SSO with role-based pricing.
+- Lead delivery on enterprise AI and internal platforms: Inventory Lookup / ClearView, Zendesk custom round-robin / dedicated-agent routing (4,000+ tickets auto-assigned), NetSuite↔Zendesk customer sync, and SellSmart / Digital-to-Store Copilot agents.
+- Built and own the staging→prod CI/CD pipeline on ECS/Fargate: quality-gated Bitbucket Pipelines → OIDC → ECR → auto-deploy staging → manual digest promotion to prod, with fully separated environments (own ECS services, RDS, DNS) and Terraform/SSM-managed secrets.
+- Own production task-server jobs, shared AWS RDS for multi-dev parity (browse perf ~11s → sub-second via matviews/query redesign), and Entra ID SSO with role-based pricing.
 - Partner with Service, Sales, and IT stakeholders; write specs/plans, ship behind feature flags, and validate live runs.
 
 ### Jr. AI Research Analyst — Furnitureland South, Inc.  
@@ -71,8 +74,9 @@ Use these as the pool when tailoring. Ticket keys are for *your* reference only 
 
 - Built scan-first inventory search and results UX (location filters, tags, role-based pricing, Excel/CSV export, client-side sort).
 - Delivered item detail (barcode view), item history/activity, FSO/SPO labeling, On Order clarity, and NetSuite deep links (prod vs SB1).
-- Stood up shared AWS RDS PostgreSQL for the team (~5 GB NetSuite-derived dataset) and automated 15-min delta-sync on the task server.
-- Performance: per-serial snapshot (`vmpn_serial_snapshot`), default browse matview (`vmpn_browse_default`), query redesign removing per-row detail lookups, statement_timeout guardrails, concurrent-user capacity work.
+- Stood up shared AWS RDS PostgreSQL for the team (~5 GB, ~23-yr NetSuite-derived history) and automated 15-min multi-lane delta-sync on the task server (drain-safe watermarks, FLSP-547 stall fix).
+- Performance: default grouped browse ~11s → ~150ms–1s via `vmpn_browse_default` matview; warm snapshot statements ~11s → ~500ms (`AS MATERIALIZED` + ANALYZE); filtered browse ~10.4s → ~2.2s via `vmpn_serial_snapshot`; query redesign removing per-row detail lookups; statement_timeout guardrails; concurrent-user capacity work.
+- Hosting & CI/CD (FLSP-403): containerized Next.js on ECS/Fargate behind the estate's first internal ALB — staging + prod as fully separated environments; Bitbucket Pipelines `verify:ci` gate → OIDC → ECR → auto staging deploy → manual digest promotion to prod; Terraform/SSM-managed secrets; Entra SSO; prod live 2026-07-16 (~1.96M txns / ~11.5M lines seeded).
 - Instant return / cached search state; fixed back-navigation and loading-spinner races.
 - Security: Microsoft Entra ID SSO; session roles from NetSuite employee + Entra group fallback; API/UI RBAC gating and verification tests.
 - CI: Bitbucket Pipeline quality gate (typecheck, ESLint, merge protection).
@@ -84,7 +88,7 @@ Use these as the pool when tailoring. Ticket keys are for *your* reference only 
 
 **Stack:** Node.js, Zendesk APIs, task-server `.bat` jobs, AWS Lambda / SQS (select flows), JSONL telemetry.
 
-- Custom round robin (CRR) for VCS/CCS/CI groups: daily caps, roster controls, supervisor exclusions, live/dry-run via env flags.
+- Custom round robin (CRR) for VCS/CCS/CI groups: **4,000+ tickets auto-assigned in production** — daily caps, roster controls, supervisor exclusions, live/dry-run via env flags.
 - Organization dedicated-agent routing; vendor dedicated assigns count toward daily cap with dual tags + `assignment_kind` telemetry (FLSM-33); CRR daily log compile / cleanup (FLSM-34).
 - CCS native vs custom RR merge strategy with feature-flag style env toggles so live VCS was never disrupted.
 - Call auto-transcription task-server job (faster-whisper path; empty-recording tagging); chat 3-minute timeout handler; dedicated-agent Lambda assigner.
@@ -112,14 +116,15 @@ Use these as the pool when tailoring. Ticket keys are for *your* reference only 
 
 **Representative tickets:** FLSI-1490–1621 (SofaScope build), 2593, 2623, 2670, 2826 · FLSI-2760 / 2862 / 2869 · FLSM-5 · FLSP-85–89, 247–251 · SofaScope live: https://sofascope.furniturelandsouth.com
 
-### 5. AWS / Cloud Proof Work
+### 5. AWS / Cloud & CI/CD
 
+- ClearView production hosting: ECS/Fargate (staging + prod services) behind internal ALB; Terraform/SSM secrets; Entra SSO; incremental cost ~$141/mo (~$171/mo total steady-state).
+- CI/CD pipeline ownership: Bitbucket Pipelines quality gate (`verify:ci`) → OIDC role → ECR → auto-deploy staging → manual image-digest promotion to prod; fully separated staging/prod environments (ECS, RDS, DNS).
 - Call transcription pipeline: API Gateway → Lambda → S3 (TTL) → SQS → ECS Fargate (Whisper) → Zendesk.
-- Chat timeout: Zendesk trigger → Lambda → delayed SQS → ticket update.
-- Dedicated agent assigner Lambda; initial non-prod AWS proof components (S3 lifecycle, SQS, ECS skeleton).
-- Shared RDS for Inventory Lookup (first durable AWS footprint for that product).
+- Chat timeout: Zendesk trigger → Lambda → delayed SQS → ticket update; dedicated agent assigner Lambda.
+- Shared RDS Postgres for Inventory Lookup (estate's first Postgres RDS; first durable AWS footprint for that product).
 
-**Representative tickets:** FLSI-2764 · portfolio AWS section · FLSP-446 / 511.
+**Representative tickets:** FLSI-2764 · FLSP-403 / 412 / 728 (hosting + CI/CD) · FLSP-446 / 511 · portfolio AWS section.
 
 ---
 
@@ -145,9 +150,9 @@ Use these as the pool when tailoring. Ticket keys are for *your* reference only 
 **Languages:** Python, TypeScript/JavaScript, Java, SQL, HTML/CSS · (familiar: C/C++)  
 **Backend / AI:** FastAPI, Node.js, Spring, CLIP, FAISS, LLMs / Copilot Studio, Whisper / speech-to-text, LangGraph (course)  
 **Frontend:** React, Next.js, Material-UI, Chart.js  
-**Data / Cloud:** PostgreSQL, AWS (S3, Lambda, SQS, ECS/Fargate, RDS), Docker, vector search  
+**Data / Cloud:** PostgreSQL (matviews, query tuning), AWS (S3, Lambda, SQS, ECS/Fargate, RDS, ALB, ECR), Terraform, Docker, vector search  
 **Integrations / Ops:** Zendesk APIs, NetSuite (SuiteQL, ODBC, SuiteScript/Suitelets), Bitbucket Pipelines, Jira, task-server automation, Microsoft Entra ID / Auth.js  
-**Practices:** TDD / offline harnesses, feature flags, observability (JSONL telemetry), RBAC, CI quality gates
+**Practices:** TDD / offline harnesses, feature flags, observability (JSONL telemetry), RBAC, CI/CD quality gates, staging→prod environment separation with manual promote
 
 ---
 
@@ -185,7 +190,7 @@ Trail running, hiking, backpacking, climbing, yoga, reading, meditation
 | Full-stack / Next.js | Inventory Lookup theme + personal React/Next projects |
 | AI / ML engineer | SofaScope, SellSmart Copilot, Whisper, CLIP/FAISS, research analyst titles |
 | Platform / integrations | Zendesk CRR, NetSuite sync, AWS Lambdas, task-server ops |
-| Cloud / DevOps | RDS, Bitbucket CI, ECS/SQS pipelines, env-flagged rollouts |
+| Cloud / DevOps | ECS/Fargate CI/CD (staging→prod promote), Terraform/SSM, RDS + delta sync, env-flagged rollouts |
 | New grad / entry | Education + personal projects + intern → analyst progression; trim ticket appendix |
 
 ---
