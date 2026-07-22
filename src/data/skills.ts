@@ -1,7 +1,7 @@
 export const skillGroups = [
   {
     label: 'Backend & AI',
-    items: ['Python', 'FastAPI', 'Node.js', 'Java', 'Spring', 'CLIP', 'FAISS', 'LLMs', 'Docker'],
+    items: ['Python', 'FastAPI', 'Node.js', 'Java', 'Spring', 'CLIP', 'FAISS', 'LLMs', 'Copilot Studio', 'Docker'],
   },
   {
     label: 'Frontend',
@@ -9,7 +9,17 @@ export const skillGroups = [
   },
   {
     label: 'Data, Cloud & Ops',
-    items: ['PostgreSQL', 'SQL', 'AWS', 'Bitbucket CI', 'Zendesk', 'NetSuite', 'Entra ID'],
+    items: [
+      'PostgreSQL',
+      'SQL',
+      'AWS',
+      'Terraform',
+      'ECS/Fargate',
+      'Bitbucket CI',
+      'Zendesk',
+      'NetSuite',
+      'Entra ID',
+    ],
   },
 ];
 

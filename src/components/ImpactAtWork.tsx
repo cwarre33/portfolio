@@ -1,4 +1,5 @@
 import { impactAtWork } from '../data/impactAtWork';
+import { ImpactStats } from './ImpactStats';
 
 export function ImpactAtWork() {
   return (
@@ -11,6 +12,7 @@ export function ImpactAtWork() {
           Selected outcomes from enterprise AI, cloud, and customer-operations work—summarized for a public audience
           (details are curated; raw delivery tracking stays offline).
         </p>
+        <ImpactStats />
         <div className="impact-at-work__grid">
           {impactAtWork.map((item) => (
             <article key={item.title} className="impact-card">
