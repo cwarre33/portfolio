@@ -10,7 +10,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     title: 'SofaScope',
-    description: 'AI-powered visual search for the world\'s largest furniture store. CLIP embeddings and FAISS vector search in a Dockerized microservices architecture — optimized search latency by 95% (15s → <500ms).',
+    description: 'AI-powered visual search for the world\'s largest furniture store. CLIP embeddings and FAISS vector search in a Dockerized microservices architecture, optimized search latency by 95% (15s → <500ms).',
     url: 'https://github.com/cwarre33',
     liveUrl: 'https://sofascope.furniturelandsouth.com',
     tags: ['Python', 'FastAPI', 'CLIP', 'FAISS', 'Docker'],
@@ -57,7 +57,7 @@ export const projects: Project[] = [
   },
   {
     title: 'EDA-NASDAQ',
-    description: 'Stock market analysis with pandas, matplotlib, and seaborn on historical NASDAQ data (1962–2024).',
+    description: 'Stock market analysis with pandas, matplotlib, and seaborn on historical NASDAQ data (1962-2024).',
     url: 'https://github.com/cwarre33/EDA-NASDAQ',
     tags: ['Python', 'pandas', 'Jupyter'],
   },

@@ -9,7 +9,7 @@ export function ImpactAtWork() {
           Impact <span>at work</span>
         </h2>
         <p className="impact-at-work__intro">
-          Selected outcomes from enterprise AI, cloud, and customer-operations work—summarized for a public audience
+          Selected outcomes from enterprise AI, cloud, and customer-operations work, summarized for a public audience
           (details are curated; raw delivery tracking stays offline).
         </p>
         <ImpactStats />

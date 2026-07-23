@@ -8,7 +8,7 @@ export function AwsWork() {
           AWS &amp; infrastructure <span>work</span>
         </h2>
         <p className="aws-work__intro">
-          Cloud platforms and serverless automations on AWS—RDS, ECS/Fargate, Terraform-managed secrets, and
+          Cloud platforms and serverless automations on AWS: RDS, ECS/Fargate, Terraform-managed secrets, and
           event-driven pipelines with measurable cost and performance outcomes.
         </p>
         <div className="aws-work__grid">

@@ -58,7 +58,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           .project-card { padding: 1.5rem; }
         }
 
-        /* Top indicator bar — transparent by default, fills with accent on hover */
+        /* Top indicator bar: transparent by default, fills with accent on hover */
         .project-card::after {
           content: '';
           position: absolute;
