@@ -1,14 +1,17 @@
-# Cameron Warren — Portfolio
+# Cameron Warren Portfolio
 
 **Live:** [https://cwarre33.github.io/portfolio/](https://cwarre33.github.io/portfolio/)
 
-A professional, React-based portfolio showcasing experience as an AI Research Analyst and Software Engineer — SofaScope, SellSmart, SEC Breach Dashboard, and full-stack/AI projects.
+React + TypeScript portfolio for an AI Research Analyst / software engineer at Furnitureland South. Highlights production work: contact-center automation (4,000+ tickets auto-assigned), inventory lookup + RDS browse perf, staging-to-prod CI/CD on ECS/Fargate, conversational AI (SellSmart / Digital-to-Store), and SofaScope visual search (15s to &lt;500ms).
+
+Also see the [GitHub profile README](https://github.com/cwarre33).
 
 ## Stack
 
-- **React 18** + **TypeScript**
-- **Vite** (build & dev server)
-- CSS with design tokens (dark, clean theme)
+- **React 18** + **TypeScript** + **Vite**
+- CSS design tokens (dark theme, glass cards, DM Sans + JetBrains Mono)
+- **Vitest** for analytics unit tests
+- Production analytics: GoatCounter + Microsoft Clarity (env-gated, no on-page UI)
 
 ## Run locally
 
@@ -17,37 +20,47 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173). The app is served with base path `/portfolio/` for GitHub Pages.
-
-## Build for GitHub Pages
+Open [http://127.0.0.1:5173/portfolio/](http://127.0.0.1:5173/portfolio/) (base path `/portfolio/` for GitHub Pages).
 
 ```bash
-npm run build
+npm test          # Vitest
+npm run build     # production bundle → dist/
 ```
 
-Deploy the contents of the `dist/` folder to the `gh-pages` branch or to GitHub Pages (e.g. set the source to the branch that contains `dist/`, or use a GitHub Action to build and push `dist/` to `gh-pages`).
+## Deploy (GitHub Pages)
 
-## Analytics
+Pushing to `main` runs `.github/workflows/deploy-pages.yml`, which builds with Vite and publishes `dist/`.
 
-Production builds load [GoatCounter](https://www.goatcounter.com/) and [Microsoft Clarity](https://clarity.microsoft.com/) when env vars are set. There is no on-page banner.
+Required repo secrets for analytics in production:
 
-1. Create a GoatCounter site; note the site code (subdomain).
-2. Create a Clarity project; copy the project ID.
-3. Locally, copy `.env.example` → `.env` and fill values (dev does not send events unless you force a production build).
-4. In the GitHub repo → Settings → Secrets and variables → Actions, add:
-   - `VITE_GOATCOUNTER_CODE`
-   - `VITE_CLARITY_ID`
-5. Push to `main` (or re-run **Deploy to GitHub Pages**) so the production bundle embeds the IDs.
+- `VITE_GOATCOUNTER_CODE`
+- `VITE_CLARITY_ID`
 
-Private Tailscale hub: see `private-dashboard/README.md`.
+Copy `.env.example` → `.env` for local reference (dev does not send events unless you force a production build). Private Tailscale analytics hub: `private-dashboard/README.md`.
 
-## Structure
+## Site sections
 
-- **Content** (resume, Jira, GitHub–informed): `src/data/` — experience, projects, skills, impact at work.
-- **Master resume (complete inventory):** `referece_context/MASTER_RESUME.md` — tailor from this; Jira/Bitbucket snapshots live alongside it.
-- **Sections:** Hero (with typewriter), About, Experience, Impact at Work, Projects, Contact, Footer.
-- **Design:** Dark theme, DM Sans + JetBrains Mono, accent blue, responsive layout.
+| Section | Content |
+|---------|---------|
+| Hero | Typewriter titles + headline stats (4,000+ tickets, &lt;500ms search, 4 AI products) |
+| About | Bio + skill groups (languages, AI, cloud/ops including Terraform, ECS, Copilot Studio) |
+| Experience | Role timeline with metric-forward bullets |
+| Impact at work | Animated metrics band + curated outcome cards |
+| AWS & infrastructure | Shared RDS + delta sync, staging→prod CI/CD on ECS/Fargate, transcription pipeline |
+| Projects | SofaScope, Breach Dashboard, AutoTrader, and more |
+| Certifications / Contact | Education, certs, resume download, links |
 
-## Legacy site
+## Content sources
 
-The previous static HTML/CSS site is preserved as `index-legacy.html` and `project.html` for reference.
+| Path | Purpose |
+|------|---------|
+| `src/data/` | Public site copy (experience, impact, AWS, projects, skills, stats) |
+| `referece_context/MASTER_RESUME.md` | Full internal inventory for tailoring resumes |
+| `referece_context/my_work_*.json` | Jira contribution snapshots (private reference) |
+| `docs/superpowers/` | Design specs and implementation plans |
+
+Keep ticket IDs out of `src/`. Prefer public-safe metrics aligned with the profile README.
+
+## Legacy
+
+Older static HTML/CSS lives as `index-legacy.html` / `project.html` for reference only.
