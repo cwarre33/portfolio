@@ -16,7 +16,7 @@ export function About() {
             </p>
             <p>
               I architected and built <strong>SofaScope</strong>, an AI-powered visual search platform for the
-              world's largest furniture store — using CLIP embeddings and FAISS vector search in a Dockerized
+              world's largest furniture store, using CLIP embeddings and FAISS vector search in a Dockerized
               microservices stack. Search performance improved by 95%, with latency dropping from 15 seconds
               to under 500ms.
             </p>
