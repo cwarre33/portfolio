@@ -3,6 +3,8 @@ export interface ImpactStat {
   target: number;
   prefix?: string;
   suffix?: string;
+  /** Decimal places for the count-up (default 0). Use 1 for values like 1.3M. */
+  decimals?: number;
   label: string;
   detail: string;
 }
@@ -28,9 +30,10 @@ export const impactStats: ImpactStat[] = [
     detail: '15s \u2192 <500ms with persistent CLIP serving',
   },
   {
-    target: 23,
-    suffix: ' yrs',
-    label: 'of data on shared RDS',
-    detail: '~5GB Postgres, delta-synced every 15 min',
+    target: 1.3,
+    suffix: 'M+',
+    decimals: 1,
+    label: 'serials tracked',
+    detail: '~200k products · ~23 years on shared RDS',
   },
 ];

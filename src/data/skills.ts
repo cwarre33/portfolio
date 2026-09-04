@@ -15,6 +15,7 @@ export const skillGroups = [
       'AWS',
       'Terraform',
       'ECS/Fargate',
+      'WAF',
       'Bitbucket CI',
       'Zendesk',
       'NetSuite',
@@ -25,7 +26,7 @@ export const skillGroups = [
 
 export const rotatingTitles = [
   'conversational AI & LLMs',
-  'inventory platforms',
+  'inventory & shop-ops platforms',
   'contact-center automation',
   'computer vision',
   'full-stack development',

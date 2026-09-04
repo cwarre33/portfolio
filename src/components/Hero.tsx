@@ -6,7 +6,7 @@ const GITHUB = 'https://github.com/cwarre33';
 const STATS = [
   { value: '4,000+', label: 'tickets auto-assigned' },
   { value: '< 500ms', label: 'AI visual search (was 15s)' },
-  { value: '4', label: 'AI products shipped' },
+  { value: '1.3M+', label: 'serials tracked in ClearView' },
 ];
 
 const SPLINE_SCENE_URL = 'https://prod.spline.design/xkOKuZbsmNGFlpat/scene.splinecode?v=2';
@@ -47,7 +47,7 @@ export function Hero() {
             <Typewriter />
           </h1>
           <p className="hero__subtitle">
-            B.S. Computer Science @ UNC Charlotte · Furnitureland South · SofaScope, SellSmart &amp; enterprise AI
+            B.S. Computer Science @ UNC Charlotte · Furnitureland South · ClearView, SofaScope &amp; SellSmart
           </p>
           <div className="hero__actions">
             <a href="#contact" className="hero__btn hero__btn--primary">

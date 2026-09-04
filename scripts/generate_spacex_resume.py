@@ -58,7 +58,7 @@ Coursework: Software Engineering, Database Design & Implementation, Logic & Algo
 ---
 
 ## Projects
-**SofaScope** — AI visual product search (Python, FastAPI, CLIP, FAISS, Docker) · [sofascope.furniturelandsouth.com](https://sofascope.furniturelandsouth.com)  
+**SofaScope** — AI visual product search (Python, FastAPI, CLIP, FAISS, Docker)  
 Optimized similarity search latency **~15s → <500ms** (~95%); Dockerized microservices for embedding + query path.
 
 **SEC 8-K Breach Dashboard** — React, Node.js, Express, MongoDB, WebSocket · [github.com/cwarre33/BreachDashboard](https://github.com/cwarre33/BreachDashboard)  
@@ -186,7 +186,7 @@ def build_pdf() -> None:
 
     section("Projects")
     body(
-        "SofaScope - AI visual product search (Python, FastAPI, CLIP, FAISS, Docker)  |  sofascope.furniturelandsouth.com",
+        "SofaScope - AI visual product search (Python, FastAPI, CLIP, FAISS, Docker)",
         bold=True,
         size=8.4,
     )

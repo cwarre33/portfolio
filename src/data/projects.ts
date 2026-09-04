@@ -12,7 +12,6 @@ export const projects: Project[] = [
     title: 'SofaScope',
     description: 'AI-powered visual search for the world\'s largest furniture store. CLIP embeddings and FAISS vector search in a Dockerized microservices architecture, optimized search latency by 95% (15s → <500ms).',
     url: 'https://github.com/cwarre33',
-    liveUrl: 'https://sofascope.furniturelandsouth.com',
     tags: ['Python', 'FastAPI', 'CLIP', 'FAISS', 'Docker'],
     highlight: true,
   },

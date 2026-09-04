@@ -2,8 +2,8 @@
 
 > **Purpose:** Single source of truth for all experience, projects, and delivery themes. Tailor down for specific applications; do not send this full document as-is unless asked for a complete work history.
 >
-> **Last synced:** 2026-07-21 
-> **Sources:** Jira (FLSI / FLSP / FLSM / ITT), Bitbucket (`ja-utlity-shed`, `inventory-lookup`, `zendesk-tools`, `sellsmart-tools`), cameron-wiki FLS catch-up (2026-07-21), portfolio site data, prior resume PDFs.
+> **Last synced:** 2026-09-04 
+> **Sources:** Jira (FLSI / FLSP / FLSM / ITT), Bitbucket (`ja-utlity-shed`, `inventory-lookup`, `zendesk-tools`, `sellsmart-tools`), cameron-wiki FLS catch-up (2026-07-21, 2026-07-30, 2026-09-02 Shop/RMF), portfolio site data, prior resume PDFs.
 
 ---
 
@@ -21,9 +21,9 @@
 
 ## Professional Summary
 
-AI / full-stack engineer at Furnitureland South building production systems across **inventory lookup (Next.js + PostgreSQL/RDS)**, **Zendesk contact-center automation**, **NetSuite integrations**, and **retail AI** (visual search, Copilot/LLM tooling). Comfortable owning features end-to-end: design → implementation → CI/CD (staging→prod on ECS/Fargate) → task-server ops → post-prod validation.
+AI / full-stack engineer at Furnitureland South building production systems across **ClearView (inventory + shop-ops: Next.js + PostgreSQL/RDS + live NetSuite)**, **Zendesk contact-center automation**, **NetSuite integrations**, and **retail AI** (visual search, Copilot/LLM tooling). Comfortable owning features end-to-end: design → implementation → CI/CD (staging→prod on ECS/Fargate, public ALB + WAF) → task-server ops → post-prod validation.
 
-**Headline metrics (public-safe):** 4,000+ tickets auto-assigned by custom round robin · inventory browse ~11s → ~150ms-1s (warm snapshot ~500ms; filtered ~10.4s → ~2.2s) · visual search ~15s → <500ms · ~5GB / ~23-yr RDS read plane synced every ~15 min.
+**Headline metrics (public-safe):** 4,000+ tickets auto-assigned by custom round robin · ~1.3M serials / 200k+ products · 70+ ClearView production users · inventory browse ~11s → ~150ms-1s (warm snapshot ~500ms; filtered ~10.4s → ~2.2s) · visual search ~15s → <500ms · ~5GB / ~23-yr RDS read plane synced every ~15 min · ClearView hosting ~$159/mo.
 
 **Jira footprint (as of 2026-07-09):** 324 unique issues · 316 assigned · 200 reported · ~280 Done / Deployed / Closed.
 
@@ -34,9 +34,9 @@ AI / full-stack engineer at Furnitureland South building production systems acro
 ### AI Research Analyst : Furnitureland South, Inc. 
 **Jamestown, NC · Jan 2026 - Present**
 
-- Lead delivery on enterprise AI and internal platforms: Inventory Lookup / ClearView, Zendesk custom round-robin / dedicated-agent routing (4,000+ tickets auto-assigned), NetSuite↔Zendesk customer sync, and SellSmart / Digital-to-Store Copilot agents.
-- Built and own the staging→prod CI/CD pipeline on ECS/Fargate: quality-gated Bitbucket Pipelines → OIDC → ECR → auto-deploy staging → manual digest promotion to prod, with fully separated environments (own ECS services, RDS, DNS) and Terraform/SSM-managed secrets.
-- Own production task-server jobs, shared AWS RDS for multi-dev parity (browse perf ~11s → sub-second via matviews/query redesign), and Entra ID SSO with role-based pricing.
+- Lead delivery on enterprise AI and internal platforms: ClearView (inventory + shop-request ops across ~1.3M serials; 70+ production users), Zendesk custom round-robin / dedicated-agent routing (4,000+ tickets auto-assigned), NetSuite↔Zendesk customer sync, and SellSmart / Digital-to-Store Copilot agents.
+- Built and own the staging→prod CI/CD pipeline on ECS/Fargate: quality-gated Bitbucket Pipelines → OIDC → ECR → auto-deploy staging → manual digest promotion to prod, with fully separated environments (own ECS services, RDS, DNS), internal + public ALBs, AWS WAF on the internet path, and Terraform/SSM-managed secrets.
+- Own production task-server jobs, shared AWS RDS for multi-dev parity (browse perf ~11s → sub-second via matviews/query redesign), Entra ID SSO with role-based pricing, and shop-ops queues that read live NetSuite (not RDS) so staff are not waiting on sync lag.
 - Partner with Service, Sales, and IT stakeholders; write specs/plans, ship behind feature flags, and validate live runs.
 
 ### Jr. AI Research Analyst : Furnitureland South, Inc. 
@@ -76,9 +76,11 @@ Use these as the pool when tailoring. Ticket keys are for *your* reference only 
 - Delivered item detail (barcode view), item history/activity, FSO/SPO labeling, On Order clarity, and NetSuite deep links (prod vs SB1).
 - Stood up shared AWS RDS PostgreSQL for the team (~5 GB, ~23-yr NetSuite-derived history) and automated 15-min multi-lane delta-sync on the task server (drain-safe watermarks, FLSP-547 stall fix).
 - Performance: default grouped browse ~11s → ~150ms-1s via `vmpn_browse_default` matview; warm snapshot statements ~11s → ~500ms (`AS MATERIALIZED` + ANALYZE); filtered browse ~10.4s → ~2.2s via `vmpn_serial_snapshot`; query redesign removing per-row detail lookups; statement_timeout guardrails; concurrent-user capacity work.
-- Hosting & CI/CD (FLSP-403): containerized Next.js on ECS/Fargate behind the estate's first internal ALB : staging + prod as fully separated environments; Bitbucket Pipelines `verify:ci` gate → OIDC → ECR → auto staging deploy → manual digest promotion to prod; Terraform/SSM-managed secrets; Entra SSO; prod live 2026-07-16 (~1.96M txns / ~11.5M lines seeded).
+- Hosting & CI/CD (FLSP-403): containerized Next.js on ECS/Fargate behind internal + public ALBs (WAF on the public path); staging + prod as fully separated environments; Bitbucket Pipelines `verify:ci` gate → OIDC → ECR → auto staging deploy → manual digest promotion to prod; Terraform/SSM-managed secrets; Entra SSO; prod live 2026-07-16 (~1.96M txns / ~11.5M lines seeded); public path verified 2026-07-24; steady-state ~$159/mo.
+- Shop-request operations (PIE replacement epic still In Progress — do not claim Done): NetSuite custom-record SoR; `/shop` queue + detail; live SuiteTalk reads (not RDS); attachments with server-side preview; duplicate-open guard; department view vs create RBAC behind a rollout flag; email subscriptions on comments/attachments. ~76 Admin-listed users (2026-09-02); 9 with explicit shop role.
+- Catalogue scale: ~1.3 million tracked serials across 200,000+ distinct products.
 - Instant return / cached search state; fixed back-navigation and loading-spinner races.
-- Security: Microsoft Entra ID SSO; session roles from NetSuite employee + Entra group fallback; API/UI RBAC gating and verification tests.
+- Security: Microsoft Entra ID SSO; session roles from NetSuite employee + Entra group fallback; API/UI RBAC gating and verification tests; public internet path still Entra-gated.
 - CI: Bitbucket Pipeline quality gate (typecheck, ESLint, merge protection).
 - EZ Tags deep-link barcode prefill; transaction parity fixes vs NetSuite production.
 
@@ -114,11 +116,11 @@ Use these as the pool when tailoring. Ticket keys are for *your* reference only 
 - SellSmart Copilot: guidance behavior, data sources, DC validation, furniture discovery use cases; KB monthly sync; vendor promo / tariff visibility; analytics via Copilot agent builder.
 - SellSmart tools: NetSuite data sync into Copilot KB, conversation diagnostics, LLM-assisted improvement suggestions.
 
-**Representative tickets:** FLSI-1490-1621 (SofaScope build), 2593, 2623, 2670, 2826 · FLSI-2760 / 2862 / 2869 · FLSM-5 · FLSP-85-89, 247-251 · SofaScope live: https://sofascope.furniturelandsouth.com
+**Representative tickets:** FLSI-1490-1621 (SofaScope build), 2593, 2623, 2670, 2826 · FLSI-2760 / 2862 / 2869 · FLSM-5 · FLSP-85-89, 247-251
 
 ### 5. AWS / Cloud & CI/CD
 
-- ClearView production hosting: ECS/Fargate (staging + prod services) behind internal ALB; Terraform/SSM secrets; Entra SSO; incremental cost ~$141/mo (~$171/mo total steady-state).
+- ClearView production hosting: ECS/Fargate (staging + prod services) behind internal + public ALBs; dedicated WAF (managed rules + per-IP rate limit) on the internet path; Terraform/SSM secrets; Entra SSO; steady-state ~$159/mo (under prior ~$201–216 estimate).
 - CI/CD pipeline ownership: Bitbucket Pipelines quality gate (`verify:ci`) → OIDC role → ECR → auto-deploy staging → manual image-digest promotion to prod; fully separated staging/prod environments (ECS, RDS, DNS).
 - Call transcription pipeline: API Gateway → Lambda → S3 (TTL) → SQS → ECS Fargate (Whisper) → Zendesk.
 - Chat timeout: Zendesk trigger → Lambda → delayed SQS → ticket update; dedicated agent assigner Lambda.
@@ -132,7 +134,7 @@ Use these as the pool when tailoring. Ticket keys are for *your* reference only 
 
 | Project | Description | Stack / Link |
 |--------|-------------|--------------|
-| **SofaScope** | AI visual search for world’s largest furniture store | Python, FastAPI, CLIP, FAISS, Docker : [live](https://sofascope.furniturelandsouth.com) |
+| **SofaScope** | AI visual search for world’s largest furniture store | Python, FastAPI, CLIP, FAISS, Docker |
 | **SEC Breach Dashboard** | Real-time SEC 8-K Item 1.05 breach filings + AI summaries | React, Node, Express, MongoDB, WebSocket, Chart.js : [repo](https://github.com/cwarre33/BreachDashboard) |
 | **AutoTrader** | Paper trading bot: volume scan, RSI + LLM news sentiment | Python, Docker : [repo](https://github.com/cwarre33/AutoTrader) |
 | **AutomationAgent** | Short-form content gen/edit/post agents + Streamlit dashboard | Python, Streamlit : [repo](https://github.com/cwarre33/AutomationAgent) |

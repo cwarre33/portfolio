@@ -9,15 +9,15 @@ export interface ImpactAtWorkItem {
 /** Curated, public-safe highlights derived from internal delivery work (no ticket identifiers on the site). */
 export const impactAtWork: ImpactAtWorkItem[] = [
   {
-    title: 'Inventory lookup platform',
+    title: 'Inventory + shop-ops platform',
     emoji: '📦',
     impact:
-      'Co-built a scan-first inventory experience for the sales floor: search, item detail, history, exports, and role-based pricing, backed by shared AWS RDS and automated NetSuite delta sync.',
+      'Own ClearView, a production Next.js app for floor and shop staff: scan-first inventory across ~1.3M serials / 200k+ products, plus shop-request operations with live NetSuite as the system of record, used by 70+ people in production.',
     outcomes: [
       'Cut default grouped browse from ~11s to ~150ms-1s (warm snapshot path ~11s → ~500ms; filtered browse ~10.4s → ~2.2s) with matviews, query redesign, and statement-timeout guardrails.',
-      'Stood up shared Postgres RDS (~5GB, ~23 years of inventory history) with ~15-minute NetSuite delta sync, Entra ID SSO with role-gated pricing, and Bitbucket CI quality gates.',
+      'Shipped shop-request queue/detail with attachments, write-back, and role-gated access; catalog reads from shared Postgres RDS (~5GB, ~23 years, ~15-min delta sync) while ops queues hit live NetSuite so staff are not waiting on lag.',
     ],
-    tags: ['Next.js', 'PostgreSQL', 'RDS', 'Terraform', 'ECS', 'Entra ID', 'NetSuite sync'],
+    tags: ['Next.js', 'PostgreSQL', 'RDS', 'NetSuite', 'ECS', 'Entra ID', 'RBAC'],
   },
   {
     title: 'AI visual product discovery',
@@ -58,10 +58,10 @@ export const impactAtWork: ImpactAtWorkItem[] = [
     impact:
       'Delivered production cloud footing for inventory and contact-center systems: CI/CD pipelines with true staging/prod separation, ECS/Fargate hosting, Terraform-managed secrets, shared RDS, and serverless event pipelines.',
     outcomes: [
-      'Built the deployment pipeline end to end: quality-gated CI, auto-deploy to an isolated staging environment, and manual digest promotion to prod on ECS/Fargate behind an internal ALB.',
-      'Reused AWS patterns across Lambda/SQS automations and the shared RDS + task-server sync plane used by the engineering team.',
+      'Built the deployment pipeline end to end: quality-gated CI, auto-deploy to isolated staging, and manual digest promotion to prod on ECS/Fargate behind internal and public ALBs, with AWS WAF on the internet path.',
+      'Reused AWS patterns across Lambda/SQS automations and the shared RDS + task-server sync plane used by the engineering team; ClearView steady-state ~$159/mo.',
     ],
-    tags: ['AWS', 'CI/CD', 'Terraform', 'ECS/Fargate', 'RDS', 'Lambda'],
+    tags: ['AWS', 'CI/CD', 'Terraform', 'ECS/Fargate', 'WAF', 'RDS'],
   },
   {
     title: 'Operations visibility & NetSuite reporting',

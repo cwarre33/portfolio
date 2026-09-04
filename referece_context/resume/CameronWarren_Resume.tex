@@ -1,0 +1,108 @@
+\documentclass[10pt,letterpaper]{article}
+
+\usepackage[margin=0.45in,bottom=0.38in]{geometry}
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\setmainfont{Helvetica Neue}[Scale=0.95]
+
+\definecolor{ink}{HTML}{1a1a1a}
+\definecolor{rulec}{HTML}{c8c8c8}
+\definecolor{linkc}{HTML}{1a365d}
+
+\hypersetup{
+  colorlinks=true,
+  urlcolor=linkc,
+  pdfauthor={Cameron Warren},
+  pdftitle={Cameron Warren Software Engineer Resume}
+}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\itemsep}{0.5pt}
+\setlength{\parsep}{0pt}
+\setlength{\topsep}{1pt}
+\setlength{\partopsep}{0pt}
+\setlength{\leftmargini}{1.05em}
+\renewcommand{\labelitemi}{\textbullet}
+
+\newcommand{\rsection}[1]{%
+  \vspace{5pt}%
+  {\normalsize\bfseries\uppercase{#1}}\par\vspace{-0.55em}
+  {\color{rulec}\rule{\textwidth}{0.4pt}}\par\vspace{3pt}%
+}
+
+\newcommand{\role}[4]{%
+  {\bfseries #1} \hfill {\small #4}\par
+  {\small\textit{#2}} \hfill {\small\textit{#3}}\par\vspace{1.5pt}%
+}
+
+\begin{document}
+\color{ink}
+
+\begin{center}
+  {\LARGE\bfseries Cameron Warren}\\[1pt]
+  {\small Software Engineer}\\[3pt]
+  {\footnotesize
+    336-870-3371 \;$\cdot$\;
+    \href{mailto:cwarre33@charlotte.edu}{cwarre33@charlotte.edu} \;$\cdot$\;
+    Charlotte / Winston-Salem, NC}\\[1pt]
+  {\footnotesize
+    \href{https://github.com/cwarre33}{github.com/cwarre33} \;$\cdot$\;
+    \href{https://linkedin.com/in/cameron-warren-73a0192b2}{linkedin.com/in/cameron-warren-73a0192b2} \;$\cdot$\;
+    \href{https://cwarre33.github.io/portfolio/}{cwarre33.github.io/portfolio}}
+\end{center}
+
+\rsection{Summary}
+{\small Software engineer shipping production full-stack systems: Next.js, TypeScript, React, PostgreSQL, REST APIs, Amazon Web Services (AWS), Terraform, CI/CD, and retail AI (computer vision, LLMs).}
+
+\rsection{Work Experience}
+
+\role{AI Research Analyst}{Furnitureland South, Inc.}{Jamestown, NC}{Jan 2026 -- Present}
+\begin{itemize}
+  \item Own production ClearView (Next.js, TypeScript, PostgreSQL/RDS): scan-first inventory plus shop-request operations used by 70+ staff across {\textasciitilde}1.3M serials / 200k+ products.
+  \item Cut grouped browse {\textasciitilde}11s $\rightarrow$ {\textasciitilde}150ms--1s via materialized views, query redesign, and statement-timeout guardrails; 15-minute ERP delta sync on {\textasciitilde}5GB / {\textasciitilde}23 years of history.
+  \item Shipped shop-request queue/detail with attachments, write-back, and role-gated access; catalog on RDS, ops queues on live NetSuite so staff are not waiting on lag.
+  \item Hosted on Amazon ECS/Fargate behind internal + public ALBs with AWS WAF and Microsoft Entra ID (SSO); own staging$\rightarrow$prod CI/CD (Bitbucket Pipelines, OIDC/ECR, Terraform/SSM).
+  \item Built production Zendesk routing (custom round robin, dedicated-agent paths, feature-flagged rollouts) that has assigned 4,000+ tickets.
+\end{itemize}
+
+\vspace{3pt}
+\role{Jr.\ AI Research Analyst}{Furnitureland South, Inc.}{Jamestown, NC}{Aug 2025 -- Jan 2026}
+\begin{itemize}
+  \item Shipped AWS async pipelines (API Gateway $\rightarrow$ Lambda $\rightarrow$ S3 $\rightarrow$ SQS $\rightarrow$ ECS/Fargate) for speech-to-text write-back and delayed chat timeout handling.
+  \item Delivered ERP $\leftrightarrow$ support-platform sync and reporting Suitelets/SQL with logging, retries, and dry-run/live controls; wrote specs and shipped behind env flags.
+\end{itemize}
+
+\vspace{3pt}
+\role{Information Technology Intern}{Furnitureland South, Inc.}{Jamestown, NC}{May 2025 -- Aug 2025}
+\begin{itemize}
+  \item Built core of SofaScope visual search: CLIP embedding pipeline, FAISS nearest-neighbor search, and React UI from research prototype to production-facing service.
+\end{itemize}
+
+\rsection{Projects}
+{\bfseries SofaScope} --- AI visual product search (Python, FastAPI, CLIP, FAISS, Docker)\par
+{\small Similarity search {\textasciitilde}15s $\rightarrow$ $<$500ms ({\textasciitilde}95\%); Dockerized embedding + query path.}
+
+\vspace{3pt}
+{\bfseries SEC 8-K Breach Dashboard} --- React, Node.js, Express, MongoDB, WebSocket \;$\cdot$\; \href{https://github.com/cwarre33/BreachDashboard}{github.com/cwarre33/BreachDashboard}\par
+{\small Real-time SEC cybersecurity filings with live updates and AI-assisted summaries.}
+
+\vspace{3pt}
+{\bfseries AutoTrader} --- Python, Docker \;$\cdot$\; \href{https://github.com/cwarre33/AutoTrader}{github.com/cwarre33/AutoTrader}\par
+{\small Paper-trading bot: volume scan, RSI + LLM news sentiment, automated paper execution.}
+
+\rsection{Skills}
+{\bfseries Languages:} Python, Java, JavaScript, TypeScript, SQL, HTML/CSS, C/C++ (coursework)\par
+{\bfseries Systems:} Node.js, FastAPI, React, Next.js, Spring, PostgreSQL, Docker, REST APIs, Git, Amazon Web Services (AWS: Lambda, S3, SQS, ECS/Fargate, RDS, ALB, WAF), Terraform, CI/CD, NetSuite, Zendesk, Microsoft Entra ID\par
+{\bfseries Engineering:} Full-stack development, performance optimization, testing, SSO/RBAC, async jobs, API integrations}
+
+\rsection{Education}
+{\bfseries University of North Carolina at Charlotte} --- B.S.\ Computer Science \hfill Dec 2025 \;$\cdot$\; GPA {\bfseries 3.5}\par
+{\small Chancellor's List \;$\cdot$\; Dean's List \;$\cdot$\; Coursework: Software Engineering, Database Design, Algorithms, Operating Systems, Networking}\par
+\vspace{2pt}
+{\small\bfseries Certifications:} AWS Academy Cloud Foundations \;$\cdot$\; Introduction to LangGraph (LangChain) \;$\cdot$\; Data \& Programming Foundations for AI
+
+\end{document}

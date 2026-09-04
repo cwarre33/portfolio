@@ -2,7 +2,7 @@
 
 **Live:** [https://cwarre33.github.io/portfolio/](https://cwarre33.github.io/portfolio/)
 
-React + TypeScript portfolio for an AI Research Analyst / software engineer at Furnitureland South. Highlights production work: contact-center automation (4,000+ tickets auto-assigned), inventory lookup + RDS browse perf, staging-to-prod CI/CD on ECS/Fargate, conversational AI (SellSmart / Digital-to-Store), and SofaScope visual search (15s to &lt;500ms).
+React + TypeScript portfolio for an AI Research Analyst / software engineer at Furnitureland South. Highlights production work: contact-center automation (4,000+ tickets auto-assigned), ClearView inventory + shop-ops (~1.3M serials, public ALB + WAF), staging-to-prod CI/CD on ECS/Fargate, conversational AI (SellSmart / Digital-to-Store), and SofaScope visual search (15s to &lt;500ms).
 
 Also see the [GitHub profile README](https://github.com/cwarre33).
 
@@ -42,7 +42,7 @@ Copy `.env.example` → `.env` for local reference (dev does not send events unl
 
 | Section | Content |
 |---------|---------|
-| Hero | Typewriter titles + headline stats (4,000+ tickets, &lt;500ms search, 4 AI products) |
+| Hero | Typewriter titles + headline stats (4,000+ tickets, &lt;500ms search, 1.3M+ serials) |
 | About | Bio + skill groups (languages, AI, cloud/ops including Terraform, ECS, Copilot Studio) |
 | Experience | Role timeline with metric-forward bullets |
 | Impact at work | Animated metrics band + curated outcome cards |

@@ -6,20 +6,18 @@
 
 ---
 
-## Education
-**University of North Carolina at Charlotte** — B.S. Computer Science · Dec 2025 · GPA **3.5**  
-Chancellor’s List · Dean’s List  
-Coursework: Software Engineering, Database Design & Implementation, Logic & Algorithms, Operating Systems, Networking
+## Summary
+Software engineer shipping production full-stack systems: Next.js, TypeScript, React, PostgreSQL, REST APIs, Amazon Web Services (AWS), Terraform, CI/CD, and retail AI (computer vision, LLMs).
 
 ---
 
-## Experience
+## Work Experience
 
 ### AI Research Analyst — Furnitureland South, Inc. · Jamestown, NC · Jan 2026 – Present
 - Own production ClearView (Next.js, TypeScript, PostgreSQL/RDS): scan-first inventory plus shop-request operations used by 70+ staff across ~1.3M serials / 200k+ products.
 - Cut grouped browse ~11s → ~150ms–1s via materialized views, query redesign, and statement-timeout guardrails; keep ~5GB / ~23 years of history fresh with a 15-minute ERP delta sync.
 - Shipped shop-request queue/detail with attachments, write-back, and role-gated access; catalog reads from RDS while ops queues hit live NetSuite so staff are not waiting on lag.
-- Hosted on ECS/Fargate behind internal and public ALBs with AWS WAF + Microsoft Entra SSO; own staging→prod CI/CD (quality-gated Bitbucket Pipelines, OIDC/ECR, Terraform/SSM secrets).
+- Hosted on Amazon ECS/Fargate behind internal and public ALBs with AWS WAF + Microsoft Entra ID (SSO); own staging→prod CI/CD (quality-gated Bitbucket Pipelines, OIDC/ECR, Terraform/SSM secrets).
 - Built production Zendesk routing automation (custom round robin, dedicated-agent paths, feature-flagged rollouts) that has assigned 4,000+ tickets.
 
 ### Jr. AI Research Analyst — Furnitureland South, Inc. · Aug 2025 – Jan 2026
@@ -48,9 +46,16 @@ Paper-trading bot: volume scan, RSI + LLM news sentiment, automated paper execut
 ---
 
 ## Skills
-**Languages:** Python, Java, JavaScript/TypeScript, SQL, C/C++ (coursework)  
-**Systems:** Node.js, FastAPI, React, Next.js, Spring, PostgreSQL, Docker, AWS (Lambda, S3, SQS, ECS/Fargate, RDS, ALB, WAF), Terraform  
-**Engineering:** Performance optimization, debugging, unit/integration tests, CI pipelines, SSO/RBAC, async job design, API integrations, technical specs & diagrams
+**Languages:** Python, Java, JavaScript, TypeScript, SQL, HTML/CSS, C/C++ (coursework)  
+**Systems:** Node.js, FastAPI, React, Next.js, Spring, PostgreSQL, Docker, REST APIs, Git, Amazon Web Services (AWS: Lambda, S3, SQS, ECS/Fargate, RDS, ALB, WAF), Terraform, CI/CD, NetSuite, Zendesk, Microsoft Entra ID  
+**Engineering:** Full-stack development, performance optimization, unit and integration testing, SSO/RBAC, async jobs, API integrations, technical specs and diagrams
+
+---
+
+## Education
+**University of North Carolina at Charlotte** — B.S. Computer Science · Dec 2025 · GPA **3.5**  
+Chancellor’s List · Dean’s List  
+Coursework: Software Engineering, Database Design & Implementation, Logic & Algorithms, Operating Systems, Networking
 
 ---
 
