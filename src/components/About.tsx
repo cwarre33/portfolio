@@ -15,14 +15,14 @@ export function About() {
               Furnitureland South</strong>, where I bridge emerging technology and real-world retail innovation.
             </p>
             <p>
-              I architected and built <strong>SofaScope</strong>, an AI-powered visual search platform for the
-              world's largest furniture store, using CLIP embeddings and FAISS vector search in a Dockerized
-              microservices stack. Search performance improved by 95%, with latency dropping from 15 seconds
-              to under 500ms.
+              I own <strong>ClearView</strong>, Furnitureland South's production inventory and shop-ops
+              platform: Next.js on ECS/Fargate, ~1.3M serials on shared RDS, Entra SSO, and shop-request
+              workflows with live NetSuite. I also built <strong>SofaScope</strong>, an AI visual search
+              system using CLIP embeddings and FAISS — latency from 15 seconds to under 500ms.
             </p>
             <p>
-              I also drive <strong>SellSmart</strong> (Conversational AI / Copilot) and internal tooling:
-              CI dashboards, vendor data pipelines, and trust/transparency in LLM outputs. I'm grateful for
+              I also drive <strong>SellSmart</strong> (Conversational AI / Copilot) and contact-center
+              automation, including custom round robin that has assigned 4,000+ tickets. I'm grateful for
               the growth, the team at FLS, and the momentum at the intersection of Computer Vision and
               Full-Stack Development.
             </p>

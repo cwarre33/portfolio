@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { impactStats, type ImpactStat } from '../data/impactStats';
 
-function useCountUp(target: number, start: boolean, durationMs = 1600): number {
+function useCountUp(target: number, start: boolean, decimals = 0, durationMs = 1600): number {
   const [value, setValue] = useState(0);
 
   useEffect(() => {
@@ -12,21 +12,26 @@ function useCountUp(target: number, start: boolean, durationMs = 1600): number {
     }
     let raf = 0;
     const t0 = performance.now();
+    const factor = 10 ** decimals;
     const tick = (now: number) => {
       const progress = Math.min((now - t0) / durationMs, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
-      setValue(Math.round(target * eased));
+      setValue(Math.round(target * eased * factor) / factor);
       if (progress < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [start, target, durationMs]);
+  }, [start, target, decimals, durationMs]);
 
   return value;
 }
 
 function StatCard({ stat, start, index }: { stat: ImpactStat; start: boolean; index: number }) {
-  const value = useCountUp(stat.target, start);
+  const value = useCountUp(stat.target, start, stat.decimals ?? 0);
+  const display = value.toLocaleString('en-US', {
+    minimumFractionDigits: stat.decimals ?? 0,
+    maximumFractionDigits: stat.decimals ?? 0,
+  });
   return (
     <div
       className={`impact-stats__card${start ? ' impact-stats__card--in' : ''}`}
@@ -34,7 +39,7 @@ function StatCard({ stat, start, index }: { stat: ImpactStat; start: boolean; in
     >
       <span className="impact-stats__value">
         {stat.prefix}
-        {value.toLocaleString('en-US')}
+        {display}
         {stat.suffix}
       </span>
       <span className="impact-stats__label">{stat.label}</span>
