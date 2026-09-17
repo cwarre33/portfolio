@@ -1,212 +1,26 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const navLinks = [
-  { href: '#about', label: 'About' },
+  { href: '#projects', label: 'Systems' },
   { href: '#experience', label: 'Experience' },
-  { href: '#impact', label: 'Impact' },
-  { href: '#aws', label: 'AWS' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#certifications', label: 'Certifications' },
+  { href: '#about', label: 'About' },
   { href: '#contact', label: 'Contact' },
-  { href: 'https://cwarre33.github.io/', label: 'Contributions', external: true },
 ];
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  useEffect(() => {
-    if (menuOpen) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = '';
-    return () => { document.body.style.overflow = ''; };
-  }, [menuOpen]);
-
-  const closeMenu = () => setMenuOpen(false);
-
-  return (
-    <header
-      className={`header ${scrolled ? 'header--scrolled' : ''} ${menuOpen ? 'header--menu-open' : ''}`}
-      role="banner"
-    >
-      <div className="container header__inner">
-        <a href="#" className="header__logo" onClick={closeMenu}>
-          Cameron Warren
-        </a>
-        <button
-          type="button"
-          className="header__menu-btn"
-          aria-expanded={menuOpen}
-          aria-controls="header-nav"
-          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          <span className="header__menu-icon" aria-hidden />
-        </button>
-        <nav
-          id="header-nav"
-          className="header__nav"
-          aria-label="Main"
-        >
-          <ul className="header__list">
-            {navLinks.map(({ href, label, external }) => (
-              <li key={href}>
-                <a
-                  href={href}
-                  className="header__link"
-                  onClick={closeMenu}
-                  {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                >
-                  {label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </div>
-      <style>{`
-        .header {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          z-index: 100;
-          padding: 0.75rem 0;
-          transition: background 0.2s ease, box-shadow 0.2s ease;
-        }
-        .header--scrolled {
-          background: rgba(15, 17, 21, 0.85);
-          backdrop-filter: blur(12px);
-          box-shadow: 0 1px 0 var(--border);
-        }
-        .header__inner {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-        .header__logo {
-          font-weight: 600;
-          color: var(--text);
-          font-size: 1.0625rem;
-          z-index: 101;
-        }
-        .header__logo:hover {
-          text-decoration: none;
-          color: var(--accent);
-        }
-        .header__menu-btn {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 44px;
-          height: 44px;
-          padding: 0;
-          background: none;
-          border: none;
-          border-radius: 8px;
-          color: var(--text);
-          cursor: pointer;
-          z-index: 101;
-        }
-        .header__menu-btn:hover {
-          background: var(--bg-card);
-        }
-        .header__menu-icon {
-          position: relative;
-          width: 22px;
-          height: 2px;
-          background: currentColor;
-          box-shadow: 0 -6px 0 currentColor, 0 6px 0 currentColor;
-          transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .header__menu-icon::after {
-          content: '';
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 22px;
-          height: 2px;
-          background: currentColor;
-          transform: rotate(-90deg);
-          opacity: 0;
-          transition: opacity 0.2s;
-        }
-        .header--menu-open .header__menu-icon {
-          box-shadow: none;
-          transform: rotate(45deg);
-        }
-        .header--menu-open .header__menu-icon::after {
-          opacity: 1;
-          transform: rotate(-90deg);
-        }
-        .header__nav {
-          display: none;
-        }
-        @media (min-width: 768px) {
-          .header__menu-btn {
-            display: none;
-          }
-          .header__nav {
-            display: block;
-          }
-        }
-        .header__list {
-          list-style: none;
-          display: flex;
-          gap: 1.5rem;
-        }
-        .header__link {
-          color: var(--text-muted);
-          font-size: 0.9375rem;
-          font-weight: 500;
-          transition: color 0.2s;
-          display: block;
-          padding: 0.5rem 0;
-        }
-        .header__link:hover {
-          color: var(--text);
-          text-decoration: none;
-        }
-        @media (max-width: 767px) {
-          .header__nav {
-            position: fixed;
-            inset: 0;
-            top: 0;
-            padding: 5rem 1.5rem 2rem;
-            background: var(--bg);
-            overflow-y: auto;
-            display: none;
-            align-items: flex-start;
-            justify-content: center;
-          }
-          .header--menu-open .header__nav {
-            display: flex;
-          }
-          .header__list {
-            flex-direction: column;
-            align-items: center;
-            gap: 0;
-            width: 100%;
-          }
-          .header__list li {
-            width: 100%;
-            border-bottom: 1px solid var(--border);
-          }
-          .header__link {
-            font-size: 1.125rem;
-            padding: 1rem 0.5rem;
-            min-height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
-        }
-      `}</style>
-    </header>
-  );
+  useEffect(() => { const onScroll=()=>setScrolled(window.scrollY>32); window.addEventListener('scroll',onScroll,{passive:true}); return()=>window.removeEventListener('scroll',onScroll); },[]);
+  useEffect(()=>{document.body.style.overflow=menuOpen?'hidden':'';return()=>{document.body.style.overflow=''}},[menuOpen]);
+  return <header className={`header ${scrolled?'header--scrolled':''} ${menuOpen?'header--open':''}`}>
+    <div className="container header__inner">
+      <a href="#" className="header__brand" onClick={()=>setMenuOpen(false)}><span className="header__mark">CW</span><span>Cameron Warren<small>Software / AI Systems</small></span></a>
+      <button className="header__toggle" aria-label="Toggle navigation" aria-expanded={menuOpen} onClick={()=>setMenuOpen(!menuOpen)}><i/><i/></button>
+      <nav className="header__nav" aria-label="Main navigation">{navLinks.map((link,i)=><a key={link.href} href={link.href} onClick={()=>setMenuOpen(false)}><span>0{i+1}</span>{link.label}</a>)}</nav>
+    </div>
+    <style>{`
+      .header{position:fixed;z-index:100;inset:0 0 auto;padding:1rem 0;transition:.3s ease}.header--scrolled{background:rgba(7,10,9,.82);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}.header__inner{display:flex;align-items:center;justify-content:space-between}.header__brand{display:flex;align-items:center;gap:.75rem;color:var(--text);font-size:.85rem;font-weight:650;line-height:1.1;letter-spacing:-.01em}.header__brand:hover{text-decoration:none}.header__brand small{display:block;margin-top:.25rem;color:#64706c;font:500 .56rem var(--font-mono);text-transform:uppercase;letter-spacing:.11em}.header__mark{width:35px;height:35px;display:grid;place-items:center;border:1px solid var(--accent);color:var(--accent);font:700 .68rem var(--font-mono)}.header__nav{display:flex;align-items:center;gap:1.8rem}.header__nav a{color:#9aa49f;font:600 .68rem var(--font-mono);text-transform:uppercase;letter-spacing:.08em}.header__nav a span{color:#46534e;margin-right:.45rem}.header__nav a:hover{color:var(--text);text-decoration:none}.header__toggle{display:none;width:44px;height:44px;background:transparent;border:0;position:relative}.header__toggle i{position:absolute;width:22px;height:1px;background:var(--text);left:11px;top:19px;transition:.2s}.header__toggle i+ i{top:25px}.header--open .header__toggle i{transform:translateY(3px) rotate(45deg)}.header--open .header__toggle i+i{transform:translateY(-3px) rotate(-45deg)}
+      @media(max-width:760px){.header__toggle{display:block}.header__nav{display:none;position:fixed;inset:0;background:rgba(7,10,9,.98);padding:7rem 1.5rem;flex-direction:column;align-items:flex-start;gap:0}.header--open .header__nav{display:flex}.header__nav a{width:100%;padding:1.3rem 0;border-bottom:1px solid var(--border);font-size:1rem}.header__brand,.header__toggle{z-index:2}}
+    `}</style>
+  </header>;
 }
