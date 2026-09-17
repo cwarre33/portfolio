@@ -1,152 +1,23 @@
 import { useEffect, useRef, useState } from 'react';
 import { impactStats, type ImpactStat } from '../data/impactStats';
 
-function useCountUp(target: number, start: boolean, decimals = 0, durationMs = 1600): number {
-  const [value, setValue] = useState(0);
-
-  useEffect(() => {
-    if (!start) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setValue(target);
-      return;
-    }
-    let raf = 0;
-    const t0 = performance.now();
-    const factor = 10 ** decimals;
-    const tick = (now: number) => {
-      const progress = Math.min((now - t0) / durationMs, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setValue(Math.round(target * eased * factor) / factor);
-      if (progress < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [start, target, decimals, durationMs]);
-
-  return value;
+function formatStat(stat: ImpactStat, value: number) {
+  const display = value.toLocaleString('en-US',{minimumFractionDigits:stat.decimals??0,maximumFractionDigits:stat.decimals??0});
+  return `${stat.prefix??''}${display}${stat.suffix??''}`;
 }
-
-function StatCard({ stat, start, index }: { stat: ImpactStat; start: boolean; index: number }) {
-  const value = useCountUp(stat.target, start, stat.decimals ?? 0);
-  const display = value.toLocaleString('en-US', {
-    minimumFractionDigits: stat.decimals ?? 0,
-    maximumFractionDigits: stat.decimals ?? 0,
-  });
-  return (
-    <div
-      className={`impact-stats__card${start ? ' impact-stats__card--in' : ''}`}
-      style={{ '--stat-delay': `${index * 0.1}s` } as React.CSSProperties}
-    >
-      <span className="impact-stats__value">
-        {stat.prefix}
-        {display}
-        {stat.suffix}
-      </span>
-      <span className="impact-stats__label">{stat.label}</span>
-      <span className="impact-stats__detail">{stat.detail}</span>
-    </div>
-  );
+function StatCard({stat,start,index}:{stat:ImpactStat;start:boolean;index:number}) {
+  const valueRef=useRef<HTMLSpanElement>(null);
+  useEffect(()=>{
+    if(!start||!valueRef.current||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    const node=valueRef.current,t0=performance.now();let raf=0;
+    const tick=(now:number)=>{const p=Math.min((now-t0)/1500,1),e=1-Math.pow(1-p,3);node.textContent=formatStat(stat,stat.target*e);if(p<1)raf=requestAnimationFrame(tick)};
+    node.textContent=formatStat(stat,0);raf=requestAnimationFrame(tick);return()=>cancelAnimationFrame(raf);
+  },[start,stat]);
+  return <div className={`impact-stats__card${start?' impact-stats__card--in':''}`} style={{'--stat-delay':`${index*.08}s`} as React.CSSProperties}>
+    <span ref={valueRef} className="impact-stats__value" data-count-to={stat.target}>{formatStat(stat,stat.target)}</span>
+    <span className="impact-stats__label">{stat.label}</span><span className="impact-stats__detail">{stat.detail}</span>
+  </div>;
 }
-
-export function ImpactStats() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.3 },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div className="impact-stats" ref={ref} aria-label="Headline metrics">
-      {impactStats.map((stat, i) => (
-        <StatCard key={stat.label} stat={stat} start={visible} index={i} />
-      ))}
-      <style>{`
-        .impact-stats {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 0.75rem;
-          margin-bottom: 2rem;
-        }
-        @media (min-width: 900px) {
-          .impact-stats {
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-          }
-        }
-        .impact-stats__card {
-          background: var(--glass-bg);
-          backdrop-filter: blur(var(--glass-blur));
-          -webkit-backdrop-filter: blur(var(--glass-blur));
-          border: 1px solid var(--glass-border);
-          border-radius: 14px;
-          padding: 1.25rem 1rem;
-          box-shadow: var(--glass-shadow);
-          display: flex;
-          flex-direction: column;
-          gap: 0.3rem;
-          position: relative;
-          overflow: hidden;
-          opacity: 0;
-          transform: translateY(20px);
-          transition: border-color 0.3s, box-shadow 0.3s;
-        }
-        .impact-stats__card::before {
-          content: '';
-          position: absolute;
-          top: 0; left: 0; right: 0;
-          height: 1px;
-          background: linear-gradient(90deg,
-            transparent, rgba(255,255,255,0.2) 30%,
-            rgba(255,255,255,0.35) 50%,
-            rgba(255,255,255,0.2) 70%, transparent);
-          pointer-events: none;
-        }
-        .impact-stats__card:hover {
-          border-color: var(--glass-border-hover);
-          box-shadow: var(--glass-shadow-hover);
-        }
-        .impact-stats__card--in {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        @media (prefers-reduced-motion: no-preference) {
-          .impact-stats__card--in {
-            animation: entrance-fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) var(--stat-delay, 0s) both;
-          }
-        }
-        .impact-stats__value {
-          font-family: var(--font-mono);
-          font-size: clamp(1.75rem, 4vw, 2.375rem);
-          font-weight: 700;
-          line-height: 1.1;
-          color: var(--accent);
-          text-shadow: 0 0 24px rgba(88, 166, 255, 0.35);
-          font-variant-numeric: tabular-nums;
-        }
-        .impact-stats__label {
-          font-size: 0.875rem;
-          font-weight: 600;
-          color: var(--text);
-        }
-        .impact-stats__detail {
-          font-size: 0.75rem;
-          color: var(--text-muted);
-          line-height: 1.4;
-        }
-      `}</style>
-    </div>
-  );
-}
+export function ImpactStats(){const ref=useRef<HTMLDivElement>(null),[visible,setVisible]=useState(false);useEffect(()=>{const el=ref.current;if(!el)return;const observer=new IntersectionObserver(([entry])=>{if(entry.isIntersecting){setVisible(true);observer.disconnect()}},{threshold:.25});observer.observe(el);return()=>observer.disconnect()},[]);return <div className="impact-stats" ref={ref} aria-label="Headline metrics">{impactStats.map((stat,i)=><StatCard key={stat.label} stat={stat} start={visible} index={i}/>)}<style>{`
+.impact-stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);margin-bottom:3rem}.impact-stats__card{padding:1.5rem;border-right:1px solid var(--border);background:rgba(255,255,255,.012);opacity:.5;transform:translateY(12px)}.impact-stats__card:last-child{border-right:0}.impact-stats__card--in{opacity:1;transform:none}.impact-stats__value{display:block;font:700 clamp(1.8rem,3vw,3.1rem)/1 var(--font-mono);letter-spacing:-.06em;color:var(--accent);font-variant-numeric:tabular-nums}.impact-stats__label{display:block;margin-top:.7rem;font-size:.78rem;font-weight:650;text-transform:uppercase;letter-spacing:.05em}.impact-stats__detail{display:block;margin-top:.35rem;color:var(--text-muted);font-size:.7rem;line-height:1.45}@media(prefers-reduced-motion:no-preference){.impact-stats__card--in{animation:statin .55s cubic-bezier(.16,1,.3,1) var(--stat-delay) both}@keyframes statin{from{opacity:.5;transform:translateY(12px)}to{opacity:1;transform:none}}}@media(max-width:800px){.impact-stats{grid-template-columns:repeat(2,1fr)}.impact-stats__card:nth-child(2){border-right:0}.impact-stats__card{border-bottom:1px solid var(--border)}}@media(max-width:480px){.impact-stats{grid-template-columns:1fr}.impact-stats__card{border-right:0}}
+`}</style></div>}
