@@ -21,3 +21,7 @@ referece_context/jira_raw/
 .worktrees
 
 .superpowers/
+
+# Local screenshot / QA output
+dev/
+shots/
