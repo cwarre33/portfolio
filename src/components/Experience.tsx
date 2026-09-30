@@ -1,108 +1,76 @@
 import { experience } from '../data/experience';
+import { certifications, education } from '../data/certifications';
+import { projects } from '../data/projects';
+
+const featuredElsewhere = new Set(['SofaScope', 'AutoTrader']);
 
 export function Experience() {
   return (
-    <section id="experience" className="section experience">
+    <section id="experience" className="section">
       <div className="container">
-        <h2 className="section-title">
-          Experience <span>& roles</span>
-        </h2>
-        <div className="experience__list">
+        <header className="section__head reveal">
+          <span className="section__index mono">05 / Experience</span>
+          <h2 className="section__title">
+            Intern to system owner <em>in eight months.</em>
+          </h2>
+        </header>
+
+        <ol className="timeline">
           {experience.map((job) => (
-            <article key={`${job.company}-${job.period}`} className="experience__item">
-              <div className="experience__timeline" aria-hidden />
-              <div className="experience__content">
-                <div className="experience__meta">
-                  <h3 className="experience__role">{job.role}</h3>
-                  <p className="experience__company">{job.company}</p>
-                  <p className="experience__location">{job.location}</p>
-                  <time className="experience__period" dateTime={job.period}>
-                    {job.period}
-                  </time>
-                </div>
-                <ul className="experience__highlights">
+            <li key={job.role} className="timeline__item reveal">
+              <div className="timeline__when mono">{job.period}</div>
+              <div className="timeline__what">
+                <h3>{job.role}</h3>
+                <p className="timeline__org">
+                  {job.company} · {job.location}
+                </p>
+                <ul>
                   {job.highlights.map((h) => (
                     <li key={h}>{h}</li>
                   ))}
                 </ul>
               </div>
-            </article>
+            </li>
           ))}
+        </ol>
+
+        <div className="creds reveal">
+          <div>
+            <span className="mono">education</span>
+            <p>{education}</p>
+          </div>
+          <div>
+            <span className="mono">certifications</span>
+            <ul>
+              {certifications.map((c) => (
+                <li key={c.name}>
+                  {c.name}
+                  {c.issuer && <span> · {c.issuer}</span>}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
+
+        <h3 className="subhead reveal mono" id="projects">
+          more on github
+        </h3>
+        <ul className="repo-grid">
+          {projects
+            .filter((p) => !featuredElsewhere.has(p.title))
+            .map((p) => (
+              <li key={p.title} className="repo reveal">
+                <a href={p.liveUrl ?? p.url} target="_blank" rel="noopener noreferrer">
+                  <strong>
+                    {p.title} <span aria-hidden="true">↗</span>
+                  </strong>
+                  <p>{p.description}</p>
+                  <span className="mono">{p.tags.join(' · ')}</span>
+                </a>
+              </li>
+            ))}
+        </ul>
       </div>
-      <style>{`
-        .experience__list {
-          position: relative;
-        }
-        .experience__item {
-          position: relative;
-          padding-left: 1.25rem;
-          padding-bottom: 2rem;
-        }
-        @media (min-width: 640px) {
-          .experience__item { padding-left: 1.5rem; }
-        }
-        .experience__item:last-child {
-          padding-bottom: 0;
-        }
-        .experience__timeline {
-          position: absolute;
-          left: 0;
-          top: 0.5rem;
-          bottom: 0;
-          width: 2px;
-          background: var(--border);
-          border-radius: 1px;
-        }
-        .experience__content {
-          position: relative;
-        }
-        .experience__meta {
-          margin-bottom: 0.75rem;
-        }
-        .experience__role {
-          font-size: 1.0625rem;
-          font-weight: 600;
-          color: var(--text);
-          margin-bottom: 0.25rem;
-        }
-        .experience__company {
-          font-size: 0.9375rem;
-          color: var(--accent);
-          margin-bottom: 0.125rem;
-        }
-        .experience__location,
-        .experience__period {
-          font-size: 0.8125rem;
-          color: var(--text-muted);
-        }
-        .experience__period {
-          display: block;
-          margin-top: 0.25rem;
-        }
-        .experience__highlights {
-          list-style: none;
-          font-size: 0.9375rem;
-          color: var(--text-muted);
-          line-height: 1.6;
-        }
-        .experience__highlights li {
-          position: relative;
-          padding-left: 1rem;
-          margin-bottom: 0.35rem;
-          overflow-wrap: break-word;
-        }
-        .experience__highlights li::before {
-          content: '';
-          position: absolute;
-          left: 0;
-          top: 0.5em;
-          width: 4px;
-          height: 4px;
-          background: var(--accent);
-          border-radius: 50%;
-        }
-      `}</style>
     </section>
   );
 }
