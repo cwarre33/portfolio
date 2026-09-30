@@ -1418,127 +1418,316 @@ code {
 }
 
 /* ───────────── Arena ───────────── */
-.arena {
+/* Kaggle stat row */
+.kstats {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(24px, 5vw, 64px);
-  align-items: start;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--line-2);
+  margin-bottom: clamp(40px, 6vw, 64px);
 }
 
-.orbit {
-  position: sticky;
-  top: 110px;
+.kstats > div {
+  padding: 24px 20px 24px 0;
 }
 
-.orbit svg {
+.kstats > div + div {
+  padding-left: 20px;
+  border-left: 1px solid var(--line);
+}
+
+.kstats dt {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  font-variant-numeric: tabular-nums;
+}
+
+.kstats dd {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.kstats dd span {
   display: block;
-  width: 100%;
-  max-width: 520px;
-  margin: 0 auto;
-  overflow: visible;
-}
-
-.orbit__ring {
-  fill: none;
-  stroke: var(--line);
-}
-
-.orbit__spoke {
-  stroke: var(--line);
-  stroke-dasharray: 2 5;
-}
-
-.orbit__core {
-  fill: rgba(184, 156, 255, 0.12);
-  stroke: var(--violet);
-}
-
-.orbit__core-label {
-  fill: var(--text);
-  font-family: var(--mono);
-  font-size: 13px;
-}
-
-.orbit__pt {
-  cursor: pointer;
-}
-
-.orbit__pt circle:last-child {
-  fill: var(--violet);
-  transition: r 0.3s;
-}
-
-.orbit__pt.has-result circle:last-child {
-  fill: var(--signal);
-}
-
-.orbit__halo {
-  fill: var(--violet);
-  opacity: 0.08;
-  transition: opacity 0.3s;
-}
-
-.orbit__pt.has-result .orbit__halo {
-  fill: var(--signal);
-}
-
-.orbit__pt.is-hot .orbit__halo {
-  opacity: 0.35;
-}
-
-.orbit__spin {
-  transform-box: view-box;
-  transform-origin: center;
-  animation: spin 120s linear infinite;
-}
-
-.orbit:hover .orbit__spin {
-  animation-play-state: paused;
-}
-
-.orbit__core-label {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: spin 120s linear infinite reverse;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.comp-list li {
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  gap: 4px 14px;
-  align-items: baseline;
-  padding: 10px 12px;
-  border-bottom: 1px solid var(--line);
-  border-radius: 8px;
-  transition: background 0.2s;
-}
-
-.comp-list li.is-hot {
-  background: rgba(184, 156, 255, 0.07);
-}
-
-.comp-list__name {
-  font-size: 0.95rem;
-}
-
-.comp-list__domain {
+  margin-top: 2px;
+  font-size: 0.8rem;
   color: var(--faint);
 }
 
-.comp-list__prize {
-  color: var(--violet);
-  min-width: 64px;
-  text-align: right;
+/* Finish-percentile dot plot */
+.finish {
+  --bronze: #d99a62;
+  --row-label: minmax(0, 15rem);
+  --row-rank: 8.5rem;
+  margin: 0;
+  padding: clamp(18px, 3vw, 32px);
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--ink-2);
 }
 
-.comp-list__result {
-  grid-column: 1 / -1;
-  font-size: 0.8rem;
+.finish__head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px 16px;
+  margin-bottom: 18px;
+  font-weight: 500;
+}
+
+.finish__head .mono {
+  color: var(--faint);
+  font-weight: 400;
+}
+
+.finish__axis,
+.finish__row {
+  display: grid;
+  grid-template-columns: var(--row-label) 1fr var(--row-rank);
+  gap: 16px;
+  align-items: center;
+}
+
+.finish__scale {
+  position: relative;
+  height: 18px;
+  color: var(--faint);
+  font-size: 0.66rem;
+}
+
+.finish__scale span {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.finish__scale span:first-child {
+  transform: none;
+}
+
+.finish__scale span:last-child {
+  transform: translateX(-100%);
+}
+
+.finish__rows {
+  border-top: 1px solid var(--line);
+}
+
+.finish__row {
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+  transition: background 0.2s;
+}
+
+.finish__row.is-hot {
+  background: rgba(233, 230, 223, 0.03);
+}
+
+.finish__name {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.finish__name:hover {
   color: var(--signal);
+}
+
+.finish__name .mono {
+  font-size: 0.66rem;
+  color: var(--faint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.finish__track {
+  position: relative;
+  height: 22px;
+}
+
+.finish__track::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: var(--line-2);
+}
+
+.finish__zone {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 10%;
+  border-radius: 4px;
+  background: rgba(217, 154, 98, 0.1);
+  border-right: 1px dashed rgba(217, 154, 98, 0.45);
+}
+
+.finish__bar {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 2px;
+  transform: translateY(-50%);
+  border-radius: 2px;
+  background: rgba(233, 230, 223, 0.28);
+}
+
+.finish__dot {
+  position: absolute;
+  top: 50%;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--text);
+  box-shadow: 0 0 0 2px var(--ink-2);
+  transition: transform 0.2s var(--ease);
+}
+
+.finish__row.is-hot .finish__dot {
+  transform: translate(-50%, -50%) scale(1.35);
+}
+
+.finish__row.is-medal .finish__dot {
+  width: 14px;
+  height: 14px;
+  background: var(--bronze);
+  box-shadow: 0 0 0 2px var(--ink-2), 0 0 16px rgba(217, 154, 98, 0.6);
+}
+
+.finish__row.is-medal .finish__bar {
+  background: var(--bronze);
+}
+
+.finish__row.is-live .finish__dot {
+  background: var(--ink-2);
+  border: 2px solid var(--text);
+}
+
+.finish__tip {
+  position: absolute;
+  bottom: calc(100% + 4px);
+  z-index: 2;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 0.68rem;
+  color: var(--text);
+  background: var(--ink);
+  border: 1px solid var(--line-2);
+  pointer-events: none;
+}
+
+.finish__rank {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.finish__row.is-medal .finish__rank {
+  color: var(--text);
+}
+
+.finish__tag {
+  padding: 1px 6px;
+  border-radius: 999px;
+  border: 1px solid var(--line-2);
+  font-weight: 400;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.finish__tag--medal {
+  border-color: rgba(217, 154, 98, 0.6);
+  color: var(--bronze);
+}
+
+.finish__note {
+  margin-top: 14px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.finish__note a {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--line-2);
+  text-underline-offset: 3px;
+}
+
+.finish__key {
+  display: inline-block;
+  vertical-align: -1px;
+  margin-right: 2px;
+}
+
+.finish__key--zone {
+  width: 18px;
+  height: 11px;
+  border-radius: 3px;
+  background: rgba(217, 154, 98, 0.18);
+  border-right: 1px dashed rgba(217, 154, 98, 0.6);
+}
+
+.finish__key--live {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--text);
+}
+
+@media (max-width: 860px) {
+  .kstats {
+    grid-template-columns: 1fr 1fr;
+  }
+  .kstats > div:nth-child(3) {
+    padding-left: 0;
+    border-left: 0;
+  }
+  .kstats > div:nth-child(n + 3) {
+    border-top: 1px solid var(--line);
+  }
+}
+
+@media (max-width: 640px) {
+  .finish__axis {
+    grid-template-columns: 1fr;
+  }
+  .finish__axis > span:first-child {
+    display: none;
+  }
+  .finish__tick-10 {
+    display: none;
+  }
+  .finish__row {
+    grid-template-columns: 1fr auto;
+    gap: 6px 12px;
+  }
+  .finish__track {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+  .finish__rank {
+    grid-row: 1;
+    grid-column: 2;
+  }
 }
 
 .labs {
@@ -1598,26 +1787,11 @@ code {
 }
 
 @media (max-width: 960px) {
-  .arena,
   .labs {
     grid-template-columns: 1fr;
   }
-  .orbit {
-    position: relative;
-    top: 0;
-    max-width: 420px;
-    margin: 0 auto;
-  }
 }
 
-@media (max-width: 480px) {
-  .comp-list li {
-    grid-template-columns: 1fr auto;
-  }
-  .comp-list__domain {
-    display: none;
-  }
-}
 
 /* ───────────── Brain ───────────── */
 .brain {
@@ -2080,10 +2254,6 @@ code {
     position: relative;
     top: 0;
   }
-  .orbit {
-    position: relative;
-    top: 0;
-  }
 }
 
 /* ───────────── Very small phones (≤ 340px) ───────────── */
@@ -2125,8 +2295,7 @@ code {
   .hero {
     min-height: 0;
   }
-  .adr__panel,
-  .orbit {
+  .adr__panel {
     position: static;
   }
 }
