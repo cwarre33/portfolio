@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { EMAIL, GITHUB, LINKEDIN, RESUME_HREF, sections } from './links';
 import { trackEvent } from '../analytics/track';
+import { copyText, shortcutLabel } from '../hooks/platform';
 
 interface Command {
   label: string;
@@ -26,8 +27,10 @@ function CommandPalette({ open, onClose }: { open: boolean; onClose: () => void 
         label: 'Copy email',
         hint: EMAIL,
         run: () => {
-          void navigator.clipboard?.writeText(EMAIL);
-          trackEvent('contact_email_copy');
+          void copyText(EMAIL).then((ok) => {
+            if (ok) trackEvent('contact_email_copy');
+            else window.location.href = `mailto:${EMAIL}`;
+          });
         },
       },
       {
@@ -46,6 +49,15 @@ function CommandPalette({ open, onClose }: { open: boolean; onClose: () => void 
   );
 
   const results = commands.filter((c) => (c.label + c.hint).toLowerCase().includes(q.toLowerCase()));
+
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
 
   useEffect(() => {
     if (open) {
@@ -70,6 +82,10 @@ function CommandPalette({ open, onClose }: { open: boolean; onClose: () => void 
           ref={inputRef}
           className="cmdk__input"
           placeholder="Jump to a section, open a link…"
+          enterKeyHint="go"
+          autoCapitalize="off"
+          autoCorrect="off"
+          spellCheck={false}
           value={q}
           onChange={(e) => {
             setQ(e.target.value);
@@ -99,7 +115,7 @@ function CommandPalette({ open, onClose }: { open: boolean; onClose: () => void 
               role="option"
               aria-selected={i === sel}
               className={i === sel ? 'is-sel' : ''}
-              onMouseEnter={() => setSel(i)}
+              onPointerMove={() => setSel(i)}
               onClick={() => run(c)}
             >
               <span>{c.label}</span>
@@ -169,7 +185,7 @@ export function Header() {
           ))}
         </nav>
         <button type="button" className="nav__cmd" onClick={() => setOpen(true)} aria-label="Open command palette">
-          <span className="mono">⌘K</span>
+          <span className="mono">{shortcutLabel}</span>
         </button>
       </header>
       <CommandPalette open={open} onClose={() => setOpen(false)} />

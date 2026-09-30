@@ -57,7 +57,7 @@ export function Arena() {
                 {kaggle.count}
               </text>
               {points.map((p, i) => (
-                <g key={i} className={`orbit__pt${hot === i ? ' is-hot' : ''}${p.result ? ' has-result' : ''}`} onMouseEnter={() => setHot(i)} onMouseLeave={() => setHot(null)}>
+                <g key={i} className={`orbit__pt${hot === i ? ' is-hot' : ''}${p.result ? ' has-result' : ''}`} onPointerEnter={() => setHot(i)} onPointerLeave={() => setHot(null)} onClick={() => setHot(i)}>
                   <circle cx={p.x} cy={p.y} r={p.r * 2.4} className="orbit__halo" />
                   <circle cx={p.x} cy={p.y} r={p.r} />
                 </g>
@@ -68,7 +68,7 @@ export function Arena() {
 
           <ul className="comp-list">
             {kaggle.competitions.map((comp, i) => (
-              <li key={comp.name} className={hot === i ? 'is-hot' : ''} onMouseEnter={() => setHot(i)} onMouseLeave={() => setHot(null)}>
+              <li key={comp.name} className={hot === i ? 'is-hot' : ''} onPointerEnter={() => setHot(i)} onPointerLeave={() => setHot(null)} onClick={() => setHot(i)}>
                 <span className="comp-list__name">{comp.name}</span>
                 <span className="comp-list__domain mono">{comp.domain}</span>
                 <span className="comp-list__prize mono">{comp.prize}</span>

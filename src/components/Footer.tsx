@@ -1,4 +1,5 @@
 import { wiki } from '../data/wiki';
+import { shortcutLabel } from '../hooks/platform';
 
 export function Footer() {
   return (
@@ -8,7 +9,7 @@ export function Footer() {
         <span>
           metrics compiled from cameron-wiki · {wiki.totals.pages} pages · synced {wiki.generatedAt}
         </span>
-        <span>press ⌘K</span>
+        <span className="footer__kbd">press {shortcutLabel}</span>
       </div>
     </footer>
   );

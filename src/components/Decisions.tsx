@@ -39,8 +39,14 @@ export function Decisions() {
                   aria-controls="adr-panel"
                   className={i === open ? 'is-open' : ''}
                   style={{ ['--tone' as string]: tone[item.domain] }}
-                  onClick={() => setOpen(i)}
-                  onMouseEnter={() => setOpen(i)}
+                  onClick={() => {
+                    setOpen(i);
+                    // Panel stacks above the list on narrow screens; bring it into view.
+                    if (window.matchMedia('(max-width: 960px)').matches) {
+                      document.getElementById('adr-panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                  }}
+                  onPointerEnter={(e) => e.pointerType === 'mouse' && setOpen(i)}
                 >
                   <span className="mono">ADR-{String(i + 1).padStart(2, '0')}</span>
                   {item.title}
