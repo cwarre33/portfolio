@@ -5,17 +5,24 @@ import { GITHUB, LINKEDIN, RESUME_HREF } from './links';
 import { trackEvent } from '../analytics/track';
 
 function useWide() {
-  const [wide, setWide] = useState(() => typeof window !== 'undefined' && window.innerWidth >= 960);
+  const query = '(min-width: 960px)';
+  const [wide, setWide] = useState(() => typeof window !== 'undefined' && window.matchMedia(query).matches);
   useEffect(() => {
-    const on = () => setWide(window.innerWidth >= 960);
-    window.addEventListener('resize', on);
-    return () => window.removeEventListener('resize', on);
+    const mq = window.matchMedia(query);
+    const on = () => setWide(mq.matches);
+    // Safari < 14 only has addListener.
+    if (mq.addEventListener) mq.addEventListener('change', on);
+    else mq.addListener(on);
+    return () => (mq.removeEventListener ? mq.removeEventListener('change', on) : mq.removeListener(on));
   }, []);
   return wide;
 }
 
 export function Hero() {
-  const [focus, setFocus] = useState<DomainKey | null>(null);
+  // Hover previews a domain; click/tap pins it.
+  const [hovered, setHovered] = useState<DomainKey | null>(null);
+  const [pinned, setPinned] = useState<DomainKey | null>(null);
+  const focus = hovered ?? pinned;
   const wide = useWide();
   const t = wiki.totals;
 
@@ -72,12 +79,10 @@ export function Hero() {
             type="button"
             className={`legend-chip${focus === domain.key ? ' is-on' : ''}`}
             style={{ ['--chip' as string]: domain.color }}
-            onMouseEnter={() => setFocus(domain.key)}
-            onMouseLeave={() => setFocus(null)}
-            onFocus={() => setFocus(domain.key)}
-            onBlur={() => setFocus(null)}
-            onClick={() => setFocus((f) => (f === domain.key ? null : domain.key))}
-            aria-pressed={focus === domain.key}
+            onPointerEnter={(e) => e.pointerType === 'mouse' && setHovered(domain.key)}
+            onPointerLeave={(e) => e.pointerType === 'mouse' && setHovered(null)}
+            onClick={() => setPinned((f) => (f === domain.key ? null : domain.key))}
+            aria-pressed={pinned === domain.key}
           >
             <i aria-hidden="true" />
             {domain.label}

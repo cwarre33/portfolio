@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { trackEvent } from '../analytics/track';
 import { EMAIL, GITHUB, LINKEDIN, RESUME_HREF } from './links';
+import { copyText } from '../hooks/platform';
 
 export function Contact() {
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState<null | boolean>(null);
 
   return (
     <section id="contact" className="section contact">
@@ -20,11 +21,13 @@ export function Contact() {
           <button
             type="button"
             className="btn btn--primary btn--xl"
-            onClick={() => {
-              void navigator.clipboard?.writeText(EMAIL);
-              setCopied(true);
-              setTimeout(() => setCopied(false), 1800);
-              trackEvent('contact_email_copy');
+            aria-live="polite"
+            onClick={async () => {
+              const ok = await copyText(EMAIL);
+              setCopied(ok);
+              setTimeout(() => setCopied(null), 1800);
+              if (ok) trackEvent('contact_email_copy');
+              else window.location.href = `mailto:${EMAIL}`;
             }}
           >
             {copied ? 'Copied ✓' : EMAIL}

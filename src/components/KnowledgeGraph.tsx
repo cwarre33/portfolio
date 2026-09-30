@@ -150,7 +150,9 @@ export function KnowledgeGraph({ focus, centerX = 0.5 }: Props) {
     let raf = 0;
     let last = performance.now();
 
-    const pulses = Array.from({ length: reduced ? 0 : 26 }, () => ({
+    // Fewer pulses on small / low-core devices keeps phones cool.
+    const lowPower = window.innerWidth < 720 || (navigator.hardwareConcurrency ?? 8) <= 4;
+    const pulses = Array.from({ length: reduced ? 0 : lowPower ? 12 : 26 }, () => ({
       link: Math.floor(Math.random() * wiki.links.length),
       t: Math.random(),
       speed: 0.25 + Math.random() * 0.5,
@@ -336,6 +338,13 @@ export function KnowledgeGraph({ focus, centerX = 0.5 }: Props) {
       }
     };
 
+    if (typeof IntersectionObserver === 'undefined' || typeof ResizeObserver === 'undefined') {
+      resize();
+      project();
+      draw();
+      return;
+    }
+
     const io = new IntersectionObserver(([entry]) => {
       const was = visible;
       visible = entry.isIntersecting && !document.hidden;
@@ -361,6 +370,7 @@ export function KnowledgeGraph({ focus, centerX = 0.5 }: Props) {
     canvas.addEventListener('pointerdown', onDown);
     window.addEventListener('pointerup', onUp);
     canvas.addEventListener('pointerleave', onLeave);
+    canvas.addEventListener('pointercancel', onUp);
     document.addEventListener('visibilitychange', onVis);
     raf = requestAnimationFrame(frame);
 
@@ -372,6 +382,7 @@ export function KnowledgeGraph({ focus, centerX = 0.5 }: Props) {
       canvas.removeEventListener('pointerdown', onDown);
       window.removeEventListener('pointerup', onUp);
       canvas.removeEventListener('pointerleave', onLeave);
+      canvas.removeEventListener('pointercancel', onUp);
       document.removeEventListener('visibilitychange', onVis);
     };
   }, []);
@@ -388,7 +399,11 @@ export function KnowledgeGraph({ focus, centerX = 0.5 }: Props) {
         aria-label={`Interactive 3D map of Cameron's knowledge wiki: ${wiki.totals.pages} pages connected by ${wiki.totals.links} links.`}
       />
       {node && dom && hover && (
-        <div className="kg__tip" style={{ left: hover.x, top: hover.y }} aria-hidden="true">
+        <div
+          className={`kg__tip${hover.x > (canvasRef.current?.clientWidth ?? 0) - 290 ? ' is-flipped' : ''}`}
+          style={{ left: hover.x, top: hover.y }}
+          aria-hidden="true"
+        >
           <span className="kg__tip-domain" style={{ color: dom.color }}>
             {dom.label}
           </span>
