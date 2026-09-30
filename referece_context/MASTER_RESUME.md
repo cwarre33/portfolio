@@ -11,7 +11,7 @@
 
 - **Name:** Cameron Warren 
 - **Phone:** 336-870-3371 
-- **Email:** cwarre33@charlotte.edu / cwarre33@uncc.edu 
+- **Email:** cwarre33@alumni.uncc.edu (primary; former student addresses cwarre33@charlotte.edu / cwarre33@uncc.edu) 
 - **Location:** Winston-Salem / Charlotte, NC 
 - **GitHub:** https://github.com/cwarre33 
 - **LinkedIn:** https://linkedin.com/in/cameron-warren-73a0192b2 

@@ -1,7 +1,7 @@
 # Cameron Warren
 **Software Engineer**
 
-336-870-3371 · cwarre33@charlotte.edu · Charlotte / Winston-Salem, NC  
+336-870-3371 · cwarre33@alumni.uncc.edu · Charlotte / Winston-Salem, NC  
 [github.com/cwarre33](https://github.com/cwarre33) · [linkedin.com/in/cameron-warren-73a0192b2](https://linkedin.com/in/cameron-warren-73a0192b2) · [cwarre33.github.io/portfolio](https://cwarre33.github.io/portfolio/)
 
 ---
