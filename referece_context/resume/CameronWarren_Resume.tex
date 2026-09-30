@@ -5,7 +5,10 @@
 \usepackage{xcolor}
 \usepackage{hyperref}
 
-\setmainfont{Helvetica Neue}[Scale=0.95]
+% Helvetica Neue on macOS; TeX Gyre Heros (a metric Helvetica clone) elsewhere.
+\IfFontExistsTF{Helvetica Neue}
+  {\setmainfont{Helvetica Neue}[Scale=0.95]}
+  {\setmainfont{TeX Gyre Heros}[Scale=0.95]}
 
 \definecolor{ink}{HTML}{1a1a1a}
 \definecolor{rulec}{HTML}{c8c8c8}
@@ -97,7 +100,7 @@
 \rsection{Skills}
 {\bfseries Languages:} Python, Java, JavaScript, TypeScript, SQL, HTML/CSS, C/C++ (coursework)\par
 {\bfseries Systems:} Node.js, FastAPI, React, Next.js, Spring, PostgreSQL, Docker, REST APIs, Git, Amazon Web Services (AWS: Lambda, S3, SQS, ECS/Fargate, RDS, ALB, WAF), Terraform, CI/CD, NetSuite, Zendesk, Microsoft Entra ID\par
-{\bfseries Engineering:} Full-stack development, performance optimization, testing, SSO/RBAC, async jobs, API integrations}
+{\bfseries Engineering:} Full-stack development, performance optimization, testing, SSO/RBAC, async jobs, API integrations\par
 
 \rsection{Education}
 {\bfseries University of North Carolina at Charlotte} --- B.S.\ Computer Science \hfill Dec 2025 \;$\cdot$\; GPA {\bfseries 3.5}\par
