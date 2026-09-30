@@ -47,11 +47,24 @@ Copy `.env.example` → `.env` for local reference (dev does not send events unl
 | Impact | Bento of production metrics with micro-visualizations (latency race, round robin, serial field) |
 | Systems | ClearView, SofaScope, contact-center automation, SellSmart with animated pipelines |
 | Decisions | Public ADRs: what I chose, what I passed on, and the tradeoff I accepted |
-| Research | Kaggle orbit (14 competitions) and eval harnesses and agents |
+| Research | Kaggle standings (finish-percentile chart, medals, badges) and eval harnesses |
 | Second brain | Wiki stats, domain composition, and the redaction split |
 | Experience / Contact | Timeline, credentials, other repos, CTA |
 
 Press **⌘K / Ctrl+K** anywhere for the command palette.
+
+## Private cockpit (`ops`)
+
+Type `ops` in the ⌘K / Ctrl K palette to open `#/ops`, a read-only job-search cockpit over
+[career-ops](https://github.com/santifer/career-ops) data in the **private** `cwarre33/cameron-wiki` repo (`career/`).
+
+- Nothing private is in this repo or the bundle. The cockpit (`src/ops/`, code-split) fetches
+  `career/data/applications.md` and `career/reports/*.md` at runtime from `api.github.com`.
+- Sign in with a **fine-grained** GitHub token: resource owner `cwarre33`, only `cameron-wiki`,
+  permission *Contents: Read-only*, with an expiry. It is kept in `sessionStorage` (cleared when the tab
+  closes, or with **lock**) and sent only to `api.github.com`.
+- The `ops` command is discoverable in public JS by design; access is enforced by GitHub, not by obscurity.
+- On `#/ops`, Clarity recording is stopped, the view is masked, and `noindex` is set.
 
 ## Wiki data
 
@@ -72,7 +85,7 @@ Curated copy lives in `src/data/story.ts` (systems, ADRs, Kaggle, labs) and cite
 |------|---------|
 | `src/data/story.ts` | Public site copy for systems, decisions, research |
 | `src/data/experience.ts`, `projects.ts`, `certifications.ts` | Timeline, repos, credentials |
-| `referece_context/MASTER_RESUME.md` | Full internal inventory for tailoring resumes |
+| `resume/` | Public resume source (`.tex`, markdown) and built PDF; copy the PDF to `public/downloads/` |
 | `docs/superpowers/` | Design specs and implementation plans |
 
 Keep ticket IDs out of `src/`. Prefer public-safe metrics aligned with the profile README.

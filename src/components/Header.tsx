@@ -48,7 +48,11 @@ function CommandPalette({ open, onClose }: { open: boolean; onClose: () => void 
     []
   );
 
-  const results = commands.filter((c) => (c.label + c.hint).toLowerCase().includes(q.toLowerCase()));
+  // Hidden entry to the private cockpit: only appears on an exact match, never in the default list.
+  const secret = q.trim().toLowerCase() === 'ops';
+  const results = secret
+    ? [{ label: 'Open ops', hint: 'restricted', run: () => (window.location.hash = '/ops') }]
+    : commands.filter((c) => (c.label + c.hint).toLowerCase().includes(q.toLowerCase()));
 
   useEffect(() => {
     if (!open) return;

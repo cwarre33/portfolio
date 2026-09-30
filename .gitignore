@@ -15,9 +15,14 @@ dist
 .idea
 .vscode
 
-# Ephemeral Jira MCP page dumps (merged JSON is kept)
-referece_context/jira_raw/
 
 .worktrees
 
 .superpowers/
+
+# Local screenshot / QA output
+dev/
+shots/
+
+# Private reference material lives in the private cameron-wiki repo
+referece_context/

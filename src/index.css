@@ -2318,3 +2318,374 @@ code {
     max-width: 1560px;
   }
 }
+
+/* ───────────── Private ops cockpit (#/ops) ───────────── */
+.ops {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background:
+    radial-gradient(60% 40% at 50% 0%, rgba(212, 255, 90, 0.05), transparent 70%),
+    var(--ink);
+}
+
+.ops-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px var(--gutter);
+  padding-top: max(12px, env(safe-area-inset-top));
+  border-bottom: 1px solid var(--line);
+  background: rgba(7, 8, 12, 0.85);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  color: var(--muted);
+}
+
+.ops-bar > .mono {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ops-main {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: clamp(24px, 4vw, 48px) var(--gutter) 64px;
+}
+
+.ops-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ops-chip {
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line-2);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.ops-chip:hover,
+.ops-chip.is-on {
+  color: var(--text);
+  border-color: var(--text);
+}
+
+.ops-muted {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.ops-error {
+  color: var(--ember);
+  font-size: 0.9rem;
+}
+
+.ops-loading {
+  padding: 20vh 0;
+  text-align: center;
+}
+
+/* login */
+.ops-login,
+.ops-empty {
+  max-width: 440px;
+  margin: 12vh auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ops-login h1,
+.ops-empty h1 {
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.ops-login p,
+.ops-empty p {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.ops-login__mark {
+  align-self: flex-start;
+  padding: 4px 10px;
+  border-radius: 6px;
+  color: var(--ink);
+  background: var(--signal);
+}
+
+.ops-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ops-field .mono {
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.ops-field input {
+  width: 100%;
+  height: 48px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line-2);
+  background: var(--ink-2);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 16px;
+}
+
+.ops-field input:focus {
+  outline: 2px solid var(--signal);
+  outline-offset: 1px;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: progress;
+  transform: none;
+}
+
+/* cockpit */
+.ops-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.ops-kpis {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  border-top: 1px solid var(--line-2);
+}
+
+.ops-kpis > div {
+  padding: 18px 16px 18px 0;
+}
+
+.ops-kpis > div + div {
+  padding-left: 16px;
+  border-left: 1px solid var(--line);
+}
+
+.ops-kpis dt {
+  font-size: clamp(1.8rem, 3.6vw, 2.8rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  font-variant-numeric: tabular-nums;
+}
+
+.ops-kpis dd {
+  margin-top: 6px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.ops-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+  padding: 22px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--ink-2);
+}
+
+.ops-card h2 {
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.ops-card--funnel {
+  grid-column: span 3;
+}
+
+.ops-card--table {
+  grid-column: 1 / -1;
+}
+
+.ops-card__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ops-funnel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ops-funnel li {
+  display: grid;
+  grid-template-columns: 7rem 1fr 6rem;
+  gap: 12px;
+  align-items: center;
+}
+
+.ops-funnel__label {
+  font-size: 0.9rem;
+}
+
+.ops-funnel__track {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(233, 230, 223, 0.06);
+  overflow: hidden;
+}
+
+.ops-funnel__bar {
+  display: block;
+  height: 100%;
+  min-width: 2px;
+  border-radius: inherit;
+  background: var(--signal);
+}
+
+.ops-funnel .mono {
+  text-align: right;
+  color: var(--text);
+}
+
+.ops-funnel em {
+  font-family: var(--mono);
+  font-style: normal;
+  color: var(--muted);
+}
+
+.ops-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.ops-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.9rem;
+}
+
+.ops-list li strong {
+  font-weight: 500;
+}
+
+.ops-score {
+  color: var(--signal);
+}
+
+.ops-tag {
+  margin-left: 6px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 138, 91, 0.5);
+  color: var(--ember);
+  font-weight: 400;
+  font-size: 0.66rem;
+}
+
+.ops-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ops-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.ops-table th {
+  padding: 8px 10px;
+  text-align: left;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line-2);
+  white-space: nowrap;
+}
+
+.ops-table td {
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+.ops-notes {
+  max-width: 28ch;
+  color: var(--muted);
+}
+
+.ops-status {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--line-2);
+  font-size: 0.76rem;
+  white-space: nowrap;
+}
+
+.ops-status--applied,
+.ops-status--responded {
+  border-color: rgba(122, 162, 255, 0.5);
+  color: var(--blue);
+}
+
+.ops-status--interview,
+.ops-status--offer {
+  border-color: rgba(212, 255, 90, 0.5);
+  color: var(--signal);
+}
+
+.ops-status--rejected,
+.ops-status--discarded {
+  color: var(--muted);
+}
+
+@media (max-width: 960px) {
+  .ops-grid {
+    grid-template-columns: 1fr;
+  }
+  .ops-card--funnel {
+    grid-column: auto;
+  }
+  .ops-kpis {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .ops-kpis > div:nth-child(4) {
+    padding-left: 0;
+    border-left: 0;
+  }
+  .ops-kpis > div:nth-child(n + 4) {
+    border-top: 1px solid var(--line);
+  }
+}
+
+@media (max-width: 480px) {
+  .ops-funnel li {
+    grid-template-columns: 5.5rem 1fr 4.5rem;
+    gap: 8px;
+  }
+}
