@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { daysSince, normalizeStatus, parseReport, parseReportPath, parseScore, parseTracker, reachedStage } from './parse';
+import { readFileSync, existsSync } from 'node:fs';
+import { daysSince, normalizeStatus, parseReport, parseReportPath, parseScore, parseTracker, reachedStage, yamlList } from './parse';
 
 const TRACKER = `# Applications Tracker
 
@@ -115,5 +116,62 @@ describe('helpers', () => {
   it('computes days since a date', () => {
     expect(daysSince('2026-09-20', new Date('2026-09-30T12:00:00Z'))).toBe(10);
     expect(daysSince('not a date')).toBeNull();
+  });
+});
+
+describe('Machine Summary gaps (career-ops report format)', () => {
+  const MS = `# Evaluation: Acme — Eng
+
+**Score:** 3.2/5
+
+---
+
+## Machine Summary
+
+\`\`\`yaml
+company: "Acme"
+hard_stops:
+  - "5+ years required"
+soft_gaps:
+  - "Kubernetes not in cv.md"
+  - 'No fintech domain'
+top_strengths:
+  - "AWS depth"
+empty_list: []
+\`\`\`
+
+### Gaps
+
+| Gap | Severity | Mitigation |
+|---|---|---|
+| table gap | Low | x |
+`;
+
+  it('reads YAML lists and ignores empty ones', () => {
+    expect(yamlList(MS, 'soft_gaps')).toEqual(['Kubernetes not in cv.md', 'No fintech domain']);
+    expect(yamlList(MS, 'hard_stops')).toEqual(['5+ years required']);
+    expect(yamlList(MS, 'empty_list')).toEqual([]);
+    expect(yamlList(MS, 'missing_key')).toEqual([]);
+    expect(yamlList('no fence here', 'soft_gaps')).toEqual([]);
+  });
+
+  it('prefers Machine Summary gaps (hard stops as High) over the gaps table', () => {
+    expect(parseReport('r.md', MS).gaps).toEqual([
+      { gap: '5+ years required', severity: 'High' },
+      { gap: 'Kubernetes not in cv.md', severity: 'Medium' },
+      { gap: 'No fintech domain', severity: 'Medium' },
+    ]);
+  });
+
+  it('maps Hired to the offer stage', () => {
+    expect(normalizeStatus('Hired')).toBe('offer');
+  });
+
+  const real = '../cameron-wiki/career/reports/001-pendo-2026-09-30.md';
+  it.skipIf(!existsSync(real))('parses a real career-ops report when the wiki checkout is present', () => {
+    const r = parseReport(real, readFileSync(real, 'utf8'));
+    expect(r.score).toBe(4.2);
+    expect(r.gaps.length).toBeGreaterThan(0);
+    expect(r.gaps.every((g) => g.severity === 'Medium')).toBe(true);
   });
 });

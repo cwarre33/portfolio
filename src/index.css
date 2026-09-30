@@ -2590,11 +2590,17 @@ code {
   font-weight: 500;
 }
 
+.ops-list li > span:last-child {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
 .ops-score {
   color: var(--signal);
 }
 
 .ops-tag {
+  white-space: nowrap;
   margin-left: 6px;
   padding: 1px 6px;
   border-radius: 999px;
