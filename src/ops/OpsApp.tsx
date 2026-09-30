@@ -188,8 +188,12 @@ function Cockpit({ apps, reports, loadedAt, onRefresh }: { apps: Application[]; 
     .sort((x, y) => (y.days ?? 0) - (x.days ?? 0));
 
   const gaps = useMemo(() => {
+    // Only roles still in play: skip reports whose tracker row is SKIP / Discarded.
+    const base = (p: string) => p.split('/').pop() ?? p;
+    const dropped = new Set(apps.filter((a) => a.status === 'discarded' && a.reportPath).map((a) => base(a.reportPath!)));
     const m = new Map<string, { gap: string; n: number; high: number }>();
     for (const r of reports) {
+      if (dropped.has(base(r.path))) continue;
       for (const g of r.gaps) {
         const key = g.gap.toLowerCase().replace(/[^a-z0-9 ]/g, '').trim();
         if (!key) continue;
@@ -200,7 +204,7 @@ function Cockpit({ apps, reports, loadedAt, onRefresh }: { apps: Application[]; 
       }
     }
     return [...m.values()].sort((a, b) => b.n - a.n || b.high - a.high).slice(0, 8);
-  }, [reports]);
+  }, [reports, apps]);
 
   const rows = [...apps].sort((a, b) =>
     sort === 'score' ? (b.score ?? -1) - (a.score ?? -1) : b.date.localeCompare(a.date)

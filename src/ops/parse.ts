@@ -66,7 +66,7 @@ const STATUS_ALIASES: [RegExp, StatusId][] = [
   [/^(applied|aplicad|postulad)/, 'applied'],
   [/^(responded|respond)/, 'responded'],
   [/^(interview|entrevista)/, 'interview'],
-  [/^(offer|oferta)/, 'offer'],
+  [/^(offer|oferta|hired|contratad)/, 'offer'],
   [/^(rejected|rechazad)/, 'rejected'],
   [/^(discarded|descartad|skip|do not apply|no aplicar)/, 'discarded'],
 ];
@@ -150,11 +150,28 @@ export interface ReportSummary {
   gaps: { gap: string; severity: string }[];
 }
 
+/** Reads a top-level YAML string list (e.g. `soft_gaps:`) from the report's Machine Summary fence. */
+export function yamlList(md: string, key: string): string[] {
+  const fence = md.match(/## Machine Summary\s*```ya?ml\n([\s\S]*?)```/)?.[1];
+  if (!fence) return [];
+  const m = fence.match(new RegExp(`^${key}:[ \\t]*(\\[\\])?[ \\t]*\\n((?:[ \\t]*- .*\\n?)*)`, 'm'));
+  if (!m || m[1]) return [];
+  return m[2]
+    .split('\n')
+    .map((l) => l.replace(/^\s+-\s+/, '').trim().replace(/^["']|["']$/g, ''))
+    .filter(Boolean);
+}
+
 export function parseReport(path: string, md: string): ReportSummary {
   const field = (name: string) => md.match(new RegExp(`\\*\\*${name}:\\*\\*\\s*(.+)`, 'i'))?.[1].trim() ?? null;
   const title = md.match(/^#\s+(.+)$/m)?.[1].replace(/^Evaluation:\s*/i, '').trim() ?? path;
-  const gaps: { gap: string; severity: string }[] = [];
-  const gapSection = md.split(/^#{2,4}\s+Gaps\s*$/im)[1];
+  // Preferred source: the Machine Summary YAML every career-ops report carries.
+  const gaps: { gap: string; severity: string }[] = [
+    ...yamlList(md, 'hard_stops').map((gap) => ({ gap, severity: 'High' })),
+    ...yamlList(md, 'soft_gaps').map((gap) => ({ gap, severity: 'Medium' })),
+  ];
+  // Fallback: a "Gaps" markdown table (older / hand-written reports).
+  const gapSection = gaps.length ? undefined : md.split(/^#{2,4}\s+Gaps\s*$/im)[1];
   if (gapSection) {
     for (const line of gapSection.split('\n')) {
       if (/^#{1,4}\s/.test(line)) break;
