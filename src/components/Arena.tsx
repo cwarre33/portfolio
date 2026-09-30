@@ -1,31 +1,21 @@
 import { useState } from 'react';
-import { kaggle, labs } from '../data/story';
+import { kaggle, labs, topPercent } from '../data/story';
 
-function prizeValue(p: string): number {
-  const m = p.match(/\$([\d.]+)(k|M)?/);
-  if (!m) return 0;
-  return parseFloat(m[1]) * (m[2] === 'M' ? 1e6 : m[2] === 'k' ? 1e3 : 1);
-}
-
-const domainsInOrder = [...new Set(kaggle.competitions.map((c) => c.domain))];
+const fmt = (n: number) => n.toLocaleString('en-US');
+const pct = (v: number) => (v < 10 ? v.toFixed(1) : Math.round(v).toString());
 
 export function Arena() {
   const [hot, setHot] = useState<number | null>(null);
-  const size = 360, c = size / 2;
+  const finals = kaggle.ranked.filter((c) => c.status === 'final');
+  const best = [...finals].sort((a, b) => topPercent(a) - topPercent(b))[0];
+  const median = [...finals.map(topPercent)].sort((a, b) => a - b)[Math.floor(finals.length / 2)];
 
-  const points = kaggle.competitions.map((comp, i) => {
-    const di = domainsInOrder.indexOf(comp.domain);
-    const sameDomain = kaggle.competitions.filter((x, j) => x.domain === comp.domain && j < i).length;
-    const angle = (di / domainsInOrder.length) * Math.PI * 2 - Math.PI / 2 + sameDomain * 0.22;
-    const v = prizeValue(comp.prize);
-    const ring = v ? 150 - Math.log10(v) * 16 : 146; // bigger prize → closer to the core
-    return {
-      x: c + Math.cos(angle) * ring,
-      y: c + Math.sin(angle) * ring,
-      r: v ? 1.6 + Math.log10(v) * 0.62 : 3,
-      result: Boolean(comp.result),
-    };
-  });
+  const stats = [
+    { value: String(kaggle.competitionMedals), label: 'competition medal', sub: `bronze · ${best.name}` },
+    { value: `top ${pct(topPercent(best))}%`, label: 'best final finish', sub: `${fmt(best.rank!)} of ${fmt(best.teams)} teams` },
+    { value: String(kaggle.codeMedals), label: 'code medals', sub: 'notebooks voted up by the community' },
+    { value: String(kaggle.badges), label: 'badges earned', sub: `${kaggle.entered} competitions entered` },
+  ];
 
   return (
     <section id="arena" className="section">
@@ -36,47 +26,92 @@ export function Arena() {
             Off the clock, <em>in the arena.</em>
           </h2>
           <p className="section__lede">
-            {kaggle.count} Kaggle competitions across {kaggle.domains} domains ({kaggle.prizePool} in combined prize pools), plus the eval
-            harnesses and agents I built to go with them.
+            {kaggle.entered} Kaggle competitions across math reasoning, bioinformatics, NLP, vision, simulation and tabular ML. No prize
+            wins yet. Here's exactly where I finished, plus the eval harnesses and agents I built along the way.
           </p>
         </header>
 
-        <div className="arena reveal">
-          <div className="orbit">
-            <svg viewBox={`0 0 ${size} ${size}`} role="img" aria-label="Kaggle competitions plotted by domain; larger prize pools sit closer to the center.">
-              <g className="orbit__spin">
-              {[60, 95, 130, 150].map((r) => (
-                <circle key={r} cx={c} cy={c} r={r} className="orbit__ring" />
-              ))}
-              {domainsInOrder.map((d, i) => {
-                const a = (i / domainsInOrder.length) * Math.PI * 2 - Math.PI / 2;
-                return <line key={d} x1={c} y1={c} x2={c + Math.cos(a) * 168} y2={c + Math.sin(a) * 168} className="orbit__spoke" />;
-              })}
-              <circle cx={c} cy={c} r={26} className="orbit__core" />
-              <text x={c} y={c + 4} textAnchor="middle" className="orbit__core-label">
-                {kaggle.count}
-              </text>
-              {points.map((p, i) => (
-                <g key={i} className={`orbit__pt${hot === i ? ' is-hot' : ''}${p.result ? ' has-result' : ''}`} onPointerEnter={() => setHot(i)} onPointerLeave={() => setHot(null)} onClick={() => setHot(i)}>
-                  <circle cx={p.x} cy={p.y} r={p.r * 2.4} className="orbit__halo" />
-                  <circle cx={p.x} cy={p.y} r={p.r} />
-                </g>
-              ))}
-              </g>
-            </svg>
+        <dl className="kstats reveal">
+          {stats.map((s) => (
+            <div key={s.label}>
+              <dt>{s.value}</dt>
+              <dd>
+                {s.label}
+                <span>{s.sub}</span>
+              </dd>
+            </div>
+          ))}
+        </dl>
+
+        <figure className="finish reveal">
+          <figcaption className="finish__head">
+            <span>Finish position, as % of the field</span>
+            <span className="mono">
+              lower is better · median final finish top {pct(median)}%
+            </span>
+          </figcaption>
+
+          <div className="finish__axis mono" aria-hidden="true">
+            <span />
+            <div className="finish__scale">
+              <span style={{ left: '0%' }}>0%</span>
+              <span className="finish__tick-10" style={{ left: '10%' }}>10%</span>
+              <span style={{ left: '25%' }}>25%</span>
+              <span style={{ left: '50%' }}>50%</span>
+              <span style={{ left: '75%' }}>75%</span>
+              <span style={{ left: '100%' }}>100%</span>
+            </div>
           </div>
 
-          <ul className="comp-list">
-            {kaggle.competitions.map((comp, i) => (
-              <li key={comp.name} className={hot === i ? 'is-hot' : ''} onPointerEnter={() => setHot(i)} onPointerLeave={() => setHot(null)} onClick={() => setHot(i)}>
-                <span className="comp-list__name">{comp.name}</span>
-                <span className="comp-list__domain mono">{comp.domain}</span>
-                <span className="comp-list__prize mono">{comp.prize}</span>
-                {comp.result && <span className="comp-list__result">{comp.result}</span>}
-              </li>
-            ))}
-          </ul>
-        </div>
+          <ol className="finish__rows">
+            {kaggle.ranked.map((c, i) => {
+              const p = topPercent(c);
+              const tip = `${c.name}: ${fmt(c.rank!)} of ${fmt(c.teams)} (top ${pct(p)}%)${c.status === 'live' ? ', live leaderboard' : ''}${c.medal ? ', bronze medal' : ''}`;
+              return (
+                <li
+                  key={c.name}
+                  className={`finish__row${hot === i ? ' is-hot' : ''}${c.medal ? ' is-medal' : ''}${c.status === 'live' ? ' is-live' : ''}`}
+                  onPointerEnter={() => setHot(i)}
+                  onPointerLeave={() => setHot(null)}
+                >
+                  <a className="finish__name" href={c.url} target="_blank" rel="noopener noreferrer">
+                    {c.name}
+                    <span className="mono">
+                      {c.domain} · {c.kind}
+                    </span>
+                  </a>
+                  <div className="finish__track" role="img" aria-label={tip}>
+                    {(c.kind === 'Featured' || c.kind === 'Research') && <span className="finish__zone" aria-hidden="true" />}
+                    <span className="finish__bar" style={{ width: `${p}%` }} aria-hidden="true" />
+                    <span className="finish__dot" style={{ left: `${p}%` }} aria-hidden="true" />
+                    {hot === i && (
+                      <span className="finish__tip mono" style={{ left: `${p}%` }} aria-hidden="true">
+                        {fmt(c.rank!)} / {fmt(c.teams)} · beat {fmt(c.teams - c.rank!)} teams
+                      </span>
+                    )}
+                  </div>
+                  <span className="finish__rank mono">
+                    {fmt(c.rank!)}/{fmt(c.teams)}
+                    {c.medal && <b className="finish__tag finish__tag--medal">bronze</b>}
+                    {c.status === 'live' && <b className="finish__tag">live</b>}
+                  </span>
+                </li>
+              );
+            })}
+          </ol>
+
+          <p className="finish__note">
+            <span className="finish__key finish__key--zone" aria-hidden="true" /> top 10%: the bronze line, shaded only where a medal was possible
+            (featured and research competitions with 1,000+ teams). Playground and community competitions don't award medals.{' '}
+            <span className="finish__key finish__key--live" aria-hidden="true" /> live: provisional leaderboard as of {kaggle.snapshot}.
+          </p>
+          <p className="finish__note">
+            <span className="mono">also entered, unranked:</span> {kaggle.unranked.join(' · ')}.{' '}
+            <a href={kaggle.profile} target="_blank" rel="noopener noreferrer">
+              Full profile ↗
+            </a>
+          </p>
+        </figure>
 
         <div className="labs">
           {labs.map((lab) => (

@@ -180,9 +180,9 @@ export function Impact() {
           </article>
 
           <article className="tile reveal">
-            <span className="tile__kicker mono">Kaggle · breadth</span>
-            <Stat to={14} start={inView} />
-            <p className="tile__label">competitions across 10 domains, ~$3.8M in combined prize pools.</p>
+            <span className="tile__kicker mono">Kaggle · AI Mathematical Olympiad 3</span>
+            <Stat to={8.7} decimals={1} prefix="top " suffix="%" start={inView} />
+            <p className="tile__label">358th of 4,138 teams, inside the bronze-medal line.</p>
           </article>
         </div>
       </div>
