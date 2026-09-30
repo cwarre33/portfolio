@@ -1,212 +1,178 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { EMAIL, GITHUB, LINKEDIN, RESUME_HREF, sections } from './links';
+import { trackEvent } from '../analytics/track';
 
-const navLinks = [
-  { href: '#about', label: 'About' },
-  { href: '#experience', label: 'Experience' },
-  { href: '#impact', label: 'Impact' },
-  { href: '#aws', label: 'AWS' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#certifications', label: 'Certifications' },
-  { href: '#contact', label: 'Contact' },
-  { href: 'https://cwarre33.github.io/', label: 'Contributions', external: true },
-];
+interface Command {
+  label: string;
+  hint: string;
+  run: () => void;
+}
 
-export function Header() {
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+function go(id: string) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+}
+
+function CommandPalette({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const [q, setQ] = useState('');
+  const [sel, setSel] = useState(0);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const commands = useMemo<Command[]>(
+    () => [
+      ...sections.map((s) => ({ label: `Go to ${s.label}`, hint: `#${s.id}`, run: () => go(s.id) })),
+      { label: 'Open GitHub', hint: 'github.com/cwarre33', run: () => window.open(GITHUB, '_blank', 'noopener') },
+      { label: 'Open LinkedIn', hint: 'linkedin', run: () => window.open(LINKEDIN, '_blank', 'noopener') },
+      {
+        label: 'Copy email',
+        hint: EMAIL,
+        run: () => {
+          void navigator.clipboard?.writeText(EMAIL);
+          trackEvent('contact_email_copy');
+        },
+      },
+      {
+        label: 'Download résumé',
+        hint: 'PDF',
+        run: () => {
+          trackEvent('resume_download');
+          const a = document.createElement('a');
+          a.href = RESUME_HREF;
+          a.download = '';
+          a.click();
+        },
+      },
+    ],
+    []
+  );
+
+  const results = commands.filter((c) => (c.label + c.hint).toLowerCase().includes(q.toLowerCase()));
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+    if (open) {
+      setQ('');
+      setSel(0);
+      requestAnimationFrame(() => inputRef.current?.focus());
+    }
+  }, [open]);
 
-  useEffect(() => {
-    if (menuOpen) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = '';
-    return () => { document.body.style.overflow = ''; };
-  }, [menuOpen]);
+  if (!open) return null;
 
-  const closeMenu = () => setMenuOpen(false);
+  const run = (c: Command | undefined) => {
+    if (!c) return;
+    onClose();
+    c.run();
+  };
 
   return (
-    <header
-      className={`header ${scrolled ? 'header--scrolled' : ''} ${menuOpen ? 'header--menu-open' : ''}`}
-      role="banner"
-    >
-      <div className="container header__inner">
-        <a href="#" className="header__logo" onClick={closeMenu}>
-          Cameron Warren
-        </a>
-        <button
-          type="button"
-          className="header__menu-btn"
-          aria-expanded={menuOpen}
-          aria-controls="header-nav"
-          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          <span className="header__menu-icon" aria-hidden />
-        </button>
-        <nav
-          id="header-nav"
-          className="header__nav"
-          aria-label="Main"
-        >
-          <ul className="header__list">
-            {navLinks.map(({ href, label, external }) => (
-              <li key={href}>
-                <a
-                  href={href}
-                  className="header__link"
-                  onClick={closeMenu}
-                  {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                >
-                  {label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+    <div className="cmdk" role="dialog" aria-modal="true" aria-label="Command palette" onMouseDown={onClose}>
+      <div className="cmdk__panel" onMouseDown={(e) => e.stopPropagation()}>
+        <input
+          ref={inputRef}
+          className="cmdk__input"
+          placeholder="Jump to a section, open a link…"
+          value={q}
+          onChange={(e) => {
+            setQ(e.target.value);
+            setSel(0);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'ArrowDown') {
+              e.preventDefault();
+              setSel((s) => Math.min(results.length - 1, s + 1));
+            } else if (e.key === 'ArrowUp') {
+              e.preventDefault();
+              setSel((s) => Math.max(0, s - 1));
+            } else if (e.key === 'Enter') {
+              run(results[sel]);
+            } else if (e.key === 'Escape') {
+              onClose();
+            }
+          }}
+          aria-activedescendant={results[sel] ? `cmd-${sel}` : undefined}
+          aria-controls="cmdk-list"
+        />
+        <ul className="cmdk__list" id="cmdk-list" role="listbox">
+          {results.map((c, i) => (
+            <li
+              key={c.label}
+              id={`cmd-${i}`}
+              role="option"
+              aria-selected={i === sel}
+              className={i === sel ? 'is-sel' : ''}
+              onMouseEnter={() => setSel(i)}
+              onClick={() => run(c)}
+            >
+              <span>{c.label}</span>
+              <span className="mono">{c.hint}</span>
+            </li>
+          ))}
+          {results.length === 0 && <li className="cmdk__empty">No matches</li>}
+        </ul>
+        <div className="cmdk__foot mono">↑↓ navigate · ↵ select · esc close</div>
       </div>
-      <style>{`
-        .header {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          z-index: 100;
-          padding: 0.75rem 0;
-          transition: background 0.2s ease, box-shadow 0.2s ease;
-        }
-        .header--scrolled {
-          background: rgba(15, 17, 21, 0.85);
-          backdrop-filter: blur(12px);
-          box-shadow: 0 1px 0 var(--border);
-        }
-        .header__inner {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-        .header__logo {
-          font-weight: 600;
-          color: var(--text);
-          font-size: 1.0625rem;
-          z-index: 101;
-        }
-        .header__logo:hover {
-          text-decoration: none;
-          color: var(--accent);
-        }
-        .header__menu-btn {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 44px;
-          height: 44px;
-          padding: 0;
-          background: none;
-          border: none;
-          border-radius: 8px;
-          color: var(--text);
-          cursor: pointer;
-          z-index: 101;
-        }
-        .header__menu-btn:hover {
-          background: var(--bg-card);
-        }
-        .header__menu-icon {
-          position: relative;
-          width: 22px;
-          height: 2px;
-          background: currentColor;
-          box-shadow: 0 -6px 0 currentColor, 0 6px 0 currentColor;
-          transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .header__menu-icon::after {
-          content: '';
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 22px;
-          height: 2px;
-          background: currentColor;
-          transform: rotate(-90deg);
-          opacity: 0;
-          transition: opacity 0.2s;
-        }
-        .header--menu-open .header__menu-icon {
-          box-shadow: none;
-          transform: rotate(45deg);
-        }
-        .header--menu-open .header__menu-icon::after {
-          opacity: 1;
-          transform: rotate(-90deg);
-        }
-        .header__nav {
-          display: none;
-        }
-        @media (min-width: 768px) {
-          .header__menu-btn {
-            display: none;
-          }
-          .header__nav {
-            display: block;
-          }
-        }
-        .header__list {
-          list-style: none;
-          display: flex;
-          gap: 1.5rem;
-        }
-        .header__link {
-          color: var(--text-muted);
-          font-size: 0.9375rem;
-          font-weight: 500;
-          transition: color 0.2s;
-          display: block;
-          padding: 0.5rem 0;
-        }
-        .header__link:hover {
-          color: var(--text);
-          text-decoration: none;
-        }
-        @media (max-width: 767px) {
-          .header__nav {
-            position: fixed;
-            inset: 0;
-            top: 0;
-            padding: 5rem 1.5rem 2rem;
-            background: var(--bg);
-            overflow-y: auto;
-            display: none;
-            align-items: flex-start;
-            justify-content: center;
-          }
-          .header--menu-open .header__nav {
-            display: flex;
-          }
-          .header__list {
-            flex-direction: column;
-            align-items: center;
-            gap: 0;
-            width: 100%;
-          }
-          .header__list li {
-            width: 100%;
-            border-bottom: 1px solid var(--border);
-          }
-          .header__link {
-            font-size: 1.125rem;
-            padding: 1rem 0.5rem;
-            min-height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
-        }
-      `}</style>
-    </header>
+    </div>
+  );
+}
+
+export function Header() {
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState('');
+  const progressRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setOpen((o) => !o);
+        trackEvent('command_palette');
+      }
+    };
+    const onScroll = () => {
+      setScrolled(window.scrollY > 40);
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if (progressRef.current) progressRef.current.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
+    };
+    window.addEventListener('keydown', onKey);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) if (e.isIntersecting) setActive(e.target.id);
+      },
+      { rootMargin: '-45% 0px -50% 0px' }
+    );
+    sections.forEach((s) => {
+      const el = document.getElementById(s.id);
+      if (el) io.observe(el);
+    });
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      window.removeEventListener('scroll', onScroll);
+      io.disconnect();
+    };
+  }, []);
+
+  return (
+    <>
+      <div className="progress" ref={progressRef} aria-hidden="true" />
+      <header className={`nav${scrolled ? ' is-scrolled' : ''}`}>
+        <a href="#top" className="nav__brand" aria-label="Back to top">
+          <span className="nav__mark" aria-hidden="true">CW</span>
+        </a>
+        <nav className="nav__links" aria-label="Sections">
+          {sections.map((s) => (
+            <a key={s.id} href={`#${s.id}`} className={active === s.id ? 'is-active' : ''}>
+              {s.label}
+            </a>
+          ))}
+        </nav>
+        <button type="button" className="nav__cmd" onClick={() => setOpen(true)} aria-label="Open command palette">
+          <span className="mono">⌘K</span>
+        </button>
+      </header>
+      <CommandPalette open={open} onClose={() => setOpen(false)} />
+    </>
   );
 }
