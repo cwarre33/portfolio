@@ -1,4 +1,4 @@
-export const EMAIL = 'cwarre33@uncc.edu';
+export const EMAIL = 'cwarre33@alumni.uncc.edu';
 export const LINKEDIN = 'https://www.linkedin.com/in/cameron-warren-73a0192b2/';
 export const GITHUB = 'https://github.com/cwarre33';
 export const RESUME_HREF = `${import.meta.env.BASE_URL}downloads/CameronWarrenResumeDownload.pdf`;

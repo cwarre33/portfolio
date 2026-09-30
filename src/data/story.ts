@@ -209,31 +209,59 @@ export const decisions: Decision[] = [
 export interface Competition {
   name: string;
   domain: string;
-  prize: string;
-  result?: string;
+  /** Kaggle competition type as listed on the site */
+  kind: 'Featured' | 'Research' | 'Community' | 'Playground';
+  rank?: number;
+  teams: number;
+  /** `live` = leaderboard still open, rank is provisional */
+  status: 'final' | 'live';
+  medal?: 'bronze';
+  url: string;
 }
 
+/**
+ * Snapshot of Cameron's Kaggle profile (cameronwarrennn), 2026-09-30.
+ * Ranks are as shown on the profile's competitions tab; no prize wins.
+ * The single competition medal is AIMO 3: 358/4,138 is inside the top-10%
+ * bronze cutoff for 1,000+ team competitions, and no other ranked finish is.
+ */
 export const kaggle = {
-  count: 14,
-  prizePool: '$3.8M',
-  domains: 10,
-  competitions: [
-    { name: 'AI Mathematical Olympiad 3', domain: 'Math reasoning', prize: '$2.2M' },
-    { name: 'ARC Prize 2025', domain: 'Reasoning', prize: '$1M' },
-    { name: 'Hull Tactical', domain: 'Quant finance', prize: '$100k' },
-    { name: 'Google Tunix', domain: 'NLP', prize: '$100k' },
-    { name: 'Stanford RNA 3D Folding', domain: 'Bioinformatics', prize: '$75k' },
-    { name: 'CSIRO Image2Biomass', domain: 'Computer vision', prize: '$75k' },
-    { name: 'Deep Past · Akkadian', domain: 'NLP', prize: '$50k', result: 'Found + documented data leakage' },
-    { name: 'March Mania 2026', domain: 'Sports analytics', prize: '$50k' },
-    { name: 'MABe Mouse Behavior', domain: 'Motion', prize: '$50k' },
-    { name: 'UrbanFloodBench', domain: 'Environmental', prize: '$7k' },
-    { name: 'Motion-S Text-to-Sign', domain: 'Motion', prize: 'Kudos', result: 'Rank 25 · 97.8% of top score' },
-    { name: 'Jaguar Re-ID', domain: 'Computer vision', prize: 'Kudos' },
-    { name: 'House Prices', domain: 'Tabular', prize: 'Knowledge', result: '~Rank 19' },
-    { name: 'Heart Disease S6E2', domain: 'Tabular', prize: 'Swag' },
+  profile: 'https://www.kaggle.com/cameronwarrennn',
+  snapshot: 'Sep 30, 2026',
+  entered: 20,
+  competitionMedals: 1,
+  codeMedals: 2,
+  badges: 33,
+  ranked: [
+    { name: 'Predicting EV Purchases (S6E9)', domain: 'Tabular', kind: 'Playground', rank: 42, teams: 3551, status: 'live', url: 'https://www.kaggle.com/competitions/playground-series-s6e9' },
+    { name: 'AI Mathematical Olympiad 3', domain: 'Math reasoning', kind: 'Featured', rank: 358, teams: 4138, status: 'final', medal: 'bronze', url: 'https://www.kaggle.com/competitions/ai-mathematical-olympiad-progress-prize-3' },
+    { name: 'Stanford RNA 3D Folding 2', domain: 'Bioinformatics', kind: 'Featured', rank: 437, teams: 1867, status: 'final', url: 'https://www.kaggle.com/competitions/stanford-rna-3d-folding-2' },
+    { name: 'Orbit Wars', domain: 'Simulation / RL', kind: 'Featured', rank: 1170, teams: 4729, status: 'final', url: 'https://www.kaggle.com/competitions/orbit-wars' },
+    { name: 'Predicting Heart Disease (S6E2)', domain: 'Tabular', kind: 'Playground', rank: 1373, teams: 4370, status: 'final', url: 'https://www.kaggle.com/competitions/playground-series-s6e2' },
+    { name: 'UrbanFloodBench', domain: 'Environmental', kind: 'Community', rank: 117, teams: 264, status: 'final', url: 'https://www.kaggle.com/competitions/urban-flood-modelling' },
+    { name: 'Deep Past · Akkadian → English', domain: 'NLP', kind: 'Featured', rank: 1200, teams: 2674, status: 'final', url: 'https://www.kaggle.com/competitions/deep-past-initiative-machine-translation' },
+    { name: 'ARC Prize 2026 · ARC-AGI-3', domain: 'Reasoning', kind: 'Featured', rank: 1640, teams: 3503, status: 'live', url: 'https://www.kaggle.com/competitions/arc-prize-2026-arc-agi-3' },
+    { name: 'Motion-S Text-to-Sign', domain: 'Motion generation', kind: 'Community', rank: 62, teams: 130, status: 'final', url: 'https://www.kaggle.com/competitions/motion-s-hierarchical-text-to-motion-generation-for-sign-language' },
+    { name: 'Predicting Stellar Class (S6E6)', domain: 'Tabular', kind: 'Playground', rank: 1362, teams: 2816, status: 'final', url: 'https://www.kaggle.com/competitions/playground-series-s6e6' },
+    { name: 'CSIRO Image2Biomass', domain: 'Computer vision', kind: 'Research', rank: 1910, teams: 3805, status: 'final', url: 'https://www.kaggle.com/competitions/csiro-biomass' },
+    { name: 'March Machine Learning Mania', domain: 'Sports analytics', kind: 'Featured', rank: 2771, teams: 3462, status: 'final', url: 'https://www.kaggle.com/competitions/march-machine-learning-mania-2026' },
+    { name: 'Jaguar Re-Identification', domain: 'Computer vision', kind: 'Community', rank: 299, teams: 348, status: 'final', url: 'https://www.kaggle.com/competitions/jaguar-re-id' },
   ] as Competition[],
+  /** Entered without a leaderboard rank (hackathons, writeups, or no final submission scored). */
+  unranked: [
+    'Gemma 4 Developer Agent',
+    'ARC Prize 2026 · Paper Track',
+    'Google Tunix Hack',
+    'MABe Mouse Behavior',
+    'Hull Tactical Market Prediction',
+    'ARC Prize 2025',
+    'House Prices',
+  ],
 };
+
+export function topPercent(c: Competition): number {
+  return c.rank ? (c.rank / c.teams) * 100 : 100;
+}
 
 export interface Lab {
   name: string;
