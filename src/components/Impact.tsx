@@ -147,8 +147,8 @@ export function Impact() {
 
           <article className="tile tile--rr reveal">
             <span className="tile__kicker mono">Zendesk · custom round robin</span>
-            <Stat to={4000} suffix="+" start={inView} />
-            <p className="tile__label">tickets auto-assigned with dedicated-agent preference and daily caps.</p>
+            <Stat to={9928} start={inView} />
+            <p className="tile__label">unique tickets processed, with dedicated-agent preference and daily caps.</p>
             <RoundRobin />
           </article>
 

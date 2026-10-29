@@ -80,7 +80,7 @@ export const systems: System[] = [
     summary:
       'A custom round robin with dedicated-agent preference, daily caps, and env-flagged rollouts, plus a serverless pipeline that transcribes calls and writes them back to tickets.',
     metrics: [
-      { value: '4,000+', label: 'tickets auto-assigned' },
+      { value: '9,928', label: 'unique tickets processed' },
       { value: '0', label: 'live-traffic disruptions from rollouts' },
       { value: '7-day', label: 'S3 TTL on call audio' },
       { value: '≈$0', label: 'idle cost (on-demand + spot)' },

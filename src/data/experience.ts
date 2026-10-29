@@ -6,7 +6,7 @@ export const experience = [
     period: 'Jan 2026 - Present',
     highlights: [
       'Shipping production ClearView (Next.js + RDS): inventory browse ~11s → sub-second across ~1.3M serials, shop-request operations for 70+ staff, public ALB + WAF + Entra SSO, and a staging→prod CI/CD pipeline I built on ECS/Fargate with Terraform-managed secrets.',
-      'Custom Zendesk round robin has assigned 4,000+ tickets with dedicated-agent routing, daily caps, and safe env-flagged rollouts.',
+      'Custom Zendesk round robin has processed 9,928 unique tickets with dedicated-agent routing, daily caps, and safe env-flagged rollouts.',
       'Leading Conversational AI / Copilot Studio (SellSmart + Digital-to-Store) and visual-search work into live retail workflows.',
     ],
   },

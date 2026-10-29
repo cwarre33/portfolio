@@ -18,7 +18,7 @@ Software engineer shipping production full-stack systems: Next.js, TypeScript, R
 - Cut grouped browse ~11s → ~150ms–1s via materialized views, query redesign, and statement-timeout guardrails; keep ~5GB / ~23 years of history fresh with a 15-minute ERP delta sync.
 - Shipped shop-request queue/detail with attachments, write-back, and role-gated access; catalog reads from RDS while ops queues hit live NetSuite so staff are not waiting on lag.
 - Hosted on Amazon ECS/Fargate behind internal and public ALBs with AWS WAF + Microsoft Entra ID (SSO); own staging→prod CI/CD (quality-gated Bitbucket Pipelines, OIDC/ECR, Terraform/SSM secrets).
-- Built production Zendesk routing automation (custom round robin, dedicated-agent paths, feature-flagged rollouts) that has assigned 4,000+ tickets.
+- Built production Zendesk routing automation (custom round robin, dedicated-agent paths, feature-flagged rollouts) that has processed 9,928 unique tickets.
 
 ### Jr. AI Research Analyst — Furnitureland South, Inc. · Aug 2025 – Jan 2026
 - Designed and shipped AWS async pipelines (API Gateway → Lambda → S3 → SQS → ECS/Fargate) for speech-to-text write-back and delayed chat timeout handling; benchmarked model variants for cost/latency.

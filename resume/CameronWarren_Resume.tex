@@ -69,7 +69,7 @@
   \item Cut grouped browse {\textasciitilde}11s $\rightarrow$ {\textasciitilde}150ms--1s via materialized views, query redesign, and statement-timeout guardrails; 15-minute ERP delta sync on {\textasciitilde}5GB / {\textasciitilde}23 years of history.
   \item Shipped shop-request queue/detail with attachments, write-back, and role-gated access; catalog on RDS, ops queues on live NetSuite so staff are not waiting on lag.
   \item Hosted on Amazon ECS/Fargate behind internal + public ALBs with AWS WAF and Microsoft Entra ID (SSO); own staging$\rightarrow$prod CI/CD (Bitbucket Pipelines, OIDC/ECR, Terraform/SSM).
-  \item Built production Zendesk routing (custom round robin, dedicated-agent paths, feature-flagged rollouts) that has assigned 4,000+ tickets.
+  \item Built production Zendesk routing (custom round robin, dedicated-agent paths, feature-flagged rollouts) that has processed 9,928 unique tickets.
 \end{itemize}
 
 \vspace{3pt}
